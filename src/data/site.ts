@@ -107,7 +107,7 @@ export const SITE = {
     /** PDF is committed to public/resume/ and served from this path. */
     pdfPath: '/resume/vin-cataldo-resume.pdf',
     /** Set true once the real PDF has been committed. */
-    pdfAvailable: false,
+    pdfAvailable: true,
   },
 
   education: {
@@ -149,16 +149,8 @@ export const SITE = {
     inProgressTerm: 'Fall 2026',
   },
 
-  /**
-   * §6.4: the certifications block is omitted rather than shown thin.
-   *
-   * Vin's Phase 0 answer was about OSHA specifically, made before his resume
-   * showed CPR, EVOC, and NCSF Personal Trainer certifications. Those exist and
-   * could be listed — CPR in particular is site-relevant. Flip this to true and
-   * add files to src/content/credentials/ with kind: 'certification' if he
-   * wants them shown.
-   */
-  showCertifications: false,
+  /** §6.4. Vin confirmed all three resume certifications should show. */
+  showCertifications: true,
 } as const;
 
 export type Site = typeof SITE;
