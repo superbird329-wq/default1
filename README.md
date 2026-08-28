@@ -291,43 +291,68 @@ first, real content later, never a guess.
 The site is a plain static build (`dist/`). It deploys to **Cloudflare Pages**.
 
 `public/_headers` (security headers) and `public/_redirects` (`www` → apex) are
-read automatically by Cloudflare Pages — there is nothing to configure for
-either.
+read automatically — there is nothing to configure for either.
 
-### First-time setup
+### Before the first deploy
 
-1. Push this repository to GitHub.
-2. Cloudflare dashboard → **Workers & Pages** → **Create** → **Pages** →
-   **Connect to Git**, and pick this repository.
+The repository is already on GitHub and already public, so there is nothing to
+push. Two things are worth doing first:
+
+- **Rename the default branch.** It is currently
+  `claude/vincataldo-portfolio-build-w0x0a0`, which works but is an odd name to
+  see on a production site's repository. On GitHub: **Settings → Branches →**
+  rename it to `main`. Cloudflare follows the default branch, so do this before
+  connecting, not after.
+- **Decide whether the repository should stay public.** It contains your email,
+  phone number, resume content, and coursework — all of it intended for
+  publication. It does not contain your transcript. Public is fine; private
+  works identically with Cloudflare. Your call.
+
+### Connect Cloudflare Pages
+
+1. Sign in at <https://dash.cloudflare.com>, then **Workers & Pages** →
+   **Create** → **Pages** → **Connect to Git**.
+2. Authorise GitHub and pick `superbird329-wq/default1`.
 3. Build settings:
    - Framework preset: **Astro**
    - Build command: `npm run build`
    - Build output directory: `dist`
-   - Environment variable: `NODE_VERSION` = `22.22.2`
-4. Deploy. Cloudflare gives you a `*.pages.dev` URL — check the site loads there
-   before touching DNS.
-5. **Custom domains** → add `vincataldo.com`, then add `www.vincataldo.com`.
-   Cloudflare creates the DNS records for you if the domain is on Cloudflare
-   DNS; otherwise it shows you the CNAME to add at your registrar.
-6. **SSL/TLS → Edge Certificates** → turn on **Always Use HTTPS**.
+   - Production branch: whatever the default branch is (`main` after renaming)
+4. Under **Environment variables**, add `NODE_VERSION` = `22.22.2`. Without
+   this, Cloudflare may build on an older Node and the build will fail.
+5. **Save and Deploy.** The first build takes two to three minutes.
 
-`vincataldo.com` is the canonical domain and `www` redirects to it. That choice
-lives in `public/_redirects`; if you ever reverse it, change it there too or the
-two will disagree.
+You now have a live URL like `default1-a1b2.pages.dev`. Check it works before
+going near DNS.
 
-### After setup
+### Point vincataldo.com at it
 
-Every push to the default branch redeploys automatically. Pull requests get
-their own preview URL. There is nothing to run by hand.
+1. In the Pages project: **Custom domains** → **Set up a domain** →
+   `vincataldo.com`.
+2. Add `www.vincataldo.com` as a second custom domain.
+3. If the domain's DNS is on Cloudflare, records are created for you. If it is
+   at another registrar, Cloudflare shows the exact CNAME to add there.
+4. **SSL/TLS → Edge Certificates → Always Use HTTPS: on.**
 
-### Before you deploy
+Certificates issue automatically, usually within a few minutes.
+
+`vincataldo.com` is canonical and `www` redirects to it. That choice lives in
+`public/_redirects`; if you ever reverse it, change it there too or the two
+will disagree.
+
+### Every deploy after that
+
+Push to the default branch. Cloudflare rebuilds automatically. Pull requests
+get their own preview URL.
+
+Before pushing, run:
 
 ```bash
 npm run verify
 ```
 
-This type-checks, builds, and fails if any `TODO` placeholder or
-confidential-looking pattern survives into the output.
+It type-checks, audits colour contrast, builds from scratch, and fails if any
+`TODO` placeholder or confidential-looking pattern survives into the output.
 
 ### HSTS
 
@@ -336,8 +361,10 @@ confidential-looking pattern survives into the output.
 Only submit the domain to <https://hstspreload.org> once you are certain every
 subdomain will serve HTTPS permanently — preload entries are slow to reverse.
 
-> Netlify would also work unchanged (it reads the same `_headers` and
-> `_redirects` files) if you ever want to move.
+> Netlify would work unchanged (it reads the same `_headers` and `_redirects`
+> files) if you ever want to move.
+
+---
 
 ## Search engine indexing
 
@@ -350,8 +377,18 @@ indexable: false,
 That single flag drives both `/robots.txt` (which disallows all crawlers) and
 the `<meta name="robots" content="noindex, nofollow">` tag on every page.
 
-Flip it to `true` once the content is complete and `./scripts/check-todos.sh`
-passes. Nothing else needs to change.
+Flip it to `true` once the content is complete and `npm run verify` passes.
+Nothing else needs to change.
+
+**Deploying and indexing are separate.** You can deploy today and the site will
+be live at a URL that works for anyone you send it to — it simply will not turn
+up in Google. That is the right order: prove the deploy, finish the content,
+then open it to search.
+
+One caveat while `TODO` markers remain: they render as loud orange blocks on the
+live site. The site being unindexed stops Google finding it, but anyone you send
+the link to will see them. Do not put the URL on an application or hand it to a
+recruiter until `npm run verify` passes.
 
 ---
 
