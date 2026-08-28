@@ -14,7 +14,8 @@
     "strip-metadata": "./scripts/strip-metadata.sh",
     "check:todos": "./scripts/check-todos.sh",
     "check:confidential": "./scripts/check-confidential.sh",
-    "verify": "npm run check && npm run build && npm run check:todos && npm run check:confidential"
+    "verify": "npm run check && npm run check:contrast && npm run build && npm run check:todos && npm run check:confidential",
+    "check:contrast": "node scripts/check-contrast.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",

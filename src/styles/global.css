@@ -239,7 +239,7 @@ a:hover {
   display: inline-block;
   padding: 0.1em 0.45em;
   background: var(--c-accent);
-  color: var(--c-ink);
+  color: var(--c-on-accent);
   font-family: var(--font-mono);
   font-size: var(--step--1);
   font-weight: 500;
@@ -274,7 +274,7 @@ a:hover {
 
 .btn--primary:hover {
   background: var(--c-accent);
-  color: var(--c-ink);
+  color: var(--c-on-accent);
   border-color: var(--c-accent);
 }
 
@@ -328,8 +328,8 @@ a:hover {
   }
 
   body {
-    background: #fff;
-    color: #000;
+    background: var(--c-print-bg);
+    color: var(--c-print-fg);
     font-size: 11pt;
   }
 }

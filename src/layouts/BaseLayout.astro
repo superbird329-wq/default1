@@ -1,5 +1,6 @@
 ---
 import { SITE } from '../data/site';
+import { PALETTE } from '../lib/theme';
 import { canonicalPath } from '../lib/url';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
@@ -73,7 +74,7 @@ const ogImage = SITE.ogImageAvailable ? new URL('/og-default.png', Astro.site).h
     />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <meta name="theme-color" content="#f5f6f7" />
+    <meta name="theme-color" content={PALETTE.paper} />
 
     {
       jsonLd && (

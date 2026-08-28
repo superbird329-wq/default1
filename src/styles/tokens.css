@@ -11,15 +11,34 @@
    ========================================================================== */
 
 :root {
-  /* ---------------------------------------------------------------------------
-     COLOR — six values.
+  /* ===========================================================================
+     COLOR — THE SINGLE SOURCE.
 
-     A cool near-white ground, not a warm cream. The accent is a saturated
-     survey-marking orange: the colour of lath flagging and utility paint on a
-     site. It is deliberately not a "tech" blue and deliberately not a warm
-     terracotta, both of which the spec rules out as machine-generated defaults.
+     Every colour the site uses is defined here and nowhere else. Change a value
+     in this block and it propagates everywhere automatically, including to
+     things that are not CSS:
 
-     Contrast, measured against --c-paper (#F5F6F7):
+       - the browser-tab favicon      (generated: src/pages/favicon.svg.ts)
+       - the <meta name="theme-color"> tag  (src/layouts/BaseLayout.astro)
+       - the contrast audit           (scripts/check-contrast.mjs)
+
+     Those all read this file at build time via src/lib/theme.ts. There is no
+     second list of colours to keep in sync, and nothing hard-codes a hex value.
+
+     AFTER CHANGING ANY COLOUR, RUN:  npm run check:contrast
+
+     That verifies every pairing below still meets WCAG 2.2 AA. It is wired into
+     `npm run verify`, so a palette change that breaks accessibility fails the
+     build rather than shipping quietly.
+
+     ---------------------------------------------------------------------------
+     The current palette: a cool near-white ground, not a warm cream. The accent
+     is a saturated survey-marking orange — the colour of lath flagging and
+     utility paint on a site. It is deliberately not a "tech" blue and
+     deliberately not a warm terracotta, both of which spec §7.2 rules out as
+     machine-generated defaults.
+
+     Contrast, measured against --c-paper:
        --c-ink       16.4:1  AAA, any size
        --c-graphite   6.4:1  AA normal text
        --c-accent-ink 5.9:1  AA normal text  <- use when accent must carry text
@@ -30,7 +49,9 @@
      carries ink text, never white. Black-on-orange is also the actual
      convention of construction warning signage, so the constraint and the
      subject agree.
-  --------------------------------------------------------------------------- */
+     =========================================================================== */
+
+  /* --- The six palette values ------------------------------------------- */
   --c-paper: #f5f6f7;
   --c-surface: #ffffff;
   --c-ink: #15181b;
@@ -38,8 +59,34 @@
   --c-rule: #d2d6da;
   --c-accent: #e2510e;
 
-  /* Derived tone of --c-accent, dark enough to carry body text on paper. */
+  /*
+    Derived tone of --c-accent, dark enough to carry body text on paper.
+
+    This is set by hand rather than computed, because no automatic darkening
+    function can guarantee the 4.5:1 that AA requires. If you change --c-accent,
+    change this to a darker tone of the same hue and let check:contrast tell you
+    whether you went far enough.
+  */
   --c-accent-ink: #a63c06;
+
+  /*
+    The text colour that sits ON the accent fill (button hover, TODO markers).
+
+    A role token, not a new colour: it currently holds the same value as
+    --c-ink, because black-on-orange is both what AA requires here and what
+    construction signage actually does. It exists separately so that a darker
+    accent stays possible — switch this to the paper value and white text on
+    the fill is a one-line change instead of a hunt through components.
+  */
+  --c-on-accent: #15181b;
+
+  /*
+    Print. Deliberately not the screen palette: paper is already white, and a
+    near-black costs more ink than a true black for no legibility gain.
+    Defined here so that no stylesheet anywhere hard-codes a colour.
+  */
+  --c-print-bg: #ffffff;
+  --c-print-fg: #000000;
 
   /* ---------------------------------------------------------------------------
      TYPEFACES — three roles, self-hosted (spec §4). IBM Plex, OFL licensed.

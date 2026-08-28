@@ -29,6 +29,8 @@ npm run dev      # http://localhost:4321
 | `npm run strip-metadata` | Strip EXIF/XMP metadata from `public/` — **run before committing any image or PDF** |
 | `./scripts/check-todos.sh` | Fail if `TODO` placeholders remain in the built output |
 | `./scripts/check-confidential.sh` | Scan for confidential-looking patterns |
+| `npm run check:contrast` | Audit the palette against WCAG 2.2 AA — run after any colour change |
+| `npm run verify` | Everything above, as one pre-deploy gate |
 
 ---
 
@@ -81,6 +83,57 @@ Requires `exiftool`:
 
 - macOS: `brew install exiftool`
 - Debian/Ubuntu: `sudo apt-get install libimage-exiftool-perl`
+
+---
+
+## Changing the colours
+
+Every colour on the site is defined in **one file**: `src/styles/tokens.css`.
+Nothing else anywhere hard-codes a colour value. Change a hex there and it
+propagates automatically to:
+
+- every page and component
+- the browser-tab favicon (generated at build time from the palette)
+- the `theme-color` browser chrome tint on mobile
+- the print stylesheet
+
+There are seven values to know:
+
+| Token | What it is |
+| --- | --- |
+| `--c-paper` | The page background |
+| `--c-surface` | Cards and title-block cells (currently white) |
+| `--c-ink` | Body text and the primary button fill |
+| `--c-graphite` | Labels and secondary text |
+| `--c-rule` | Hairlines between blocks |
+| `--c-accent` | The one accent, used for marks and rules only |
+| `--c-accent-ink` | A darker tone of the accent, for when it must carry text |
+| `--c-on-accent` | The text colour that sits *on* the accent fill |
+
+### After changing any colour, run this
+
+```bash
+npm run check:contrast
+```
+
+It prints every colour pairing the site actually uses with its measured
+contrast ratio, and fails if any drops below WCAG 2.2 Level AA. It is also part
+of `npm run verify`, so a palette change that breaks accessibility fails the
+build instead of shipping quietly.
+
+Two rules the audit exists to enforce, because they are easy to get wrong:
+
+- **`--c-accent` must never carry body text.** A saturated accent bright enough
+  to work as a mark is almost never dark enough to read at 16px. That is what
+  `--c-accent-ink` is for. Darken it until the audit passes.
+- **If you switch to a dark accent, flip `--c-on-accent`.** With the current
+  orange it holds the ink value, because black-on-orange both meets AA and is
+  what construction signage does. With a dark blue or green accent you want the
+  paper value instead — the audit will tell you.
+
+A full swap is about four lines. Colours must be plain hex (`#rrggbb`), not
+`color-mix()` or `var()`, so the favicon generator and the audit can read them;
+you will get a clear error rather than a broken build if you use one.
 
 ---
 
@@ -181,8 +234,12 @@ src/
   components/           Header, footer, and shared pieces
   pages/                One file per route
   styles/
-    tokens.css          Every colour, size, and spacing value
+    tokens.css          THE source for every colour, size, and spacing value
     global.css          Base styles and utilities
+  lib/
+    palette.js          Reads tokens.css; shared by the site and the audit
+    theme.ts            Exposes the palette to Astro (favicon, theme-color)
+  pages/favicon.svg.ts  Favicon, generated from the palette
 public/
   fonts/                Self-hosted IBM Plex (OFL licensed)
   _headers              Security headers
