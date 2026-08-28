@@ -1,0 +1,93 @@
+---
+import { SITE, isTodo } from '../data/site';
+import Fact from './Fact.astro';
+
+/*
+  The signature element (spec §7.2), in its persistent form: a title block.
+
+  On a drawing sheet the title block sits in a fixed position and tells you who
+  drew the sheet, what it is, and when — before you look at the drawing. Here it
+  carries the contact information the spec requires on every page (§5), in the
+  same fixed grid of labelled cells, divided by hairlines.
+
+  Contact is a mailto: and a tel: link. There is no contact form: a form adds a
+  backend dependency and a spam surface for no benefit.
+*/
+
+const { email, phone, linkedin } = SITE.contact;
+
+const mailto = isTodo(email) ? undefined : `mailto:${email}`;
+const tel = phone && !isTodo(phone) ? `tel:${phone.replace(/[^\d+]/g, '')}` : undefined;
+const linkedinHref = isTodo(linkedin) ? undefined : linkedin;
+
+const linkedinLabel = isTodo(linkedin)
+  ? linkedin
+  : linkedin.replace(/^https?:\/\/(www\.)?linkedin\.com\/in\//, '').replace(/\/$/, '');
+
+const updated = new Date().toISOString().slice(0, 10);
+---
+
+<footer class="site-footer">
+  <div class="wrap">
+    <h2 class="visually-hidden">Contact</h2>
+
+    <div class="title-block">
+      <Fact label="Name" value={SITE.name} />
+      <Fact label="Program" value="BS Construction Management Eng. Tech." prose />
+      <Fact label="Email" value={email} href={mailto} />
+      {phone && <Fact label="Phone" value={phone} href={tel} />}
+      <Fact label="LinkedIn" value={linkedinLabel} href={linkedinHref} />
+      <Fact label="Updated" value={updated} />
+    </div>
+
+    <p class="site-footer__note">
+      &copy; {new Date().getFullYear()} {SITE.name}. Built as a static site; no
+      trackers, no cookies, no analytics.
+    </p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-block-start: var(--space-3xl);
+    border-block-start: var(--rule-heavy) solid var(--c-ink);
+    padding-block: var(--space-l) var(--space-xl);
+    background: var(--c-surface);
+  }
+
+  /*
+    The title block grid. Cells are divided by hairlines drawn as gaps over an
+    ink ground, which keeps every rule exactly 1px regardless of how the cells
+    reflow — the same trick a sheet border uses.
+  */
+  .title-block {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--rule-hair);
+    background: var(--c-rule);
+    border: var(--rule-hair) solid var(--c-rule);
+  }
+
+  .title-block > :global(.fact) {
+    background: var(--c-surface);
+    padding: var(--space-xs) var(--space-s);
+  }
+
+  .site-footer__note {
+    margin-block-start: var(--space-m);
+    font-size: var(--step--1);
+    color: var(--c-graphite);
+  }
+
+  @media (min-width: 48em) {
+    .title-block {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 64em) {
+    .title-block {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+  }
+</style>

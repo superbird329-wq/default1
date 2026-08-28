@@ -1,0 +1,119 @@
+/* =============================================================================
+   DESIGN TOKENS — vincataldo.com
+   =============================================================================
+
+   Governing idea (spec §7.1): the visual language of construction
+   documentation. Precise, gridded, densely labelled, monochrome with one
+   selective accent, organised around a title block that tells you what you are
+   looking at before you look at it.
+
+   Everything here is a decision. Do not add ad-hoc values in components.
+   ========================================================================== */
+
+:root {
+  /* ---------------------------------------------------------------------------
+     COLOR — six values.
+
+     A cool near-white ground, not a warm cream. The accent is a saturated
+     survey-marking orange: the colour of lath flagging and utility paint on a
+     site. It is deliberately not a "tech" blue and deliberately not a warm
+     terracotta, both of which the spec rules out as machine-generated defaults.
+
+     Contrast, measured against --c-paper (#F5F6F7):
+       --c-ink       16.4:1  AAA, any size
+       --c-graphite   6.4:1  AA normal text
+       --c-accent-ink 5.9:1  AA normal text  <- use when accent must carry text
+       --c-accent     3.6:1  AA large text and non-text UI only, NEVER body copy
+       --c-rule         ---  hairlines only, never text
+
+     Ink on --c-accent measures 4.6:1, which is why the accent fill always
+     carries ink text, never white. Black-on-orange is also the actual
+     convention of construction warning signage, so the constraint and the
+     subject agree.
+  --------------------------------------------------------------------------- */
+  --c-paper: #f5f6f7;
+  --c-surface: #ffffff;
+  --c-ink: #15181b;
+  --c-graphite: #545b62;
+  --c-rule: #d2d6da;
+  --c-accent: #e2510e;
+
+  /* Derived tone of --c-accent, dark enough to carry body text on paper. */
+  --c-accent-ink: #a63c06;
+
+  /* ---------------------------------------------------------------------------
+     TYPEFACES — three roles, self-hosted (spec §4). IBM Plex, OFL licensed.
+
+     Plex was drawn for technical and engineering documentation, and its sans /
+     condensed / mono widths are one designed superfamily rather than three
+     unrelated faces bolted together.
+
+       display  Plex Sans Condensed 600 — name and headings. A condensed
+                grotesque reads as a drawing sheet label, and buys horizontal
+                room for long headings at 320px.
+       body     Plex Sans 400/600 — reading at 17–18px on a phone.
+       mono     Plex Mono 400/500 — dates, tools, dimensions, context strips.
+                Monospace here is not decorative: it encodes the fact that
+                these are values rather than prose, which is how they function
+                on a drawing.
+  --------------------------------------------------------------------------- */
+  --font-display: 'IBM Plex Sans Condensed', 'Helvetica Neue', Arial, sans-serif;
+  --font-body: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Helvetica, Arial, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas,
+    monospace;
+
+  /* ---------------------------------------------------------------------------
+     TYPE SCALE — explicit at every step. Nothing relies on browser defaults.
+     Fluid steps interpolate between a 375px phone and a 1440px desktop.
+  --------------------------------------------------------------------------- */
+  --step-label: 0.75rem;                              /* 12px  mono labels     */
+  --step--1: 0.8125rem;                               /* 13px  captions, meta  */
+  --step-0: clamp(1.0625rem, 1.02rem + 0.18vw, 1.125rem);   /* 17 → 18  body   */
+  --step-1: clamp(1.1875rem, 1.13rem + 0.25vw, 1.3125rem);  /* 19 → 21  lead   */
+  --step-2: clamp(1.375rem, 1.29rem + 0.36vw, 1.625rem);    /* 22 → 26  h3     */
+  --step-3: clamp(1.625rem, 1.45rem + 0.75vw, 2.125rem);    /* 26 → 34  h2     */
+  --step-4: clamp(2rem, 1.68rem + 1.36vw, 2.9375rem);       /* 32 → 47  h1     */
+  --step-5: clamp(2.5rem, 1.95rem + 2.34vw, 4.125rem);      /* 40 → 66  name   */
+
+  --leading-tight: 1.08;
+  --leading-snug: 1.28;
+  --leading-body: 1.6;
+
+  --tracking-label: 0.08em;   /* uppercase mono labels need opening up */
+  --tracking-display: -0.015em;
+
+  /* ---------------------------------------------------------------------------
+     SPACE — 4px grid.
+  --------------------------------------------------------------------------- */
+  --space-3xs: 0.25rem;
+  --space-2xs: 0.5rem;
+  --space-xs: 0.75rem;
+  --space-s: 1rem;
+  --space-m: 1.5rem;
+  --space-l: 2rem;
+  --space-xl: 3rem;
+  --space-2xl: 4.5rem;
+  --space-3xl: 6rem;
+
+  /* ---------------------------------------------------------------------------
+     LAYOUT
+  --------------------------------------------------------------------------- */
+  --wrap: 74rem;
+  --gutter: clamp(1.25rem, 4.5vw, 3rem);
+  --measure: 66ch;          /* prose line length */
+
+  --rule-hair: 1px;
+  --rule-heavy: 2px;
+
+  /* Minimum interactive target (spec §8). */
+  --tap: 2.75rem;           /* 44px */
+
+  /* ---------------------------------------------------------------------------
+     MOTION — subtle by default, removed entirely under prefers-reduced-motion
+     (see global.css).
+  --------------------------------------------------------------------------- */
+  --ease: cubic-bezier(0.2, 0, 0.15, 1);
+  --dur-fast: 120ms;
+  --dur: 200ms;
+}

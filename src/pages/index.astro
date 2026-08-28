@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE, isTodo } from '../data/site';
+
+/*
+  PHASE 1 SCAFFOLD.
+
+  This is items 1–4 of spec §6.1 only: the above-the-fold block. The current
+  roles block, selected work, credentials strip, and contact block are built in
+  Phase 2, once the design plan is approved and real content exists.
+*/
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: SITE.name,
+  jobTitle: 'Construction Management Engineering Technology Student',
+  url: SITE.url,
+  alumniOf: {
+    '@type': 'CollegeOrUniversity',
+    name: SITE.education.institution,
+  },
+  ...(isTodo(SITE.contact.linkedin) ? {} : { sameAs: [SITE.contact.linkedin] }),
+};
+
+const resumeAvailable = SITE.resume.pdfAvailable;
+---
+
+<BaseLayout
+  title="Vincent Cataldo — Construction Management Engineering Technology, Farmingdale State College"
+  description="Construction Management Engineering Technology student at Farmingdale State College. Engineering intern experience in AutoCAD site plan drafting, geotechnical report production, and drawing quality control."
+  jsonLd={jsonLd}
+>
+  <section class="hero">
+    <div class="wrap">
+      <h1>{SITE.name}</h1>
+      <p class="hero__positioning">{SITE.positioning}</p>
+      <p class="hero__direction">{SITE.direction}</p>
+
+      <div class="hero__actions">
+        <a class="btn btn--primary" href="/projects">View projects</a>
+        {
+          resumeAvailable ? (
+            <a class="btn btn--secondary" href={SITE.resume.pdfPath} download>
+              Download resume
+            </a>
+          ) : (
+            <span class="btn" aria-disabled="true">
+              Resume PDF pending
+            </span>
+          )
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    padding-block: var(--space-xl) var(--space-2xl);
+  }
+
+  h1 {
+    font-size: var(--step-5);
+  }
+
+  .hero__positioning {
+    margin-block-start: var(--space-s);
+    max-width: 34ch;
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    line-height: var(--leading-snug);
+    color: var(--c-graphite);
+  }
+
+  .hero__direction {
+    margin-block-start: var(--space-m);
+    max-width: 42ch;
+    font-size: var(--step-1);
+    line-height: var(--leading-snug);
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    margin-block-start: var(--space-l);
+  }
+</style>

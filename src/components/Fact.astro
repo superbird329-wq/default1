@@ -1,0 +1,65 @@
+---
+import { isTodo } from '../data/site';
+
+/*
+  A single labelled field: a small uppercase mono caption over its value. This
+  is the atom of the title-block device (spec §7.2) and is reused in the site
+  footer, the project context strips, and the credentials strip.
+
+  A value that is still a TODO renders as a loud marker rather than as text, so
+  an unfilled fact can never be mistaken for a supplied one (spec §3.1).
+*/
+
+interface Props {
+  label: string;
+  value: string | null | undefined;
+  href?: string;
+  /** Render the value in the body face instead of mono (for prose values). */
+  prose?: boolean;
+}
+
+const { label, value, href, prose = false } = Astro.props;
+const todo = isTodo(value);
+---
+
+<div class="fact">
+  <span class="label">{label}</span>
+  {
+    todo ? (
+      <span class="todo">{value}</span>
+    ) : href ? (
+      <a class:list={['value', { 'value--prose': prose }]} href={href}>
+        {value}
+      </a>
+    ) : (
+      <span class:list={['value', { 'value--prose': prose }]}>{value}</span>
+    )
+  }
+</div>
+
+<style>
+  .fact {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3xs);
+    min-width: 0;
+  }
+
+  .value {
+    overflow-wrap: anywhere;
+  }
+
+  .value--prose {
+    font-family: var(--font-body);
+    font-size: var(--step--1);
+    line-height: var(--leading-snug);
+  }
+
+  a.value {
+    text-decoration-color: var(--c-rule);
+  }
+
+  a.value:hover {
+    text-decoration-color: var(--c-accent);
+  }
+</style>

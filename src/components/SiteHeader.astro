@@ -1,0 +1,123 @@
+---
+import { SITE } from '../data/site';
+import { canonicalPath } from '../lib/url';
+
+/*
+  Spec §5: name on the left, four links on the right. Under 640px the header
+  becomes two rows — name, then a full-width row of four labels — rather than a
+  hamburger menu. A hamburger hides the site's structure from someone scanning
+  quickly, which is the opposite of what this site needs. Two rows also
+  guarantees the labels fit at 320px without horizontal scroll.
+*/
+
+const links = [
+  { href: '/experience', label: 'Experience' },
+  { href: '/projects', label: 'Projects' },
+  { href: '/resume', label: 'Resume' },
+  { href: '/about', label: 'About' },
+];
+
+const path = canonicalPath(Astro.url.pathname);
+const isCurrent = (href: string) => path === href || path.startsWith(`${href}/`);
+---
+
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <a class="site-header__name" href="/">{SITE.shortName}</a>
+
+    <nav aria-label="Primary">
+      <ul>
+        {
+          links.map((link) => (
+            <li>
+              <a href={link.href} aria-current={isCurrent(link.href) ? 'page' : undefined}>
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    border-block-end: var(--rule-heavy) solid var(--c-ink);
+    background: var(--c-paper);
+  }
+
+  .site-header__inner {
+    display: grid;
+    gap: var(--space-2xs);
+    padding-block: var(--space-s) 0;
+  }
+
+  .site-header__name {
+    display: flex;
+    align-items: center;
+    min-height: var(--tap);
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    font-weight: 600;
+    letter-spacing: var(--tracking-display);
+    text-decoration: none;
+    line-height: 1;
+  }
+
+  nav ul {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  nav a {
+    display: flex;
+    align-items: center;
+    min-height: var(--tap);
+    padding-inline: 0.15em;
+    font-size: 0.8125rem;
+    letter-spacing: -0.005em;
+    text-decoration: none;
+    color: var(--c-graphite);
+    border-block-end: var(--rule-heavy) solid transparent;
+    transition: color var(--dur) var(--ease),
+      border-color var(--dur) var(--ease);
+  }
+
+  nav a:hover {
+    color: var(--c-ink);
+  }
+
+  /* Accent use 1 of 3: the current-page marker. */
+  nav a[aria-current='page'] {
+    color: var(--c-ink);
+    border-block-end-color: var(--c-accent);
+  }
+
+  @media (min-width: 40em) {
+    .site-header__inner {
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: var(--space-m);
+      padding-block: var(--space-s);
+    }
+
+    .site-header__name {
+      font-size: var(--step-2);
+    }
+
+    nav ul {
+      gap: clamp(var(--space-s), 2.5vw, var(--space-l));
+    }
+
+    nav a {
+      font-size: var(--step--1);
+      font-family: var(--font-mono);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+  }
+</style>

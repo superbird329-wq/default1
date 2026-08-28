@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Page not found — Vin Cataldo"
+  description="That page does not exist on vincataldo.com."
+>
+  <section class="wrap notfound">
+    <p class="label">Error 404</p>
+    <h1>Sheet not found</h1>
+    <p class="prose">
+      That page does not exist. Try the <a href="/projects">projects index</a> or
+      the <a href="/experience">experience page</a>.
+    </p>
+  </section>
+</BaseLayout>
+
+<style>
+  .notfound {
+    padding-block: var(--space-2xl) var(--space-3xl);
+  }
+
+  .notfound h1 {
+    margin-block: var(--space-2xs) var(--space-m);
+  }
+</style>

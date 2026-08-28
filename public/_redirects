@@ -1,0 +1,3 @@
+# www -> apex. Chosen consistently: vincataldo.com is canonical (spec §10).
+# Honoured by both Cloudflare Pages and Netlify.
+https://www.vincataldo.com/*  https://vincataldo.com/:splat  301!
