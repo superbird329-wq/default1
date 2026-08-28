@@ -99,14 +99,13 @@ first, real content later, never a guess.
 
 ## Deploying
 
-The site is a plain static build (`dist/`), so any static host works. Both
-options below are free, issue TLS certificates automatically, and redeploy on
-every push.
+The site is a plain static build (`dist/`). It deploys to **Cloudflare Pages**.
 
-`public/_headers` and `public/_redirects` are honoured by **both** hosts, so the
-security headers and the `www` → apex redirect work either way.
+`public/_headers` (security headers) and `public/_redirects` (`www` → apex) are
+read automatically by Cloudflare Pages — there is nothing to configure for
+either.
 
-### Cloudflare Pages
+### First-time setup
 
 1. Push this repository to GitHub.
 2. Cloudflare dashboard → **Workers & Pages** → **Create** → **Pages** →
@@ -115,17 +114,31 @@ security headers and the `www` → apex redirect work either way.
    - Framework preset: **Astro**
    - Build command: `npm run build`
    - Build output directory: `dist`
-   - Node version: set the `NODE_VERSION` environment variable to `22.22.2`
-4. Deploy, then **Custom domains** → add `vincataldo.com` and `www.vincataldo.com`.
-5. SSL/TLS → **Edge Certificates** → turn on **Always Use HTTPS**.
+   - Environment variable: `NODE_VERSION` = `22.22.2`
+4. Deploy. Cloudflare gives you a `*.pages.dev` URL — check the site loads there
+   before touching DNS.
+5. **Custom domains** → add `vincataldo.com`, then add `www.vincataldo.com`.
+   Cloudflare creates the DNS records for you if the domain is on Cloudflare
+   DNS; otherwise it shows you the CNAME to add at your registrar.
+6. **SSL/TLS → Edge Certificates** → turn on **Always Use HTTPS**.
 
-### Netlify
+`vincataldo.com` is the canonical domain and `www` redirects to it. That choice
+lives in `public/_redirects`; if you ever reverse it, change it there too or the
+two will disagree.
 
-1. Push this repository to GitHub.
-2. Netlify → **Add new site** → **Import an existing project**.
-3. Build command `npm run build`, publish directory `dist`.
-4. **Domain management** → add `vincataldo.com`, set it as the primary domain.
-5. **Domain management → HTTPS** → **Force HTTPS**.
+### After setup
+
+Every push to the default branch redeploys automatically. Pull requests get
+their own preview URL. There is nothing to run by hand.
+
+### Before you deploy
+
+```bash
+npm run verify
+```
+
+This type-checks, builds, and fails if any `TODO` placeholder or
+confidential-looking pattern survives into the output.
 
 ### HSTS
 
@@ -134,7 +147,8 @@ security headers and the `www` → apex redirect work either way.
 Only submit the domain to <https://hstspreload.org> once you are certain every
 subdomain will serve HTTPS permanently — preload entries are slow to reverse.
 
----
+> Netlify would also work unchanged (it reads the same `_headers` and
+> `_redirects` files) if you ever want to move.
 
 ## Search engine indexing
 

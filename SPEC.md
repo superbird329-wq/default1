@@ -399,5 +399,15 @@ Answers supplied by the owner to the section 13 questions:
    leadership on `/experience`, not as a project case study. Becomes a full case
    study after the November competition.
 
+**Host** — Cloudflare Pages. `public/_headers` and `public/_redirects` are
+committed and work there without configuration. `vincataldo.com` is canonical;
+`www` redirects to it.
+
+**Accent colour** — Survey orange `#E2510E` was compared side by side against
+blueprint cyan `#0E6FA8` in every role the accent occupies. Cyan measures better
+(5.0:1 vs 3.6:1 as a mark) but reads as a default corporate blue, which §7.1
+rules out. Orange kept. The accent never carries body text in either scheme;
+`--c-accent-ink` exists for that and passes AA.
+
 Still outstanding: questions 1, 3, and 6, and all required items in the
 section 11 content inventory.
