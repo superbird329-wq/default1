@@ -26,8 +26,12 @@ const credentials = await getCollection('credentials');
 const byKind = (kind: string) =>
   credentials.filter((c) => c.data.kind === kind).sort((a, b) => a.data.weight - b.data.weight);
 
-const { email, phone } = SITE.contact;
+const { email, phone, linkedin } = SITE.contact;
 const tel = phone && !isTodo(phone) ? `tel:${phone.replace(/[^\d+]/g, '')}` : undefined;
+const showLinkedin = SITE.linkedinProminent && !isTodo(linkedin);
+const linkedinLabel = linkedin
+  .replace(/^https?:\/\/(www\.)?/, '')
+  .replace(/\/$/, '');
 const completed = SITE.education.coursework.filter((c) => c.status === 'completed');
 ---
 
@@ -43,6 +47,7 @@ const completed = SITE.education.coursework.filter((c) => c.status === 'complete
         <p class="resume__contact value">
           <a href={`mailto:${email}`}>{email}</a>
           {phone && <> &middot; <a href={tel}>{phone}</a></>}
+          {showLinkedin && <> &middot; <a href={linkedin}>{linkedinLabel}</a></>}
         </p>
       </div>
 

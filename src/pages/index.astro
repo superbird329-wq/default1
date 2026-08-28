@@ -170,7 +170,9 @@ const jsonLd = {
     <div class="contact__grid grid-rules">
       <Fact label="Email" value={email} href={mailto} wrapAfter="@" />
       {phone && <Fact label="Phone" value={phone} href={tel} />}
-      <Fact label="LinkedIn" value={linkedinLabel} href={linkedinHref} />
+      {SITE.linkedinProminent && (
+        <Fact label="LinkedIn" value={linkedinLabel} href={linkedinHref} />
+      )}
     </div>
   </Section>
 </BaseLayout>

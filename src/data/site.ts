@@ -65,12 +65,24 @@ export const SITE = {
     email: 'vincataldo329@gmail.com',
     /** Set to null to publish no phone number at all. */
     phone: '(516) 359-8864',
-    linkedin: TODO('LinkedIn profile URL'),
+    /*
+     * Canonical profile URL. The link Vin sent carried
+     * ?utm_source=share_via&utm_content=profile&utm_medium=member_ios —
+     * tracking parameters the iOS share sheet appends. They are stripped: they
+     * would appear in the page source, in the JSON-LD sameAs, and in anything
+     * that scraped the site, while saying nothing except that the link was once
+     * shared from a phone.
+     */
+    linkedin: 'https://www.linkedin.com/in/vincataldo',
   },
 
   /**
-   * Vin asked for LinkedIn to be prominent, so it appears in the home page
-   * contact block as well as in the footer title block on every page.
+   * LinkedIn placement.
+   *
+   * The footer title block always carries it, on every page. When this is true
+   * it additionally appears in the home page contact block and in the resume
+   * header next to the email address — the two places a recruiter looking to
+   * connect will actually land. Set false for footer-only.
    */
   linkedinProminent: true,
 
