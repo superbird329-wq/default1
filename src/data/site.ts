@@ -4,9 +4,10 @@
  * To change contact information, the seeking statement, or education details,
  * edit this file and nothing else. See README.md.
  *
- * FABRICATION RULE: every value here must come from Vin. Anything not yet
- * supplied is marked with the TODO() helper so it renders as a visible
- * placeholder rather than as plausible-sounding invented text.
+ * FABRICATION RULE: every value here must come from Vin, his resume, or his
+ * transcript. Anything not yet supplied is marked with the TODO() helper so it
+ * renders as a visible placeholder rather than as plausible-sounding invented
+ * text.
  */
 
 /** Marks a value that Vin still needs to supply. Renders visibly on the page. */
@@ -15,6 +16,13 @@ export const TODO = (what: string): string => `TODO: ${what}`;
 /** True when a string is an unfilled placeholder. */
 export const isTodo = (value: string | null | undefined): boolean =>
   typeof value === 'string' && value.startsWith('TODO:');
+
+/** A course from the transcript. */
+export interface Course {
+  code: string;
+  title: string;
+  status: 'completed' | 'in-progress';
+}
 
 export const SITE = {
   url: 'https://vincataldo.com',
@@ -48,14 +56,20 @@ export const SITE = {
 
   /** Shown in the home page contact block. */
   seeking:
-    'Currently seeking a Summer 2026 internship in construction management. Available for Project Engineer Intern, Field Engineer Intern, and Assistant Project Manager roles.',
+    'Currently seeking a construction management internship. Available for Project Engineer Intern, Field Engineer Intern, and Assistant Project Manager roles on Long Island and in the New York metro area.',
 
   contact: {
-    email: TODO('public email address'),
+    email: 'vincataldo329@gmail.com',
     /** Set to null to publish no phone number at all. */
-    phone: TODO('phone number to publish, or null to omit'),
+    phone: '(516) 359-8864',
     linkedin: TODO('LinkedIn profile URL'),
   },
+
+  /**
+   * Vin asked for LinkedIn to be prominent, so it appears in the home page
+   * contact block as well as in the footer title block on every page.
+   */
+  linkedinProminent: true,
 
   /**
    * Open Graph / Twitter preview image at public/og-default.png.
@@ -65,6 +79,16 @@ export const SITE = {
   ogImageAvailable: false,
 
   resume: {
+    /**
+     * Summary paragraph, verbatim from Vin's resume document so that the HTML
+     * resume and the PDF say the same thing (spec §6.5).
+     *
+     * NOTE: this names superintendent / project manager as the goal, while the
+     * rest of the site positions for project engineer and assistant PM roles.
+     * Worth reconciling in the source document — see the build report.
+     */
+    summary:
+      'Construction Management Engineering Technology (BS) student with hands-on experience in construction, field operations, and site coordination. Skilled in AutoCAD, soil sampling, safety compliance, and project documentation. Seeking a construction internship to contribute to a career as a superintendent or project manager.',
     /** PDF is committed to public/resume/ and served from this path. */
     pdfPath: '/resume/vin-cataldo-resume.pdf',
     /** Set true once the real PDF has been committed. */
@@ -74,19 +98,69 @@ export const SITE = {
   education: {
     institution: 'Farmingdale State College (SUNY)',
     degree: 'BS, Construction Management Engineering Technology',
+    school: 'College of Engineering Technologies',
     location: 'Farmingdale, NY',
     expectedGraduation: 'Spring 2028',
     gpa: '3.81',
-    /** Course titles exactly as they appear on the transcript. */
-    coursework: [] as string[],
+    /**
+     * Relevant coursework by course title, from the transcript. Gen-ed courses
+     * are deliberately omitted: this list exists for a recruiter scanning for
+     * construction and technical subjects, not as a transcript reproduction.
+     */
+    coursework: [
+      // Completed at Farmingdale
+      { code: 'CON 161', title: 'Materials & Methods of Construction I', status: 'completed' },
+      { code: 'ECO 321', title: 'Engineering Economics', status: 'completed' },
+      { code: 'ARC 111', title: 'Graphics I', status: 'completed' },
+      { code: 'BUS 102', title: 'Managerial Accounting', status: 'completed' },
+      { code: 'EGL 310', title: 'Technical Writing', status: 'completed' },
+      { code: 'SPE 330', title: 'Professional & Technical Speech', status: 'completed' },
+      // Completed, transferred in
+      { code: 'BUS 202', title: 'Business Law I', status: 'completed' },
+      { code: 'BUS 101', title: 'Financial Accounting', status: 'completed' },
+      { code: 'BUS 109', title: 'Management Theories & Practices', status: 'completed' },
+      { code: 'ECO 157', title: 'Principles of Economics (Micro)', status: 'completed' },
+      { code: 'ECO 156', title: 'Principles of Economics (Macro)', status: 'completed' },
+      { code: 'MTH 150', title: 'Calculus I', status: 'completed' },
+      // In progress, Fall 2026
+      { code: 'CON 162', title: 'Materials & Methods of Construction II', status: 'in-progress' },
+      { code: 'CON 103T', title: 'Surveying', status: 'in-progress' },
+      { code: 'CIV 106', title: 'Statics', status: 'in-progress' },
+      { code: 'ARC 121', title: 'Graphics II', status: 'in-progress' },
+      { code: 'MTH 390', title: 'Methods in Operations Research', status: 'in-progress' },
+      { code: 'PHY 135T', title: 'College Physics I', status: 'in-progress' },
+    ] as Course[],
+    /** Term the in-progress courses belong to. */
+    inProgressTerm: 'Fall 2026',
   },
 
   /**
-   * §6.4: the certifications block is omitted entirely rather than shown
-   * empty. Set to true and populate src/content/credentials/ once a
-   * certification (e.g. OSHA 10) is actually held.
+   * §6.4: the certifications block is omitted rather than shown thin.
+   *
+   * Vin's Phase 0 answer was about OSHA specifically, made before his resume
+   * showed CPR, EVOC, and NCSF Personal Trainer certifications. Those exist and
+   * could be listed — CPR in particular is site-relevant. Flip this to true and
+   * add files to src/content/credentials/ with kind: 'certification' if he
+   * wants them shown.
    */
   showCertifications: false,
 } as const;
 
 export type Site = typeof SITE;
+
+/** A photograph with the alt text it needs to carry. */
+export interface Photo {
+  src: string;
+  alt: string;
+}
+
+/**
+ * The About page headshot.
+ *
+ * Stays null until a real photograph exists, so the page renders an empty slot
+ * of the right aspect ratio rather than a broken image. When you add one:
+ *   1. put the file in public/img/
+ *   2. run `npm run strip-metadata` (photos carry GPS coordinates)
+ *   3. set this to { src: '/img/<file>', alt: '<what it shows>' }
+ */
+export const HEADSHOT: Photo | null = null;

@@ -1,0 +1,178 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+
+/*
+  Projects index, per spec §6.2. One column on mobile, two above 900px.
+
+  The category filter is plain anchor links to in-page fragments, not a
+  JavaScript widget: static links are faster, shareable, and work with
+  JavaScript disabled. Projects are ordered by the `weight` field so Vin
+  controls the sequence by hand — never sorted by date.
+*/
+
+const CATEGORIES = ['Internship Work', 'Academic', 'Competition', 'Technical'] as const;
+
+const projects = (await getCollection('projects', ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.weight - b.data.weight,
+);
+
+/** Only offer a filter link for a category that actually has entries. */
+const populated = CATEGORIES.filter((category) =>
+  projects.some((p) => p.data.category === category),
+);
+
+const slug = (category: string) => category.toLowerCase().replace(/\s+/g, '-');
+---
+
+<BaseLayout
+  title="Projects — Vin Cataldo, Construction Management"
+  description="Construction management project case studies: geotechnical report production, AutoCAD site plan drafting, and technical tooling built against published engineering standards."
+>
+  <section class="page-head">
+    <div class="wrap">
+      <span class="label">Projects</span>
+      <h1>Case studies</h1>
+      <p class="page-head__lede">
+        Each case study follows the same structure — objective, role, approach,
+        tools and standards, deliverables, outcome, and what it taught — so they
+        can be compared quickly.
+      </p>
+    </div>
+  </section>
+
+  {
+    projects.length === 0 ? (
+      <section class="wrap empty">
+        <p>
+          <span class="todo">
+            TODO: three to five project case studies. Start with geotechnical
+            report production and drawing QC, the SPT blow-count pipeline, and
+            AutoCAD site plan drafting.
+          </span>
+        </p>
+        <p class="empty__how">
+          Add one by creating a Markdown file in <code>src/content/projects/</code>.
+          The schema in <code>src/content.config.ts</code> lists every field
+          required.
+        </p>
+      </section>
+    ) : (
+      <>
+        {populated.length > 1 && (
+          <nav class="wrap filters" aria-label="Filter projects by category">
+            <span class="label">Jump to</span>
+            <ul>
+              <li>
+                <a href="#all">All</a>
+              </li>
+              {populated.map((category) => (
+                <li>
+                  <a href={`#${slug(category)}`}>{category}</a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
+
+        <div class="wrap listing" id="all">
+          {populated.map((category) => (
+            <section class="group" id={slug(category)}>
+              <h2 class="label group__title">{category}</h2>
+              <div class="group__grid">
+                {projects
+                  .filter((p) => p.data.category === category)
+                  .map((project) => (
+                    <ProjectCard project={project} />
+                  ))}
+              </div>
+            </section>
+          ))}
+        </div>
+      </>
+    )
+  }
+</BaseLayout>
+
+<style>
+  .page-head {
+    padding-block: var(--space-l) var(--space-xl);
+  }
+
+  .page-head h1 {
+    margin-block-start: var(--space-2xs);
+  }
+
+  .page-head__lede {
+    margin-block-start: var(--space-s);
+    max-width: 52ch;
+    color: var(--c-graphite);
+  }
+
+  .empty {
+    padding-block-end: var(--space-2xl);
+    border-block-start: var(--rule-heavy) solid var(--c-ink);
+    padding-block-start: var(--space-l);
+  }
+
+  .empty__how {
+    margin-block-start: var(--space-s);
+    font-size: var(--step--1);
+    color: var(--c-graphite);
+  }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+  }
+
+  .filters {
+    padding-block: var(--space-s);
+    border-block-start: var(--rule-heavy) solid var(--c-ink);
+  }
+
+  .filters ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs) var(--space-s);
+    list-style: none;
+    padding: 0;
+    margin-block-start: var(--space-2xs);
+  }
+
+  .filters a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    text-decoration-color: var(--c-rule);
+  }
+
+  .listing {
+    padding-block-end: var(--space-2xl);
+  }
+
+  .group {
+    padding-block-start: var(--space-l);
+    scroll-margin-block-start: var(--space-m);
+  }
+
+  .group__title {
+    padding-block-end: var(--space-2xs);
+    border-block-end: var(--rule-hair) solid var(--c-rule);
+    margin-block-end: var(--space-s);
+  }
+
+  .group__grid {
+    display: grid;
+    gap: var(--space-s);
+  }
+
+  @media (min-width: 56.25em) {
+    .group__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

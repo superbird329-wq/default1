@@ -1,0 +1,252 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE, isTodo } from '../data/site';
+
+/*
+  Resume, per spec §6.5. Two things on one page:
+    1. the resume as semantic HTML, readable on a phone with no download and
+       indexable by search engines
+    2. a download link to the PDF
+
+  The HTML and the PDF are kept in sync BY HAND. This page is generated from the
+  same content collections as the rest of the site, so if you edit a role here
+  you must re-export the PDF from the source document too — and vice versa.
+
+  Certifications appear on this page because they appear on Vin's resume
+  document. They are omitted from /experience per his instruction. That
+  inconsistency is deliberate and flagged; resolve it by either adding them
+  there or removing them from the source resume.
+*/
+
+const positions = (await getCollection('experience')).sort(
+  (a, b) => a.data.weight - b.data.weight,
+);
+const credentials = await getCollection('credentials');
+const byKind = (kind: string) =>
+  credentials.filter((c) => c.data.kind === kind).sort((a, b) => a.data.weight - b.data.weight);
+
+const { email, phone } = SITE.contact;
+const tel = phone && !isTodo(phone) ? `tel:${phone.replace(/[^\d+]/g, '')}` : undefined;
+const completed = SITE.education.coursework.filter((c) => c.status === 'completed');
+---
+
+<BaseLayout
+  title="Resume — Vin Cataldo, Construction Management Engineering Technology"
+  description="Resume for Vincent Cataldo: Construction Management Engineering Technology student at Farmingdale State College, engineering intern, GPA 3.81."
+>
+  <article class="resume wrap">
+    <header class="resume__head">
+      <div>
+        <span class="label">Resume</span>
+        <h1>{SITE.name}</h1>
+        <p class="resume__contact value">
+          <a href={`mailto:${email}`}>{email}</a>
+          {phone && <> &middot; <a href={tel}>{phone}</a></>}
+        </p>
+      </div>
+
+      <div class="resume__download no-print">
+        {
+          SITE.resume.pdfAvailable ? (
+            <a class="btn btn--primary" href={SITE.resume.pdfPath} download>
+              Download PDF
+            </a>
+          ) : (
+            <p class="resume__pending">
+              <span class="todo">TODO: resume PDF export</span>
+            </p>
+          )
+        }
+      </div>
+    </header>
+
+    <section class="resume__section">
+      <h2>Summary</h2>
+      <p class="prose">{SITE.resume.summary}</p>
+    </section>
+
+    <section class="resume__section">
+      <h2>Education</h2>
+      <div class="entry">
+        <div class="entry__head">
+          <h3>{SITE.education.institution}</h3>
+          <span class="value entry__dates">Anticipated {SITE.education.expectedGraduation}</span>
+        </div>
+        <p class="entry__sub">{SITE.education.degree} &middot; GPA {SITE.education.gpa}</p>
+        <p class="entry__sub">{SITE.education.school}, {SITE.education.location}</p>
+        <p class="coursework">
+          <span class="label">Relevant coursework</span>
+          {completed.map((c) => c.title).join(' · ')}
+        </p>
+      </div>
+    </section>
+
+    <section class="resume__section">
+      <h2>Experience</h2>
+      {
+        positions.map((p) => (
+          <div class="entry">
+            <div class="entry__head">
+              <h3>{p.data.employer}</h3>
+              <span class="value entry__dates">
+                {p.data.startDate} — {p.data.endDate ?? 'Present'}
+              </span>
+            </div>
+            <p class="entry__sub">
+              {p.data.title} &middot; {p.data.location}
+            </p>
+            <ul>
+              {p.data.bullets.map((b) => (
+                <li>{b}</li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </section>
+
+    <section class="resume__section">
+      <h2>Activities and leadership</h2>
+      <ul class="plain">
+        {
+          [...byKind('membership'), ...byKind('competition')].map((c) => (
+            <li>
+              {c.data.role ? `${c.data.role}, ` : ''}
+              {c.data.name}
+              {isTodo(c.data.date) ? (
+                <> — <span class="todo">{c.data.date}</span></>
+              ) : (
+                <span class="value entry__dates"> — {c.data.upcoming ? `upcoming, ${c.data.date}` : c.data.date}</span>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="resume__section">
+      <h2>Awards</h2>
+      <ul class="plain">
+        {
+          byKind('award').map((c) => (
+            <li>
+              {c.data.name}, {c.data.organization}
+              <span class="value entry__dates"> — {c.data.date}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="resume__section">
+      <h2>Certifications</h2>
+      <ul class="plain">
+        <li>CPR Certified</li>
+        <li>Emergency Vehicle Operator Certified (EVOC)</li>
+        <li>NCSF Certified Personal Trainer</li>
+      </ul>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .resume {
+    padding-block: var(--space-l) var(--space-2xl);
+    max-width: 52rem;
+  }
+
+  .resume__head {
+    display: grid;
+    gap: var(--space-m);
+    padding-block-end: var(--space-m);
+    border-block-end: var(--rule-heavy) solid var(--c-ink);
+  }
+
+  .resume__head h1 {
+    margin-block-start: var(--space-2xs);
+    font-size: var(--step-4);
+  }
+
+  .resume__contact {
+    margin-block-start: var(--space-2xs);
+    color: var(--c-graphite);
+  }
+
+  .resume__contact a {
+    color: inherit;
+  }
+
+  .resume__section {
+    padding-block-start: var(--space-l);
+  }
+
+  .resume__section h2 {
+    font-size: var(--step-1);
+    padding-block-end: var(--space-2xs);
+    border-block-end: var(--rule-hair) solid var(--c-rule);
+    margin-block-end: var(--space-s);
+  }
+
+  .entry + .entry {
+    margin-block-start: var(--space-m);
+  }
+
+  .entry__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2xs);
+  }
+
+  .entry__head h3 {
+    font-size: var(--step-1);
+  }
+
+  .entry__dates {
+    color: var(--c-graphite);
+  }
+
+  .entry__sub {
+    font-size: var(--step--1);
+    color: var(--c-graphite);
+    margin-block-start: var(--space-3xs);
+  }
+
+  .entry ul {
+    margin-block-start: var(--space-2xs);
+    padding-inline-start: var(--space-s);
+    display: grid;
+    gap: var(--space-3xs);
+  }
+
+  .entry ul li::marker {
+    color: var(--c-accent);
+  }
+
+  .plain {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: var(--space-2xs);
+  }
+
+  .coursework {
+    margin-block-start: var(--space-2xs);
+    font-size: var(--step--1);
+    line-height: var(--leading-snug);
+  }
+
+  .coursework .label {
+    display: block;
+    margin-block-end: var(--space-3xs);
+  }
+
+  @media (min-width: 40em) {
+    .resume__head {
+      grid-template-columns: 1fr auto;
+      align-items: end;
+    }
+  }
+</style>

@@ -1,0 +1,64 @@
+---
+/*
+  A content block, divided from the one above it by a heavy rule and introduced
+  by a numbered mono label — the way a drawing sheet indexes its fields.
+
+  The numbering is the quiet half of the title-block idea: it tells you where
+  you are in the sheet before you read the heading.
+*/
+
+interface Props {
+  /** Sheet-index number, e.g. "01". */
+  number: string;
+  title: string;
+  /** Optional anchor id for deep links. */
+  id?: string;
+  /** Renders the heading visually hidden, for sections whose title is obvious. */
+  hideTitle?: boolean;
+}
+
+const { number, title, id, hideTitle = false } = Astro.props;
+---
+
+<section class="section" id={id}>
+  <div class="wrap">
+    <div class="section__head">
+      <span class="label section__number">{number}</span>
+      <h2 class:list={{ 'visually-hidden': hideTitle }}>{title}</h2>
+    </div>
+    <slot />
+  </div>
+</section>
+
+<style>
+  .section {
+    border-block-start: var(--rule-heavy) solid var(--c-ink);
+    padding-block: var(--space-l) var(--space-xl);
+  }
+
+  .section__head {
+    display: grid;
+    gap: var(--space-2xs);
+    margin-block-end: var(--space-m);
+  }
+
+  .section__number {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .section__head h2 {
+    font-size: var(--step-3);
+  }
+
+  @media (min-width: 48em) {
+    .section__head {
+      grid-template-columns: 4rem 1fr;
+      align-items: baseline;
+      gap: var(--space-s);
+    }
+
+    .section__number {
+      padding-block-start: 0.35em;
+    }
+  }
+</style>

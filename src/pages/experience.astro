@@ -1,0 +1,331 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/Section.astro';
+import { SITE, isTodo } from '../data/site';
+
+/*
+  Experience, per spec §6.4. Positions reverse-chronologically, then education,
+  memberships and leadership, and awards.
+
+  The certifications block is omitted rather than rendered thin — see
+  SITE.showCertifications in src/data/site.ts for why, and for how to turn it on.
+*/
+
+const positions = (await getCollection('experience')).sort(
+  (a, b) => a.data.weight - b.data.weight,
+);
+
+const credentials = await getCollection('credentials');
+const byKind = (kind: string) =>
+  credentials.filter((c) => c.data.kind === kind).sort((a, b) => a.data.weight - b.data.weight);
+
+const memberships = [...byKind('membership'), ...byKind('competition')];
+const awards = byKind('award');
+const certifications = byKind('certification');
+
+const completed = SITE.education.coursework.filter((c) => c.status === 'completed');
+const inProgress = SITE.education.coursework.filter((c) => c.status === 'in-progress');
+---
+
+<BaseLayout
+  title="Experience — Vin Cataldo, Construction Management"
+  description="Engineering internship at a Long Island geotechnical firm, plus construction field work, education, coursework, and professional memberships."
+>
+  <section class="page-head">
+    <div class="wrap">
+      <span class="label">Experience</span>
+      <h1>Where the work has been</h1>
+    </div>
+  </section>
+
+  {/* ---------- Positions ---------- */}
+  <Section number="01" title="Positions">
+    <ol class="positions">
+      {
+        positions.map((position) => {
+          const { employer, title, location, startDate, endDate, bullets, tools, anchor } =
+            position.data;
+          return (
+            <li id={anchor}>
+              <div class="position__head">
+                <h3>{employer}</h3>
+                <p class="position__title">{title}</p>
+                <p class="value position__meta">
+                  {location} &middot; {startDate} — {endDate ?? 'Present'}
+                </p>
+              </div>
+
+              <ul class="position__bullets">
+                {bullets.map((bullet) => (
+                  <li>{bullet}</li>
+                ))}
+              </ul>
+
+              {tools.length > 0 && (
+                <p class="position__tools">
+                  <span class="label">Software</span>
+                  <span class="value">{tools.join(' / ')}</span>
+                </p>
+              )}
+            </li>
+          );
+        })
+      }
+    </ol>
+  </Section>
+
+  {/* ---------- Education ---------- */}
+  <Section number="02" title="Education">
+    <div class="edu">
+      <div class="edu__facts grid-rules">
+        <div><span class="label">Institution</span><span>{SITE.education.institution}</span></div>
+        <div><span class="label">Degree</span><span>{SITE.education.degree}</span></div>
+        <div><span class="label">Expected</span><span class="value">{SITE.education.expectedGraduation}</span></div>
+        <div><span class="label">GPA</span><span class="value">{SITE.education.gpa}</span></div>
+      </div>
+
+      <div class="edu__courses">
+        <h3 class="label">Relevant coursework — completed</h3>
+        <ul class="courses">
+          {
+            completed.map((course) => (
+              <li>
+                <span class="value courses__code">{course.code}</span>
+                <span>{course.title}</span>
+              </li>
+            ))
+          }
+        </ul>
+
+        <h3 class="label">In progress — {SITE.education.inProgressTerm}</h3>
+        <ul class="courses">
+          {
+            inProgress.map((course) => (
+              <li>
+                <span class="value courses__code">{course.code}</span>
+                <span>{course.title}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </Section>
+
+  {/* ---------- Certifications: omitted unless held ---------- */}
+  {
+    SITE.showCertifications && certifications.length > 0 && (
+      <Section number="03" title="Certifications">
+        <ul class="creds grid-rules">
+          {certifications.map((c) => (
+            <li>
+              <span class="creds__name">{c.data.name}</span>
+              <span class="creds__org">{c.data.organization}</span>
+              {isTodo(c.data.date) ? (
+                <span class="todo">{c.data.date}</span>
+              ) : (
+                <span class="value creds__date">{c.data.date}</span>
+              )}
+            </li>
+          ))}
+        </ul>
+      </Section>
+    )
+  }
+
+  {/* ---------- Memberships and leadership ---------- */}
+  <Section number={SITE.showCertifications ? '04' : '03'} title="Memberships and leadership">
+    <ul class="creds grid-rules">
+      {
+        memberships.map((c) => (
+          <li>
+            <span class="creds__name">{c.data.name}</span>
+            {c.data.role && <span class="creds__org">{c.data.role}</span>}
+            {isTodo(c.data.date) ? (
+              <span class="todo">{c.data.date}</span>
+            ) : (
+              <span class="value creds__date">
+                {c.data.upcoming ? `Upcoming — ${c.data.date}` : c.data.date}
+              </span>
+            )}
+            {c.data.detail && <span class="creds__detail">{c.data.detail}</span>}
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+
+  {/* ---------- Awards ---------- */}
+  <Section number={SITE.showCertifications ? '05' : '04'} title="Awards">
+    <ul class="creds grid-rules">
+      {
+        awards.map((c) => (
+          <li>
+            <span class="creds__name">{c.data.name}</span>
+            <span class="creds__org">{c.data.organization}</span>
+            <span class="value creds__date">{c.data.date}</span>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="note">
+      <span class="todo">TODO: scholarships received, with awarding organization and year</span>
+    </p>
+  </Section>
+</BaseLayout>
+
+<style>
+  .page-head {
+    padding-block: var(--space-l) var(--space-xl);
+  }
+
+  .page-head h1 {
+    margin-block-start: var(--space-2xs);
+  }
+
+  /* --- Positions --- */
+  .positions {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--space-l);
+  }
+
+  .positions > li {
+    display: grid;
+    gap: var(--space-s);
+    padding-block-end: var(--space-l);
+    border-block-end: var(--rule-hair) solid var(--c-rule);
+    scroll-margin-block-start: var(--space-m);
+  }
+
+  .positions > li:last-child {
+    border-block-end: 0;
+    padding-block-end: 0;
+  }
+
+  .position__head h3 {
+    font-size: var(--step-2);
+  }
+
+  .position__title {
+    margin-block-start: var(--space-3xs);
+  }
+
+  .position__meta {
+    margin-block-start: var(--space-3xs);
+    color: var(--c-graphite);
+  }
+
+  .position__bullets {
+    display: grid;
+    gap: var(--space-2xs);
+    padding-inline-start: var(--space-s);
+    max-width: var(--measure);
+  }
+
+  .position__bullets li::marker {
+    color: var(--c-accent);
+  }
+
+  .position__tools {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-2xs);
+  }
+
+  /* --- Education --- */
+  .edu {
+    display: grid;
+    gap: var(--space-l);
+  }
+
+  .edu__facts {
+    align-content: start;
+  }
+
+  .edu__facts > div {
+    display: grid;
+    gap: var(--space-3xs);
+    padding: var(--space-xs) var(--space-s);
+    background: var(--c-surface);
+  }
+
+  .edu__courses h3 {
+    margin-block: var(--space-m) var(--space-2xs);
+  }
+
+  .edu__courses h3:first-child {
+    margin-block-start: 0;
+  }
+
+  .courses {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--space-3xs);
+  }
+
+  .courses li {
+    display: grid;
+    grid-template-columns: 5.5rem 1fr;
+    gap: var(--space-2xs);
+    font-size: var(--step--1);
+    line-height: var(--leading-snug);
+  }
+
+  .courses__code {
+    color: var(--c-graphite);
+  }
+
+  /* --- Credential lists --- */
+  .creds {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .creds li {
+    display: grid;
+    gap: var(--space-3xs);
+    padding: var(--space-xs) var(--space-s);
+    background: var(--c-surface);
+    align-content: start;
+  }
+
+  .creds__name {
+    line-height: var(--leading-snug);
+  }
+
+  .creds__org,
+  .creds__date,
+  .creds__detail {
+    font-size: var(--step--1);
+    color: var(--c-graphite);
+  }
+
+  .note {
+    margin-block-start: var(--space-m);
+  }
+
+  @media (min-width: 48em) {
+    .edu {
+      grid-template-columns: minmax(0, 20rem) minmax(0, 1fr);
+      gap: var(--space-xl);
+    }
+
+    .creds {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 64em) {
+    .creds {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

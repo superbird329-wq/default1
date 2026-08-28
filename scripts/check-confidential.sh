@@ -28,8 +28,12 @@ ADDRESS='[0-9]{1,5}[[:space:]]+([A-Z][a-zA-Z]+[[:space:]]+){1,3}(St|Street|Ave|A
 CASENUM='(Case|Docket|Permit|Application|Job|Project)[[:space:]#:.-]*(No\.?|Number|#)?[[:space:]]*[0-9]{3,}'
 # Internal project numbers in the common NN-NNN form.
 PROJNUM='\b[0-9]{2}-[0-9]{3,4}\b'
-# Phone numbers other than Vin's own (his lives in src/data/site.ts).
+# Phone numbers. Vin's own published number lives in src/data/site.ts by design,
+# so that one file is exempt from this pattern only. A phone number ANYWHERE
+# else is flagged: spec §3.2 forbids the number of any person other than Vin,
+# and a client's number appearing in a case study is exactly what this catches.
 PHONE='\(?[0-9]{3}\)?[-. ][0-9]{3}[-. ][0-9]{4}'
+PHONE_EXEMPT='src/data/site.ts'
 
 # Only src/ and public/ are scanned: that is where every published word and
 # asset comes from. README.md and SPEC.md are deliberately excluded because they
@@ -44,7 +48,12 @@ for spec in "ADDRESS:$ADDRESS" "CASE/PERMIT NUMBER:$CASENUM" "PROJECT NUMBER:$PR
   name="${spec%%:*}"
   pattern="${spec#*:}"
   while IFS= read -r line; do
-    [ -n "$line" ] && report "$name" "$line"
+    [ -z "$line" ] && continue
+    # Vin's own published number is allowed in, and only in, the site data file.
+    if [ "$name" = "PHONE" ] && [ "${line#"$PHONE_EXEMPT"}" != "$line" ]; then
+      continue
+    fi
+    report "$name" "$line"
   done < <(grep -rInE --exclude-dir=node_modules --exclude='*.woff2' \
              "$pattern" "${SEARCH_PATHS[@]}" 2>/dev/null || true)
 done

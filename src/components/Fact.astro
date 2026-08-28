@@ -1,5 +1,6 @@
 ---
 import { isTodo } from '../data/site';
+import { splitAfter } from '../lib/text';
 
 /*
   A single labelled field: a small uppercase mono caption over its value. This
@@ -16,10 +17,16 @@ interface Props {
   href?: string;
   /** Render the value in the body face instead of mono (for prose values). */
   prose?: boolean;
+  /**
+   * Allow the value to wrap after this character rather than mid-word.
+   * Pass "@" for an email address.
+   */
+  wrapAfter?: string;
 }
 
-const { label, value, href, prose = false } = Astro.props;
+const { label, value, href, prose = false, wrapAfter } = Astro.props;
 const todo = isTodo(value);
+const segments = !todo && value && wrapAfter ? splitAfter(value, wrapAfter) : null;
 ---
 
 <div class="fact">
@@ -29,7 +36,14 @@ const todo = isTodo(value);
       <span class="todo">{value}</span>
     ) : href ? (
       <a class:list={['value', { 'value--prose': prose }]} href={href}>
-        {value}
+        {segments
+          ? segments.map((segment, i) => (
+              <>
+                {segment}
+                {i < segments.length - 1 && <wbr />}
+              </>
+            ))
+          : value}
       </a>
     ) : (
       <span class:list={['value', { 'value--prose': prose }]}>{value}</span>
@@ -55,7 +69,16 @@ const todo = isTodo(value);
     line-height: var(--leading-snug);
   }
 
+  /*
+    A linked value is a real tap target, so it needs the 44px minimum. The
+    padding grows the hit area and the matching negative margin pulls the
+    surrounding layout back, so the title block looks identical while the
+    touchable region is full size.
+  */
   a.value {
+    display: inline-block;
+    padding-block: 0.75rem;
+    margin-block: -0.75rem;
     text-decoration-color: var(--c-rule);
   }
 

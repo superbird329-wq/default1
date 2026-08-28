@@ -220,6 +220,31 @@ a:hover {
   color: var(--c-ink);
 }
 
+/*
+  A ruled grid: the recurring container for labelled facts — the footer title
+  block, credential lists, context strips.
+
+  Hairlines are drawn as borders on the cells rather than as gaps over a
+  coloured ground. The gap trick is simpler but leaves an orphaned grey block
+  wherever the last row is not full, which happens the moment the number of
+  entries stops dividing evenly by the column count. Borders degrade cleanly:
+  a short last row simply ends.
+
+  Set grid-template-columns on the element itself.
+*/
+.grid-rules {
+  display: grid;
+  gap: 0;
+  border-block-start: var(--rule-hair) solid var(--c-rule);
+  border-inline-start: var(--rule-hair) solid var(--c-rule);
+}
+
+.grid-rules > * {
+  background: var(--c-surface);
+  border-block-end: var(--rule-hair) solid var(--c-rule);
+  border-inline-end: var(--rule-hair) solid var(--c-rule);
+}
+
 /* Hairline division, the way a drawing sheet is divided into fields. */
 .rule {
   border: 0;

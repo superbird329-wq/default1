@@ -1,0 +1,25 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+import ProjectLayout from '../../layouts/ProjectLayout.astro';
+
+/*
+  One static route per project case study. Draft entries are excluded so an
+  unfinished write-up never becomes a live URL.
+*/
+export const getStaticPaths: GetStaticPaths = async () => {
+  const projects = await getCollection('projects', ({ data }) => !data.draft);
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+};
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props as Props;
+---
+
+<ProjectLayout project={project} />

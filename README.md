@@ -24,6 +24,7 @@ npm run dev      # http://localhost:4321
 | --- | --- |
 | `npm run dev` | Local preview with live reload |
 | `npm run build` | Build the site into `dist/` |
+| `npm run rebuild` | Clear caches and build from scratch |
 | `npm run preview` | Serve the built `dist/` locally |
 | `npm run check` | Type-check content frontmatter and components |
 | `npm run strip-metadata` | Strip EXIF/XMP metadata from `public/` — **run before committing any image or PDF** |
@@ -83,6 +84,141 @@ Requires `exiftool`:
 
 - macOS: `brew install exiftool`
 - Debian/Ubuntu: `sudo apt-get install libimage-exiftool-perl`
+
+---
+
+## Adding a project
+
+Create one Markdown file in `src/content/projects/`. The filename becomes the
+URL: `spt-blow-count-pipeline.md` is published at `/projects/spt-blow-count-pipeline`.
+
+Everything lives in the frontmatter — the block between the `---` lines. There
+is no body text to write; the template arranges these fields into the case study
+layout, in the same order on every project, so two projects can be compared
+without re-reading the page structure.
+
+Copy this and fill it in:
+
+```yaml
+---
+title: Geotechnical report production and drawing QC
+weight: 10                  # lower numbers appear first. You control the order.
+featured: true              # true for the three shown on the home page
+draft: false                # true keeps it out of the published site entirely
+
+category: Internship Work   # Internship Work | Academic | Competition | Technical
+
+# The three facts in the title block at the top of the page
+projectType: Geotechnical investigation and reporting
+timeframe: March 2026 – present
+role: Engineering Intern
+
+summary: One line, under 200 characters. This is what shows on the cards.
+
+objective: |
+  Two to three sentences on what the work needed to accomplish.
+
+myRole: |
+  What you personally did, stated precisely. Distinguish your own contribution
+  from what the team produced. Where work was supervised, say so — "drafted
+  under the review of a licensed professional engineer" is accurate, and it
+  reads as honesty rather than as a weakness.
+
+approach:                   # three to six items
+  - The first step, and why you took it.
+  - The second step.
+  - The third step.
+
+tools:                      # name software specifically — recruiters scan this
+  - AutoCAD
+  - Excel
+
+standards:                  # codes, manuals, specs. Omit the list if none apply.
+  - ASTM D1586
+
+deliverables:
+  - What was actually produced.
+
+outcome: |
+  What happened as a result. If there is no measurable outcome, state the
+  qualitative one plainly. Never invent a number.
+
+learned: |
+  Two to four sentences. Interviewers ask about this section directly.
+
+images: []                  # optional; see the confidentiality rules below
+---
+```
+
+The build fails with a plain-English message if a required field is missing, so
+you cannot accidentally publish a half-finished case study. Set `draft: true`
+while you work on one.
+
+### Adding images to a project
+
+Only redacted crops or redrawn abstractions, and only once Subsurface
+Engineering has approved that specific image in writing. Then:
+
+1. Put the file in `public/img/`.
+2. Run `npm run strip-metadata`.
+3. Add it to the `images` list:
+
+```yaml
+images:
+  - src: /img/boring-log-excerpt.webp
+    alt: Excerpt of a boring log showing blow counts by depth
+    caption: Redacted excerpt. Client identifiers removed.
+```
+
+`alt` is required and must describe what the image shows.
+
+---
+
+## Updating the resume
+
+The resume exists in two places and they are kept in sync **by hand**:
+
+- **The web version** at `/resume` is generated from the same content as the
+  rest of the site — `src/data/site.ts` and the files in `src/content/`.
+- **The PDF** at `public/resume/vin-cataldo-resume.pdf` is exported from your
+  own resume document.
+
+So when the resume changes:
+
+1. Update your Word document and export a fresh PDF.
+2. Save it to `public/resume/vin-cataldo-resume.pdf`.
+3. Run `npm run strip-metadata` — an exported PDF carries your name, the
+   software used, and often the full original file path.
+4. Set `pdfAvailable: true` in `src/data/site.ts` if it is not already.
+5. Make the matching edit to the content files so the web version agrees.
+
+Step 5 is the one that gets forgotten. A recruiter who reads both will notice.
+
+---
+
+## Other common edits
+
+| To change | Edit |
+| --- | --- |
+| Email, phone, LinkedIn | `src/data/site.ts` → `contact` |
+| The sentence under your name | `src/data/site.ts` → `direction` |
+| What you are seeking | `src/data/site.ts` → `seeking` |
+| GPA, graduation date, coursework | `src/data/site.ts` → `education` |
+| About page text | `src/content/pages/about.md` |
+| A job or internship | `src/content/experience/*.md` |
+| A club, award, or competition | `src/content/credentials/*.md` |
+| Colours | `src/styles/tokens.css` (then `npm run check:contrast`) |
+
+### If a deleted item still appears on the site
+
+Astro caches content in `node_modules/.astro`, and a deleted Markdown file can
+survive an ordinary rebuild. If you delete a project and it is still there:
+
+```bash
+npm run rebuild
+```
+
+That clears the cache and builds from scratch. `npm run verify` already does it.
 
 ---
 
@@ -251,6 +387,19 @@ scripts/                Metadata stripping and pre-publish checks
 
 ## Build status
 
-Phase 1 (foundation) is complete. Phases 2–6 — the design pass, content pages,
-case studies, quality pass, and the full authoring guide — are in progress. See
-`SPEC.md` §12.
+Phases 1–3 are complete: the foundation, the design pass, and all five content
+pages built from Vin's real resume and transcript.
+
+Outstanding:
+
+- **Project case studies** (`SPEC.md` §12 phase 4). None written yet. The
+  projects index and the case study template are built and waiting.
+- **LinkedIn URL** — a TODO marker on every page until supplied.
+- **Resume PDF** — export from the source document, see above.
+- **Headshot** for the About page, and the two narrative paragraphs in
+  `src/content/pages/about.md`.
+- **Club and competition dates**, and any scholarships.
+- **Quality pass and deployment** (§12 phases 5–6).
+
+`npm run verify` currently fails on the remaining TODO markers. That is
+intentional: it is the gate that stops a half-finished site from going live.

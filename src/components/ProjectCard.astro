@@ -1,0 +1,142 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+/*
+  One project, as it appears on the home page and the projects index. Shows
+  exactly what spec §6.2 asks for: title, category, one-line summary, tools, and
+  Vin's role — enough for a recruiter to decide whether to open it.
+*/
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const { title, category, summary, tools, role } = project.data;
+---
+
+<article class="card">
+  <a class="card__link" href={`/projects/${project.id}`}>
+    <span class="tag">{category}</span>
+    <h3>{title}</h3>
+  </a>
+
+  <p class="card__summary">{summary}</p>
+
+  <div class="card__meta">
+    <div class="card__role">
+      <span class="label">Role</span>
+      <span class="value">{role}</span>
+    </div>
+    <div class="card__tools">
+      <span class="label">Tools</span>
+      <ul>
+        {tools.map((tool) => <li>{tool}</li>)}
+      </ul>
+    </div>
+  </div>
+</article>
+
+<style>
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+    padding: var(--space-s);
+    background: var(--c-surface);
+    border: var(--rule-hair) solid var(--c-rule);
+    transition: border-color var(--dur) var(--ease);
+  }
+
+  .card:hover {
+    border-color: var(--c-ink);
+  }
+
+  .card__link {
+    text-decoration: none;
+    display: grid;
+    gap: var(--space-2xs);
+  }
+
+  /* Stretch the link over the whole card so the entire card is the target. */
+  .card__link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .card {
+    position: relative;
+  }
+
+  .card__link h3 {
+    font-size: var(--step-2);
+  }
+
+  .card:hover .card__link h3 {
+    text-decoration: underline;
+    text-decoration-color: var(--c-accent);
+    text-underline-offset: 0.15em;
+  }
+
+  /* Accent use: the category marker on each card. */
+  .tag {
+    display: inline-block;
+    align-self: start;
+    font-family: var(--font-mono);
+    font-size: var(--step-label);
+    font-weight: 500;
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--c-graphite);
+    border-inline-start: var(--rule-heavy) solid var(--c-accent);
+    padding-inline-start: var(--space-2xs);
+  }
+
+  .card__summary {
+    font-size: var(--step--1);
+    color: var(--c-graphite);
+    line-height: var(--leading-snug);
+    margin-block-end: auto;
+  }
+
+  .card__meta {
+    display: grid;
+    gap: var(--space-s);
+    padding-block-start: var(--space-s);
+    border-block-start: var(--rule-hair) solid var(--c-rule);
+  }
+
+  .card__role,
+  .card__tools {
+    display: grid;
+    gap: var(--space-3xs);
+  }
+
+  .card__tools ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3xs) var(--space-2xs);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .card__tools li {
+    font-family: var(--font-mono);
+    font-size: var(--step-label);
+    color: var(--c-ink);
+  }
+
+  .card__tools li:not(:last-child)::after {
+    content: ' /';
+    color: var(--c-rule);
+  }
+
+  @media (min-width: 30em) {
+    .card__meta {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+      gap: var(--space-m);
+    }
+  }
+</style>

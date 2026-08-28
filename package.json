@@ -9,12 +9,14 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "clean": "rm -rf dist .astro node_modules/.astro",
+    "rebuild": "npm run clean && npm run build",
     "preview": "astro preview",
     "check": "astro check",
     "strip-metadata": "./scripts/strip-metadata.sh",
     "check:todos": "./scripts/check-todos.sh",
     "check:confidential": "./scripts/check-confidential.sh",
-    "verify": "npm run check && npm run check:contrast && npm run build && npm run check:todos && npm run check:confidential",
+    "verify": "npm run check && npm run check:contrast && npm run rebuild && npm run check:todos && npm run check:confidential",
     "check:contrast": "node scripts/check-contrast.mjs"
   },
   "dependencies": {

@@ -45,7 +45,12 @@ const projects = defineCollection({
 
     // --- Context strip: the three labelled facts in the title block ---
     projectType: z.string().min(1),
-    timeframe: z.string().min(1),
+    /**
+     * Display string, e.g. "Summer 2026" or "2026". Coerced because a bare year
+     * in YAML parses as a number, and that should not be an error the author
+     * has to decode.
+     */
+    timeframe: z.coerce.string().min(1),
     role: z.string().min(1),
 
     /** One line. Used on cards on the home page and the projects index. */
@@ -84,9 +89,9 @@ const experience = defineCollection({
     title: z.string().min(1),
     location: z.string().min(1),
     /** Display strings, e.g. "Jun 2025". Kept human-readable on purpose. */
-    startDate: z.string().min(1),
+    startDate: z.coerce.string().min(1),
     /** Omit for a current role; renders as "Present". */
-    endDate: z.string().optional(),
+    endDate: z.coerce.string().optional(),
     /** Manual ordering. Lower numbers first (most recent role first). */
     weight: z.number().int(),
     /** Concrete deliverables, not duties. Two to four. */
@@ -110,8 +115,8 @@ const credentials = defineCollection({
     name: z.string().min(1),
     /** The awarding, certifying, or member organization. */
     organization: z.string().min(1),
-    /** Year or date range, e.g. "2025" or "2024–present". */
-    date: z.string().min(1),
+    /** Year or date range, e.g. "2025" or "2024–present". Coerced: a bare year in YAML is a number. */
+    date: z.coerce.string().min(1),
     /** Role held, for memberships and competitions. */
     role: z.string().optional(),
     /** Optional one-line detail. No adjectives — facts only (§6.1). */
@@ -124,4 +129,17 @@ const credentials = defineCollection({
   }),
 });
 
-export const collections = { projects, experience, credentials };
+/**
+ * Standalone page prose, currently just the About text. A collection rather
+ * than copy inside a component so that rewriting the About page means editing
+ * one Markdown file and nothing else (spec §14).
+ */
+const pages = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/pages' }),
+  schema: z.object({
+    title: z.string().min(1),
+    description: z.string().min(1),
+  }),
+});
+
+export const collections = { projects, experience, credentials, pages };

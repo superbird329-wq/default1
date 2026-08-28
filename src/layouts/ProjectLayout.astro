@@ -1,0 +1,377 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from './BaseLayout.astro';
+import { SITE } from '../data/site';
+
+/*
+  The case study template, per spec §6.3.
+
+  The section order is FIXED and must not vary between projects. It is enforced
+  here, in the template, rather than by an author remembering it — and the Zod
+  schema in src/content.config.ts makes every one of these fields required, so a
+  case study cannot be published with a section missing. Only images are
+  optional; the page renders correctly with none.
+
+  Consistency is the point: it is what lets a recruiter compare two projects
+  without re-learning the layout, and it is what makes the set read as
+  professionally assembled rather than assembled ad hoc.
+*/
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const {
+  title,
+  category,
+  projectType,
+  timeframe,
+  role,
+  summary,
+  objective,
+  myRole,
+  approach,
+  tools,
+  standards,
+  deliverables,
+  outcome,
+  learned,
+  images,
+} = project.data;
+
+const sections = [
+  { number: '01', title: 'Objective', body: objective },
+  { number: '02', title: 'My role', body: myRole },
+] as const;
+---
+
+<BaseLayout title={`${title} — Vin Cataldo`} description={summary}>
+  <article class="project">
+    <header class="wrap project__head">
+      <span class="tag">{category}</span>
+      <h1>{title}</h1>
+      <p class="project__summary">{summary}</p>
+    </header>
+
+    {/* 1. Context strip — the title block, in fixed positions on every project */}
+    <div class="wrap">
+      <div class="context grid-rules">
+        <div class="context__cell">
+          <span class="label">Type</span>
+          <span class="value">{projectType}</span>
+        </div>
+        <div class="context__cell">
+          <span class="label">Timeframe</span>
+          <span class="value">{timeframe}</span>
+        </div>
+        <div class="context__cell context__cell--mark">
+          <span class="label">Role</span>
+          <span class="value">{role}</span>
+        </div>
+      </div>
+    </div>
+
+    {/* 2–3. Objective, My role */}
+    {
+      sections.map((section) => (
+        <section class="wrap block">
+          <div class="block__head">
+            <span class="label">{section.number}</span>
+            <h2>{section.title}</h2>
+          </div>
+          <div class="block__body prose">
+            {section.body.split('\n\n').map((para) => (
+              <p>{para}</p>
+            ))}
+          </div>
+        </section>
+      ))
+    }
+
+    {/* 4. Approach */}
+    <section class="wrap block">
+      <div class="block__head">
+        <span class="label">03</span>
+        <h2>Approach</h2>
+      </div>
+      <div class="block__body">
+        <ol class="approach">
+          {approach.map((step) => <li>{step}</li>)}
+        </ol>
+      </div>
+    </section>
+
+    {/* 5. Tools and standards — heavily scanned for keyword matches */}
+    <section class="wrap block">
+      <div class="block__head">
+        <span class="label">04</span>
+        <h2>Tools and standards</h2>
+      </div>
+      <div class="block__body">
+        <div class="specs">
+          <div>
+            <span class="label">Software</span>
+            <ul class="specs__list">
+              {tools.map((tool) => <li>{tool}</li>)}
+            </ul>
+          </div>
+          {
+            standards.length > 0 && (
+              <div>
+                <span class="label">Codes and standards</span>
+                <ul class="specs__list">
+                  {standards.map((standard) => (
+                    <li>{standard}</li>
+                  ))}
+                </ul>
+              </div>
+            )
+          }
+        </div>
+      </div>
+    </section>
+
+    {/* 6. Deliverables */}
+    <section class="wrap block">
+      <div class="block__head">
+        <span class="label">05</span>
+        <h2>Deliverables</h2>
+      </div>
+      <div class="block__body">
+        <ul class="deliverables">
+          {deliverables.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+    </section>
+
+    {/* 7. Outcome */}
+    <section class="wrap block">
+      <div class="block__head">
+        <span class="label">06</span>
+        <h2>Outcome</h2>
+      </div>
+      <div class="block__body prose">
+        {outcome.split('\n\n').map((para) => <p>{para}</p>)}
+      </div>
+    </section>
+
+    {/* 8. What I learned */}
+    <section class="wrap block">
+      <div class="block__head">
+        <span class="label">07</span>
+        <h2>What I learned</h2>
+      </div>
+      <div class="block__body prose">
+        {learned.split('\n\n').map((para) => <p>{para}</p>)}
+      </div>
+    </section>
+
+    {/* 9. Images — optional. Redacted excerpts only. */}
+    {
+      images.length > 0 && (
+        <section class="wrap block">
+          <div class="block__head">
+            <span class="label">08</span>
+            <h2>Documents</h2>
+          </div>
+          <div class="block__body">
+            <div class="figures">
+              {images.map((image) => (
+                <figure>
+                  <img src={image.src} alt={image.alt} loading="lazy" />
+                  <figcaption>{image.caption}</figcaption>
+                </figure>
+              ))}
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    <nav class="wrap project__nav" aria-label="Project navigation">
+      <a href="/projects">All projects</a>
+      <a href={`mailto:${SITE.contact.email}`}>Ask about this project</a>
+    </nav>
+  </article>
+</BaseLayout>
+
+<style>
+  .project__head {
+    padding-block: var(--space-l) var(--space-m);
+  }
+
+  .tag {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: var(--step-label);
+    font-weight: 500;
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--c-graphite);
+    border-inline-start: var(--rule-heavy) solid var(--c-accent);
+    padding-inline-start: var(--space-2xs);
+  }
+
+  .project__head h1 {
+    margin-block-start: var(--space-2xs);
+    max-width: 22ch;
+  }
+
+  .project__summary {
+    margin-block-start: var(--space-s);
+    max-width: 52ch;
+    font-size: var(--step-1);
+    line-height: var(--leading-snug);
+    color: var(--c-graphite);
+  }
+
+  /* The title block. Same three fields, same order, on every project page. */
+  .context {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .context__cell {
+    display: grid;
+    gap: var(--space-3xs);
+    align-content: start;
+    padding: var(--space-xs) var(--space-s);
+  }
+
+  .context__cell--mark {
+    position: relative;
+  }
+
+  /* Accent: the title-block corner mark. */
+  .context__cell--mark::after {
+    content: '';
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-end: 0;
+    width: 0.875rem;
+    height: 0.875rem;
+    background: var(--c-accent);
+  }
+
+  .block {
+    padding-block: var(--space-l);
+    border-block-start: var(--rule-hair) solid var(--c-rule);
+    margin-block-start: var(--space-l);
+  }
+
+  .block:first-of-type {
+    margin-block-start: var(--space-xl);
+  }
+
+  .block__head {
+    margin-block-end: var(--space-s);
+  }
+
+  .block__head h2 {
+    font-size: var(--step-2);
+    margin-block-start: var(--space-3xs);
+  }
+
+  .block__body {
+    max-width: var(--measure);
+  }
+
+  .approach {
+    display: grid;
+    gap: var(--space-s);
+    padding-inline-start: var(--space-m);
+  }
+
+  .approach li::marker {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--c-accent-ink);
+  }
+
+  .deliverables {
+    display: grid;
+    gap: var(--space-2xs);
+    padding-inline-start: var(--space-s);
+  }
+
+  .deliverables li::marker {
+    color: var(--c-accent);
+  }
+
+  .specs {
+    display: grid;
+    gap: var(--space-m);
+  }
+
+  .specs__list {
+    display: grid;
+    gap: var(--space-3xs);
+    list-style: none;
+    padding: 0;
+    margin-block-start: var(--space-2xs);
+  }
+
+  .specs__list li {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+  }
+
+  .figures {
+    display: grid;
+    gap: var(--space-m);
+  }
+
+  figure {
+    margin: 0;
+  }
+
+  figure img {
+    width: 100%;
+    border: var(--rule-hair) solid var(--c-rule);
+  }
+
+  figcaption {
+    margin-block-start: var(--space-2xs);
+    font-size: var(--step--1);
+    color: var(--c-graphite);
+  }
+
+  .project__nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-m);
+    padding-block: var(--space-l) var(--space-2xl);
+    border-block-start: var(--rule-heavy) solid var(--c-ink);
+    margin-block-start: var(--space-l);
+  }
+
+  .project__nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  @media (min-width: 40em) {
+    .context {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .block {
+      display: grid;
+      grid-template-columns: 8rem minmax(0, 1fr);
+      gap: var(--space-m);
+    }
+
+    .block__head {
+      margin-block-end: 0;
+    }
+
+    .specs {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

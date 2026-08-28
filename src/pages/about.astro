@@ -1,0 +1,107 @@
+---
+import { getEntry, render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE, HEADSHOT } from '../data/site';
+
+/*
+  About, per spec §6.6. Three to five paragraphs, first person — the one page
+  where the reader should hear the person rather than the document.
+
+  The prose lives in src/content/pages/about.md. To rewrite this page, edit that
+  file; nothing here needs to change.
+*/
+
+const about = await getEntry('pages', 'about');
+if (!about) throw new Error('src/content/pages/about.md is missing.');
+const { Content } = await render(about);
+---
+
+<BaseLayout
+  title="About — Vin Cataldo"
+  description={about.data.description}
+>
+  <div class="wrap about">
+    <header class="about__head">
+      <span class="label">About</span>
+      <h1>{SITE.shortName}</h1>
+    </header>
+
+    <div class="about__body">
+      <figure class="about__photo">
+        {
+          HEADSHOT ? (
+            <img src={HEADSHOT.src} alt={HEADSHOT.alt} width="600" height="750" />
+          ) : (
+            <div class="about__photo-slot">
+              <span class="todo">TODO: professional headshot</span>
+            </div>
+          )
+        }
+      </figure>
+
+      <div class="about__prose prose">
+        <Content />
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .about {
+    padding-block: var(--space-l) var(--space-2xl);
+  }
+
+  .about__head {
+    padding-block-end: var(--space-m);
+    border-block-end: var(--rule-heavy) solid var(--c-ink);
+  }
+
+  .about__head h1 {
+    margin-block-start: var(--space-2xs);
+  }
+
+  .about__body {
+    display: grid;
+    gap: var(--space-l);
+    padding-block-start: var(--space-l);
+  }
+
+  .about__photo {
+    margin: 0;
+  }
+
+  .about__photo img {
+    width: 100%;
+    border: var(--rule-hair) solid var(--c-rule);
+  }
+
+  /*
+    The empty slot keeps the same aspect ratio the photo will occupy, so
+    dropping the headshot in later causes no layout shift.
+  */
+  .about__photo-slot {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 4 / 5;
+    padding: var(--space-s);
+    text-align: center;
+    background: var(--c-surface);
+    border: var(--rule-hair) solid var(--c-rule);
+  }
+
+  .about__prose {
+    max-width: var(--measure);
+  }
+
+  .about__prose :global(p + p) {
+    margin-block-start: var(--space-s);
+  }
+
+  @media (min-width: 48em) {
+    .about__body {
+      grid-template-columns: minmax(0, 16rem) minmax(0, 1fr);
+      gap: var(--space-xl);
+      align-items: start;
+    }
+  }
+</style>

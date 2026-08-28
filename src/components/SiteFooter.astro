@@ -31,10 +31,10 @@ const updated = new Date().toISOString().slice(0, 10);
   <div class="wrap">
     <h2 class="visually-hidden">Contact</h2>
 
-    <div class="title-block">
+    <div class="title-block grid-rules">
       <Fact label="Name" value={SITE.name} />
       <Fact label="Program" value="BS Construction Management Eng. Tech." prose />
-      <Fact label="Email" value={email} href={mailto} />
+      <Fact label="Email" value={email} href={mailto} wrapAfter="@" />
       {phone && <Fact label="Phone" value={phone} href={tel} />}
       <Fact label="LinkedIn" value={linkedinLabel} href={linkedinHref} />
       <Fact label="Updated" value={updated} />
@@ -60,16 +60,12 @@ const updated = new Date().toISOString().slice(0, 10);
     ink ground, which keeps every rule exactly 1px regardless of how the cells
     reflow — the same trick a sheet border uses.
   */
+  /* Rules come from the shared .grid-rules utility; this sets only the columns. */
   .title-block {
-    display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--rule-hair);
-    background: var(--c-rule);
-    border: var(--rule-hair) solid var(--c-rule);
   }
 
   .title-block > :global(.fact) {
-    background: var(--c-surface);
     padding: var(--space-xs) var(--space-s);
   }
 
@@ -85,7 +81,11 @@ const updated = new Date().toISOString().slice(0, 10);
     }
   }
 
-  @media (min-width: 64em) {
+  /*
+    Six across only once each cell can actually hold an email address; below
+    that the title block stays at three and runs to two rows.
+  */
+  @media (min-width: 82em) {
     .title-block {
       grid-template-columns: repeat(6, minmax(0, 1fr));
     }

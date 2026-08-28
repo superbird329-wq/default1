@@ -1,14 +1,40 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/Section.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import Fact from '../components/Fact.astro';
 import { SITE, isTodo } from '../data/site';
 
 /*
-  PHASE 1 SCAFFOLD.
+  Home page, per spec §6.1. The job of this page is to establish in five seconds
+  who Vin is, what he is training for, and that there is real work to look at.
 
-  This is items 1–4 of spec §6.1 only: the above-the-fold block. The current
-  roles block, selected work, credentials strip, and contact block are built in
-  Phase 2, once the design plan is approved and real content exists.
+  Section order is fixed by the spec and must not be rearranged:
+    above the fold  name / positioning / direction / two buttons
+    below           current roles, selected work, credentials, contact
 */
+
+const featured = (await getCollection('projects', ({ data }) => data.featured && !data.draft)).sort(
+  (a, b) => a.data.weight - b.data.weight,
+);
+
+// §6.1 item 5: the two current roles, i.e. those with no end date.
+const currentRoles = (await getCollection('experience', ({ data }) => !data.endDate)).sort(
+  (a, b) => a.data.weight - b.data.weight,
+);
+
+const credentials = (await getCollection('credentials', ({ data }) => data.featured)).sort(
+  (a, b) => a.data.weight - b.data.weight,
+);
+
+const { email, phone, linkedin } = SITE.contact;
+const mailto = isTodo(email) ? undefined : `mailto:${email}`;
+const tel = phone && !isTodo(phone) ? `tel:${phone.replace(/[^\d+]/g, '')}` : undefined;
+const linkedinHref = isTodo(linkedin) ? undefined : linkedin;
+const linkedinLabel = isTodo(linkedin)
+  ? linkedin
+  : linkedin.replace(/^https?:\/\/(www\.)?linkedin\.com\/in\//, '').replace(/\/$/, '');
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -16,43 +42,137 @@ const jsonLd = {
   name: SITE.name,
   jobTitle: 'Construction Management Engineering Technology Student',
   url: SITE.url,
+  email: `mailto:${email}`,
   alumniOf: {
     '@type': 'CollegeOrUniversity',
     name: SITE.education.institution,
   },
-  ...(isTodo(SITE.contact.linkedin) ? {} : { sameAs: [SITE.contact.linkedin] }),
+  ...(isTodo(linkedin) ? {} : { sameAs: [linkedin] }),
 };
-
-const resumeAvailable = SITE.resume.pdfAvailable;
 ---
 
 <BaseLayout
   title="Vincent Cataldo — Construction Management Engineering Technology, Farmingdale State College"
-  description="Construction Management Engineering Technology student at Farmingdale State College. Engineering intern experience in AutoCAD site plan drafting, geotechnical report production, and drawing quality control."
+  description="Construction Management Engineering Technology student at Farmingdale State College. Engineering intern at a Long Island geotechnical firm: AutoCAD site plan drafting, geotechnical report production, and drawing quality control."
   jsonLd={jsonLd}
 >
+  {/* ---------- Above the fold ---------- */}
   <section class="hero">
     <div class="wrap">
       <h1>{SITE.name}</h1>
-      <p class="hero__positioning">{SITE.positioning}</p>
+
+      {/*
+        The positioning line as three labelled title-block facts rather than a
+        wrapped sentence. At 375px a sentence in mono ran to four lines and read
+        heavy; as facts it scans in one pass and matches the sheet vernacular.
+      */}
+      <div class="hero__block">
+        <Fact label="Program" value="BS Construction Management Eng. Tech." prose />
+        <Fact label="Institution" value="Farmingdale State College (SUNY)" prose />
+        <Fact label="Graduation" value={SITE.education.expectedGraduation} />
+      </div>
+
       <p class="hero__direction">{SITE.direction}</p>
 
       <div class="hero__actions">
         <a class="btn btn--primary" href="/projects">View projects</a>
         {
-          resumeAvailable ? (
+          SITE.resume.pdfAvailable ? (
             <a class="btn btn--secondary" href={SITE.resume.pdfPath} download>
               Download resume
             </a>
           ) : (
-            <span class="btn" aria-disabled="true">
-              Resume PDF pending
-            </span>
+            <a class="btn btn--secondary" href="/resume">
+              Read resume
+            </a>
           )
         }
       </div>
     </div>
   </section>
+
+  {/* ---------- 5. Current roles ---------- */}
+  <Section number="01" title="Current roles">
+    <ul class="roles grid-rules">
+      {
+        currentRoles.map((role) => (
+          <li>
+            <a href={`/experience#${role.data.anchor}`}>
+              <span class="roles__employer">{role.data.employer}</span>
+              <span class="roles__title">{role.data.title}</span>
+              <span class="value roles__dates">
+                {role.data.startDate} — Present
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+
+  {/* ---------- 6. Selected work ---------- */}
+  <Section number="02" title="Selected work">
+    {
+      featured.length > 0 ? (
+        <div class="work">
+          {featured.slice(0, 3).map((project) => (
+            <ProjectCard project={project} />
+          ))}
+        </div>
+      ) : (
+        <p>
+          <span class="todo">
+            TODO: three project case studies marked featured — geotechnical
+            report production and drawing QC, SPT blow-count pipeline, AutoCAD
+            site plan drafting
+          </span>
+        </p>
+      )
+    }
+  </Section>
+
+  {/* ---------- 7. Credentials strip ---------- */}
+  <Section number="03" title="Credentials">
+    <ul class="creds grid-rules">
+      <li>
+        <span class="label">GPA</span>
+        <span class="value">{SITE.education.gpa}</span>
+      </li>
+      {
+        credentials.map((c) => (
+          <li>
+            <span class="label">
+              {c.data.kind === 'award'
+                ? 'Award'
+                : c.data.kind === 'competition'
+                  ? 'Competition'
+                  : 'Membership'}
+            </span>
+            <span class="creds__name">{c.data.name}</span>
+            {c.data.role && <span class="creds__role">{c.data.role}</span>}
+            {isTodo(c.data.date) ? (
+              <span class="todo">{c.data.date}</span>
+            ) : (
+              <span class="value creds__date">
+                {c.data.upcoming ? `Upcoming — ${c.data.date}` : c.data.date}
+              </span>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+
+  {/* ---------- 8. Contact ---------- */}
+  <Section number="04" title="Contact" id="contact">
+    <p class="contact__seeking">{SITE.seeking}</p>
+
+    <div class="contact__grid grid-rules">
+      <Fact label="Email" value={email} href={mailto} wrapAfter="@" />
+      {phone && <Fact label="Phone" value={phone} href={tel} />}
+      <Fact label="LinkedIn" value={linkedinLabel} href={linkedinHref} />
+    </div>
+  </Section>
 </BaseLayout>
 
 <style>
@@ -64,13 +184,13 @@ const resumeAvailable = SITE.resume.pdfAvailable;
     font-size: var(--step-5);
   }
 
-  .hero__positioning {
-    margin-block-start: var(--space-s);
-    max-width: 34ch;
-    font-family: var(--font-mono);
-    font-size: var(--step--1);
-    line-height: var(--leading-snug);
-    color: var(--c-graphite);
+  .hero__block {
+    display: grid;
+    gap: var(--space-s);
+    margin-block-start: var(--space-m);
+    padding-block: var(--space-s);
+    border-block: var(--rule-hair) solid var(--c-rule);
+    max-width: 46rem;
   }
 
   .hero__direction {
@@ -85,5 +205,113 @@ const resumeAvailable = SITE.resume.pdfAvailable;
     flex-wrap: wrap;
     gap: var(--space-xs);
     margin-block-start: var(--space-l);
+  }
+
+  /* --- Current roles --- */
+  .roles {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .roles a {
+    display: grid;
+    gap: var(--space-3xs);
+    padding: var(--space-s);
+    background: var(--c-surface);
+    text-decoration: none;
+    min-height: var(--tap);
+    transition: background var(--dur) var(--ease);
+  }
+
+  .roles a:hover {
+    background: var(--c-paper);
+  }
+
+  .roles__employer {
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    line-height: var(--leading-tight);
+  }
+
+  .roles__title {
+    font-size: var(--step--1);
+  }
+
+  .roles__dates {
+    color: var(--c-graphite);
+  }
+
+  /* --- Selected work --- */
+  .work {
+    display: grid;
+    gap: var(--space-s);
+  }
+
+  /* --- Credentials --- */
+  .creds {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .creds li {
+    display: grid;
+    gap: var(--space-3xs);
+    padding: var(--space-xs) var(--space-s);
+    background: var(--c-surface);
+  }
+
+  .creds__name {
+    line-height: var(--leading-snug);
+  }
+
+  .creds__role,
+  .creds__date {
+    font-size: var(--step--1);
+    color: var(--c-graphite);
+  }
+
+  /* --- Contact --- */
+  .contact__seeking {
+    max-width: var(--measure);
+    margin-block-end: var(--space-m);
+  }
+
+  .contact__grid {
+  }
+
+  .contact__grid > :global(.fact) {
+    background: var(--c-surface);
+    padding: var(--space-xs) var(--space-s);
+  }
+
+  @media (min-width: 40em) {
+    .hero__block {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-m);
+    }
+
+    .roles {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .creds {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .contact__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 56em) {
+    .work {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .creds {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
   }
 </style>
