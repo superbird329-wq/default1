@@ -1,5 +1,5 @@
 ---
-employer: Golden Touch Sandblasting
+employer: Golden Touch Blasting
 title: Assistant Sandblaster & Administrative Assistant
 location: Brookhaven, NY
 startDate: September 2023

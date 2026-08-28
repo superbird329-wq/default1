@@ -10,6 +10,9 @@
  * text.
  */
 
+import type { ImageMetadata } from 'astro';
+import headshotImage from '../assets/vin-cataldo-headshot.png';
+
 /** Marks a value that Vin still needs to supply. Renders visibly on the page. */
 export const TODO = (what: string): string => `TODO: ${what}`;
 
@@ -83,12 +86,12 @@ export const SITE = {
      * Summary paragraph, verbatim from Vin's resume document so that the HTML
      * resume and the PDF say the same thing (spec §6.5).
      *
-     * NOTE: this names superintendent / project manager as the goal, while the
-     * rest of the site positions for project engineer and assistant PM roles.
-     * Worth reconciling in the source document — see the build report.
+     * Vin confirmed project manager, not superintendent, as the goal, so the
+     * word "superintendent" was dropped here. Make the same edit in the source
+     * Word document before exporting the PDF, or the two will disagree.
      */
     summary:
-      'Construction Management Engineering Technology (BS) student with hands-on experience in construction, field operations, and site coordination. Skilled in AutoCAD, soil sampling, safety compliance, and project documentation. Seeking a construction internship to contribute to a career as a superintendent or project manager.',
+      'Construction Management Engineering Technology (BS) student with hands-on experience in construction, field operations, and site coordination. Skilled in AutoCAD, soil sampling, safety compliance, and project documentation. Seeking a construction internship to contribute to a career as a project manager.',
     /** PDF is committed to public/resume/ and served from this path. */
     pdfPath: '/resume/vin-cataldo-resume.pdf',
     /** Set true once the real PDF has been committed. */
@@ -150,17 +153,23 @@ export type Site = typeof SITE;
 
 /** A photograph with the alt text it needs to carry. */
 export interface Photo {
-  src: string;
+  src: ImageMetadata;
   alt: string;
 }
 
 /**
  * The About page headshot.
  *
- * Stays null until a real photograph exists, so the page renders an empty slot
- * of the right aspect ratio rather than a broken image. When you add one:
- *   1. put the file in public/img/
- *   2. run `npm run strip-metadata` (photos carry GPS coordinates)
- *   3. set this to { src: '/img/<file>', alt: '<what it shows>' }
+ * The source file lives in src/assets/ rather than public/, so Astro processes
+ * it through sharp at build time: it is re-encoded to WebP, resized to the
+ * widths the page actually requests, and served with explicit dimensions so
+ * there is no layout shift. Re-encoding also discards EXIF, XMP, and IPTC,
+ * which is why this path does not depend on remembering to run exiftool.
+ *
+ * To replace it: drop the new file in src/assets/ and change the import above.
+ * Set this to null to go back to an empty slot.
  */
-export const HEADSHOT: Photo | null = null;
+export const HEADSHOT: Photo | null = {
+  src: headshotImage,
+  alt: 'Vincent Cataldo',
+};

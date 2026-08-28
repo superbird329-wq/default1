@@ -1,5 +1,6 @@
 ---
 import { getEntry, render } from 'astro:content';
+import { Picture } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { SITE, HEADSHOT } from '../data/site';
 
@@ -30,7 +31,16 @@ const { Content } = await render(about);
       <figure class="about__photo">
         {
           HEADSHOT ? (
-            <img src={HEADSHOT.src} alt={HEADSHOT.alt} width="600" height="750" />
+            <Picture
+              src={HEADSHOT.src}
+              alt={HEADSHOT.alt}
+              widths={[256, 384, 512, 768]}
+              sizes="(min-width: 48em) 16rem, 100vw"
+              formats={['avif', 'webp']}
+              fallbackFormat="webp"
+              quality={82}
+              loading="eager"
+            />
           ) : (
             <div class="about__photo-slot">
               <span class="todo">TODO: professional headshot</span>
@@ -82,7 +92,7 @@ const { Content } = await render(about);
   .about__photo-slot {
     display: grid;
     place-items: center;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 1 / 1;
     padding: var(--space-s);
     text-align: center;
     background: var(--c-surface);
@@ -95,6 +105,20 @@ const { Content } = await render(about);
 
   .about__prose :global(p + p) {
     margin-block-start: var(--space-s);
+  }
+
+  /*
+    A paragraph Vin still has to write. Marked so the gaps are obvious at a
+    glance; scripts/check-todos.sh independently refuses to publish while any
+    remain. Delete the whole <p class="todo-note"> block when writing the real
+    paragraph.
+  */
+  .about__prose :global(.todo-note) {
+    padding: var(--space-s);
+    border-inline-start: var(--rule-heavy) solid var(--c-accent);
+    background: var(--c-surface);
+    font-size: var(--step--1);
+    color: var(--c-graphite);
   }
 
   @media (min-width: 48em) {
