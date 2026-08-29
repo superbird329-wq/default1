@@ -1,10 +1,11 @@
 ---
 import { getCollection } from 'astro:content';
+import { Picture } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Section from '../components/Section.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import Fact from '../components/Fact.astro';
-import { SITE, isTodo } from '../data/site';
+import { SITE, isTodo, HEADSHOT } from '../data/site';
 
 /*
   Home page, per spec §6.1. The job of this page is to establish in five seconds
@@ -59,6 +60,22 @@ const jsonLd = {
   {/* ---------- Above the fold ---------- */}
   <section class="hero">
     <div class="wrap">
+      {
+        HEADSHOT && (
+          <Picture
+            src={HEADSHOT.src}
+            alt={HEADSHOT.alt}
+            widths={[128, 192, 256]}
+            sizes="8rem"
+            formats={['avif', 'webp']}
+            fallbackFormat="webp"
+            quality={82}
+            loading="eager"
+            class="hero__photo"
+          />
+        )
+      }
+
       <h1>{SITE.name}</h1>
 
       {/*
@@ -180,6 +197,15 @@ const jsonLd = {
 <style>
   .hero {
     padding-block: var(--space-xl) var(--space-2xl);
+  }
+
+  .hero__photo {
+    display: block;
+    width: 8rem;
+    height: 8rem;
+    object-fit: cover;
+    margin-block-end: var(--space-m);
+    border: var(--rule-hair) solid var(--c-rule);
   }
 
   h1 {
