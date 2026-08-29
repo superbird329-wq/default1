@@ -1,3 +1,5 @@
-# www -> apex. Chosen consistently: vincataldo.com is canonical (spec §10).
-# Honoured by both Cloudflare Pages and Netlify.
-https://www.vincataldo.com/*  https://vincataldo.com/:splat  301!
+# www -> apex is handled by a Cloudflare Redirect Rule at the zone level, not
+# here. The Workers-with-assets deploy target (what Cloudflare's Git
+# integration now uses) only accepts relative-path redirects in this file —
+# a cross-host rule like the one this used to contain fails the deploy
+# outright ("Only relative URLs are allowed").

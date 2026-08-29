@@ -288,10 +288,15 @@ first, real content later, never a guess.
 
 ## Deploying
 
-The site is a plain static build (`dist/`). It deploys to **Cloudflare Pages**.
+The site is a plain static build (`dist/`). It deploys to **Cloudflare
+Workers** via Cloudflare's Git integration (the successor to classic
+Cloudflare Pages — the dashboard still calls the section "Workers & Pages").
 
-`public/_headers` (security headers) and `public/_redirects` (`www` → apex) are
-read automatically — there is nothing to configure for either.
+`public/_headers` (security headers) is read automatically — there is nothing
+to configure for it. `www` → apex is **not** handled by `public/_redirects`:
+this deploy target only accepts relative-path redirect rules, so a
+cross-host rule there fails the deploy outright. Instead it's a Cloudflare
+Redirect Rule set up once the domain is connected (see below).
 
 ### Before the first deploy
 
@@ -308,33 +313,44 @@ push. Two things are worth doing first:
   publication. It does not contain your transcript. Public is fine; private
   works identically with Cloudflare. Your call.
 
-### Connect Cloudflare Pages
+### Connect Cloudflare
 
-1. Sign in at <https://dash.cloudflare.com>, then **Workers & Pages** →
-   **Create** → **Pages** → **Connect to Git**.
+1. Sign in at <https://dash.cloudflare.com>, then **Compute → Workers &
+   Pages** → **Create application** → **Connect to Git** (or **Import an
+   existing Git repository**, depending on what the dashboard offers when you
+   land there).
 2. Authorise GitHub and pick `superbird329-wq/default1`.
 3. Build settings:
    - Framework preset: **Astro**
    - Build command: `npm run build`
    - Build output directory: `dist`
-   - Production branch: whatever the default branch is (`main` after renaming)
-4. Under **Environment variables**, add `NODE_VERSION` = `22.22.2`. Without
-   this, Cloudflare may build on an older Node and the build will fail.
+   - Production branch: `main`
+4. Node is picked up automatically from `.nvmrc` (`22.22.2`) — no environment
+   variable needed.
 5. **Save and Deploy.** The first build takes two to three minutes.
 
-You now have a live URL like `default1-a1b2.pages.dev`. Check it works before
-going near DNS.
+You now have a live URL like `default1.<account>.workers.dev`. Check it works
+before going near DNS.
 
 ### Point vincataldo.com at it
 
-1. In the Pages project: **Custom domains** → **Set up a domain** →
-   `vincataldo.com`.
-2. Add `www.vincataldo.com` as a second custom domain.
-3. If the domain's DNS is on Cloudflare, records are created for you. If it is
-   at another registrar, Cloudflare shows the exact CNAME to add there.
-4. **SSL/TLS → Edge Certificates → Always Use HTTPS: on.**
+Cloudflare needs to own DNS for `vincataldo.com` for the steps below (custom
+domains and Redirect Rules are zone-level features):
 
-Certificates issue automatically, usually within a few minutes.
+1. **Domains → Add a domain** → `vincataldo.com`. Cloudflare gives you two
+   nameservers.
+2. At the registrar, replace the existing nameservers with Cloudflare's two.
+   Propagation is usually well under an hour; Cloudflare emails you once the
+   zone is active.
+3. In the Worker's project: **Domains** tab → add `vincataldo.com` and
+   `www.vincataldo.com` as custom domains. Certificates issue automatically.
+4. **Rules → Redirect Rules** (zone level, not the Worker) → create a rule:
+   when hostname equals `www.vincataldo.com`, redirect to
+   `https://vincataldo.com/${1}` (or the dashboard's equivalent dynamic
+   redirect using the incoming path), status 301. This replaces the old
+   `public/_redirects` cross-host rule, which this deploy target no longer
+   accepts.
+5. **SSL/TLS → Edge Certificates → Always Use HTTPS: on.**
 
 `vincataldo.com` is canonical and `www` redirects to it. That choice lives in
 `public/_redirects`; if you ever reverse it, change it there too or the two
