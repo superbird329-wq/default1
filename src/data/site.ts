@@ -55,11 +55,11 @@ export const SITE = {
    * this is the one line on the home page that should sound like him.
    */
   direction:
-    'I am looking for a project engineer or field engineer internship with a general contractor or construction manager on Long Island or in the New York metro area.',
+    "I'm building toward a career as a project engineer or field engineer with a general contractor or construction manager on Long Island and in the New York metro area.",
 
   /** Shown in the home page contact block. */
   seeking:
-    'Currently seeking a construction management internship. Available for Project Engineer Intern, Field Engineer Intern, and Assistant Project Manager roles on Long Island and in the New York metro area.',
+    'Reach out about Project Engineer Intern, Field Engineer Intern, and Assistant Project Manager roles on Long Island and in the New York metro area.',
 
   contact: {
     email: 'vincataldo329@gmail.com',
@@ -103,7 +103,7 @@ export const SITE = {
      * Word document before exporting the PDF, or the two will disagree.
      */
     summary:
-      'Construction Management Engineering Technology (BS) student with hands-on experience in construction, field operations, and site coordination. Skilled in AutoCAD, soil sampling, safety compliance, and project documentation. Seeking a construction internship to contribute to a career as a project manager.',
+      'Construction Management Engineering Technology (BS) student with hands-on experience in construction, field operations, and site coordination. Skilled in AutoCAD, soil sampling, safety compliance, and project documentation. Building toward a career as a project manager in construction management.',
     /** PDF is committed to public/resume/ and served from this path. */
     pdfPath: '/resume/vin-cataldo-resume.pdf',
     /** Set true once the real PDF has been committed. */
