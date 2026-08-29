@@ -3,10 +3,14 @@ title: About
 description: Vincent Cataldo — Construction Management Engineering Technology student at Farmingdale State College, engineering intern, club president.
 ---
 
-<p class="todo-note">TODO: how I came into construction. Two or three sentences,
-first person. What first got you interested, and what made you choose
-construction management over architecture or civil engineering. This is the
-paragraph a recruiter remembers, and it is the one nobody can write for you.</p>
+I started out as a business management major — the same instinct that had me
+running a lemonade stand as a kid and then car washing, mowing lawns,
+shoveling snow, and throwing parties as I got older. But watching AI take over
+more of what a screen-based career looks like, I wanted skills rooted in the
+physical world instead, and I had real respect for the men doing that
+work — my father, my boss at the time Brian Gold, and my best friend George.
+Construction management put those together. I haven't looked back since my
+first CM class.
 
 I am studying Construction Management Engineering Technology at Farmingdale
 State College, with a bachelor's degree anticipated in Spring 2028. My
