@@ -1,0 +1,16 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // Matches the Worker name Cloudflare's Git integration already created for
+  // this project. Without this file present, Cloudflare's build silently
+  // reruns its "astro add cloudflare" setup wizard on every deploy, which
+  // bolts on the @astrojs/cloudflare adapter, KV/Images bindings we never
+  // asked for, and switches astro:assets Picture/Image output to the runtime
+  // /_image endpoint — which isn't wired up here and 404s. This file is
+  // enough for Wrangler to skip that wizard and just upload dist/ as static
+  // assets, matching the plain static build described in README.md.
+  "name": "default1",
+  "compatibility_date": "2026-08-29",
+  "assets": {
+    "directory": "./dist"
+  }
+}

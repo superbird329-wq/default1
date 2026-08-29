@@ -298,16 +298,20 @@ this deploy target only accepts relative-path redirect rules, so a
 cross-host rule there fails the deploy outright. Instead it's a Cloudflare
 Redirect Rule set up once the domain is connected (see below).
 
+`wrangler.jsonc` at the repo root tells Cloudflare's build to deploy `dist/`
+as plain static assets under the Worker name `default1`. Without it present,
+Cloudflare's Git integration silently reruns its "set this project up for
+Cloudflare" wizard on every build, which bolts on the `@astrojs/cloudflare`
+adapter, KV/Images bindings nothing here uses, and switches `astro:assets`
+image output to a runtime `/_image` endpoint that isn't wired up on a static
+deploy — breaking every `<Picture>` on the site with a 404. Don't delete this
+file.
+
 ### Before the first deploy
 
 The repository is already on GitHub and already public, so there is nothing to
-push. Two things are worth doing first:
+push. One thing is worth deciding first:
 
-- **Rename the default branch.** It is currently
-  `claude/vincataldo-portfolio-build-w0x0a0`, which works but is an odd name to
-  see on a production site's repository. On GitHub: **Settings → Branches →**
-  rename it to `main`. Cloudflare follows the default branch, so do this before
-  connecting, not after.
 - **Decide whether the repository should stay public.** It contains your email,
   phone number, resume content, and coursework — all of it intended for
   publication. It does not contain your transcript. Public is fine; private
