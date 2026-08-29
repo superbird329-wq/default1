@@ -296,7 +296,8 @@ Cloudflare Pages — the dashboard still calls the section "Workers & Pages").
 to configure for it. `www` → apex is **not** handled by `public/_redirects`:
 this deploy target only accepts relative-path redirect rules, so a
 cross-host rule there fails the deploy outright. Instead it's a Cloudflare
-Redirect Rule set up once the domain is connected (see below).
+Redirect Rule, created once the domain was connected (see below) and already
+active on the zone.
 
 ### Before the first deploy
 
@@ -344,12 +345,14 @@ domains and Redirect Rules are zone-level features):
    zone is active.
 3. In the Worker's project: **Domains** tab → add `vincataldo.com` and
    `www.vincataldo.com` as custom domains. Certificates issue automatically.
-4. **Rules → Redirect Rules** (zone level, not the Worker) → create a rule:
-   when hostname equals `www.vincataldo.com`, redirect to
-   `https://vincataldo.com/${1}` (or the dashboard's equivalent dynamic
-   redirect using the incoming path), status 301. This replaces the old
-   `public/_redirects` cross-host rule, which this deploy target no longer
-   accepts.
+4. **Rules → Redirect Rules** (zone level, not the Worker) → create a rule
+   from the built-in "Redirect from WWW to root" template: URI full wildcard
+   match `https://www.*`, dynamic target `https://${1}`, status 301, with
+   "Preserve query string" checked. This replaces the old `public/_redirects`
+   cross-host rule, which this deploy target no longer accepts. (Cloudflare
+   may warn that DNS isn't proxying `www` traffic — if the `www` CNAME is
+   already proxied, as it is here, that warning is a false positive and safe
+   to dismiss.) This rule is deployed and active.
 5. **SSL/TLS → Edge Certificates → Always Use HTTPS: on.**
 
 `vincataldo.com` is canonical and `www` redirects to it. That choice lives in
