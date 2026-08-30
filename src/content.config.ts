@@ -115,8 +115,12 @@ const credentials = defineCollection({
     name: z.string().min(1),
     /** The awarding, certifying, or member organization. */
     organization: z.string().min(1),
-    /** Year or date range, e.g. "2025" or "2024–present". Coerced: a bare year in YAML is a number. */
-    date: z.coerce.string().min(1),
+    /**
+     * Year or date range, e.g. "2025" or "2024–present". Coerced: a bare year
+     * in YAML is a number. Optional: a certification with no confirmed date
+     * renders without one rather than guessing.
+     */
+    date: z.coerce.string().min(1).optional(),
     /** Role held, for memberships and competitions. */
     role: z.string().optional(),
     /** Optional one-line detail. No adjectives — facts only (§6.1). */

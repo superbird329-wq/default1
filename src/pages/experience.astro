@@ -122,11 +122,12 @@ const inProgress = SITE.education.coursework.filter((c) => c.status === 'in-prog
             <li>
               <span class="creds__name">{c.data.name}</span>
               <span class="creds__org">{c.data.organization}</span>
-              {isTodo(c.data.date) ? (
-                <span class="todo">{c.data.date}</span>
-              ) : (
-                <span class="value creds__date">{c.data.date}</span>
-              )}
+              {c.data.date &&
+                (isTodo(c.data.date) ? (
+                  <span class="todo">{c.data.date}</span>
+                ) : (
+                  <span class="value creds__date">{c.data.date}</span>
+                ))}
             </li>
           ))}
         </ul>
