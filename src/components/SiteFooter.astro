@@ -34,8 +34,8 @@ const updated = new Date().toISOString().slice(0, 10);
     <div class="title-block grid-rules">
       <Fact label="Name" value={SITE.name} />
       <Fact label="Program" value="BS Construction Management Eng. Tech." prose />
-      <Fact label="Email" value={email} href={mailto} wrapAfter="@" />
-      {phone && <Fact label="Phone" value={phone} href={tel} />}
+      <Fact label="Email" value={email} href={mailto} wrapAfter="@" icon="mail" />
+      {phone && <Fact label="Phone" value={phone} href={tel} icon="phone" />}
       <Fact label="LinkedIn" value={linkedinLabel} href={linkedinHref} icon="linkedin" />
       <Fact label="Updated" value={updated} />
     </div>

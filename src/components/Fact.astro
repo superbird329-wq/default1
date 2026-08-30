@@ -73,7 +73,13 @@ const segments = !todo && value && wrapAfter ? splitAfter(value, wrapAfter) : nu
     line-height: var(--leading-snug);
   }
 
-  .value--icon {
+  /*
+    Specificity matches a.value below (0,2,1 vs 0,1,1) so this reliably wins
+    regardless of source order -- otherwise the icon and value can end up on
+    separate lines, since overflow-wrap: anywhere is allowed to break right
+    after the icon with no space to hold it back.
+  */
+  a.value.value--icon {
     display: inline-flex;
     align-items: center;
     gap: 0.35em;
