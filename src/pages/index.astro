@@ -25,9 +25,9 @@ const currentRoles = (await getCollection('experience', ({ data }) => !data.endD
   (a, b) => a.data.weight - b.data.weight,
 );
 
-const credentials = (await getCollection('credentials', ({ data }) => data.featured)).sort(
-  (a, b) => a.data.weight - b.data.weight,
-);
+const credentials = (
+  await getCollection('credentials', ({ data }) => data.featured && data.kind !== 'award')
+).sort((a, b) => a.data.weight - b.data.weight);
 
 const { email, phone, linkedin } = SITE.contact;
 const mailto = isTodo(email) ? undefined : `mailto:${email}`;
