@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { SITE, isTodo } from '../data/site';
+import Icon from '../components/Icon.astro';
 
 /*
   Resume, per spec §6.5. Two things on one page:
@@ -45,9 +46,17 @@ const completed = SITE.education.coursework.filter((c) => c.status === 'complete
         <span class="label">Resume</span>
         <h1>{SITE.name}</h1>
         <p class="resume__contact value">
-          <a href={`mailto:${email}`}>{email}</a>
-          {phone && <> &middot; <a href={tel}>{phone}</a></>}
-          {showLinkedin && <> &middot; <a href={linkedin}>{linkedinLabel}</a></>}
+          <a href={`mailto:${email}`}><Icon name="mail" /> {email}</a>
+          {phone && (
+            <a href={tel}>
+              <Icon name="phone" /> {phone}
+            </a>
+          )}
+          {showLinkedin && (
+            <a href={linkedin}>
+              <Icon name="linkedin" /> {linkedinLabel}
+            </a>
+          )}
         </p>
       </div>
 
@@ -180,7 +189,14 @@ const completed = SITE.education.coursework.filter((c) => c.status === 'complete
   }
 
   .resume__contact a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
     color: inherit;
+  }
+
+  .resume__contact a:not(:first-child) {
+    margin-inline-start: var(--space-s);
   }
 
   .resume__section {
