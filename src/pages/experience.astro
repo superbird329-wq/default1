@@ -122,11 +122,12 @@ const inProgress = SITE.education.coursework.filter((c) => c.status === 'in-prog
             <li>
               <span class="creds__name">{c.data.name}</span>
               <span class="creds__org">{c.data.organization}</span>
-              {isTodo(c.data.date) ? (
-                <span class="todo">{c.data.date}</span>
-              ) : (
-                <span class="value creds__date">{c.data.date}</span>
-              )}
+              {c.data.date &&
+                (isTodo(c.data.date) ? (
+                  <span class="todo">{c.data.date}</span>
+                ) : (
+                  <span class="value creds__date">{c.data.date}</span>
+                ))}
             </li>
           ))}
         </ul>
@@ -142,13 +143,14 @@ const inProgress = SITE.education.coursework.filter((c) => c.status === 'in-prog
           <li>
             <span class="creds__name">{c.data.name}</span>
             {c.data.role && <span class="creds__org">{c.data.role}</span>}
-            {isTodo(c.data.date) ? (
-              <span class="todo">{c.data.date}</span>
-            ) : (
-              <span class="value creds__date">
-                {c.data.upcoming ? `Upcoming — ${c.data.date}` : c.data.date}
-              </span>
-            )}
+            {c.data.date &&
+              (isTodo(c.data.date) ? (
+                <span class="todo">{c.data.date}</span>
+              ) : (
+                <span class="value creds__date">
+                  {c.data.upcoming ? `Upcoming — ${c.data.date}` : c.data.date}
+                </span>
+              ))}
             {c.data.detail && <span class="creds__detail">{c.data.detail}</span>}
           </li>
         ))
@@ -169,9 +171,6 @@ const inProgress = SITE.education.coursework.filter((c) => c.status === 'in-prog
         ))
       }
     </ul>
-    <p class="note">
-      <span class="todo">TODO: scholarships received, with awarding organization and year</span>
-    </p>
   </Section>
 </BaseLayout>
 

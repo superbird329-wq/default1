@@ -137,13 +137,7 @@ const jsonLd = {
           ))}
         </div>
       ) : (
-        <p>
-          <span class="todo">
-            TODO: three project case studies marked featured — geotechnical
-            report production and drawing QC, SPT blow-count pipeline, AutoCAD
-            site plan drafting
-          </span>
-        </p>
+        <p class="wip">Case studies — work in progress.</p>
       )
     }
   </Section>
@@ -153,7 +147,7 @@ const jsonLd = {
     <ul class="creds grid-rules">
       <li>
         <span class="label">GPA</span>
-        <span class="value">{SITE.education.gpa}</span>
+        <span class="value creds__gpa">{SITE.education.gpa}</span>
       </li>
       {
         credentials.map((c) => (
@@ -167,13 +161,14 @@ const jsonLd = {
             </span>
             <span class="creds__name">{c.data.name}</span>
             {c.data.role && <span class="creds__role">{c.data.role}</span>}
-            {isTodo(c.data.date) ? (
-              <span class="todo">{c.data.date}</span>
-            ) : (
-              <span class="value creds__date">
-                {c.data.upcoming ? `Upcoming — ${c.data.date}` : c.data.date}
-              </span>
-            )}
+            {c.data.date &&
+              (isTodo(c.data.date) ? (
+                <span class="todo">{c.data.date}</span>
+              ) : (
+                <span class="value creds__date">
+                  {c.data.upcoming ? `Upcoming — ${c.data.date}` : c.data.date}
+                </span>
+              ))}
           </li>
         ))
       }
@@ -276,6 +271,10 @@ const jsonLd = {
     gap: var(--space-s);
   }
 
+  .wip {
+    color: var(--c-graphite);
+  }
+
   /* --- Credentials --- */
   .creds {
     list-style: none;
@@ -298,6 +297,11 @@ const jsonLd = {
   .creds__date {
     font-size: var(--step--1);
     color: var(--c-graphite);
+  }
+
+  .creds__gpa {
+    font-size: var(--step-2);
+    font-weight: 700;
   }
 
   /* --- Contact --- */

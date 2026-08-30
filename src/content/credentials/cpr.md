@@ -1,7 +1,7 @@
 ---
 kind: certification
-name: CPR Certified
-organization: 'TODO: issuing body'
-date: 'TODO: date obtained'
+name: Lifeguarding with CPR/AED for the Professional Rescuer and First Aid
+organization: American Red Cross
+date: 'May 2023'
 weight: 5
 ---
