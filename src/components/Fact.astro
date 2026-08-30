@@ -1,6 +1,7 @@
 ---
 import { isTodo } from '../data/site';
 import { splitAfter } from '../lib/text';
+import Icon from './Icon.astro';
 
 /*
   A single labelled field: a small uppercase mono caption over its value. This
@@ -22,9 +23,11 @@ interface Props {
    * Pass "@" for an email address.
    */
   wrapAfter?: string;
+  /** Small glyph shown before the value, e.g. "linkedin" for a LinkedIn link. */
+  icon?: 'mail' | 'phone' | 'linkedin';
 }
 
-const { label, value, href, prose = false, wrapAfter } = Astro.props;
+const { label, value, href, prose = false, wrapAfter, icon } = Astro.props;
 const todo = isTodo(value);
 const segments = !todo && value && wrapAfter ? splitAfter(value, wrapAfter) : null;
 ---
@@ -35,7 +38,8 @@ const segments = !todo && value && wrapAfter ? splitAfter(value, wrapAfter) : nu
     todo ? (
       <span class="todo">{value}</span>
     ) : href ? (
-      <a class:list={['value', { 'value--prose': prose }]} href={href}>
+      <a class:list={['value', { 'value--prose': prose, 'value--icon': !!icon }]} href={href}>
+        {icon && <Icon name={icon} />}
         {segments
           ? segments.map((segment, i) => (
               <>
@@ -67,6 +71,12 @@ const segments = !todo && value && wrapAfter ? splitAfter(value, wrapAfter) : nu
     font-family: var(--font-body);
     font-size: var(--step--1);
     line-height: var(--leading-snug);
+  }
+
+  .value--icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
   }
 
   /*
