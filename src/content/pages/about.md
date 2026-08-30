@@ -3,12 +3,13 @@ title: About
 description: Vincent Cataldo — Construction Management Engineering Technology student at Farmingdale State College, engineering intern, club president.
 ---
 
-I started college as a business management major. But as AI started eating
-into what a screen-based career even looks like, I wanted work rooted in the
-physical world instead — something a chatbot couldn't do for me. I had real
-respect for the men already doing that kind of work: my father, my boss at
-the time Brian Gold, and my best friend George. Construction management put
-those together, and I haven't looked back since my first CM class.
+I actually started out as a business major. But once AI started blowing up
+in high school and college, I didn't want a career that was just behind a
+screen — I wanted to do something in the physical world that couldn't get
+replaced that easily. I've also always had a lot of respect for the guys
+doing that kind of work: my dad, my boss at the time Brian Gold, and my
+best friend George. Construction management just made sense. Haven't
+looked back since my first CM class.
 
 I am studying Construction Management Engineering Technology at Farmingdale
 State College, with a bachelor's degree anticipated in Spring 2028. My
@@ -24,19 +25,19 @@ including soil sampling and test borings. Before that — and still, alongside
 school — I have worked at Golden Touch Blasting doing surface preparation
 and handling billing and client communication.
 
-That split between field and office is exactly what I want more of as I move
-into project engineer and field engineer roles — I like the internship for
-the same reason I'll like the job, and I'm excited to see where it goes from
-here.
+That mix of field and office is exactly what I want more of going into
+project engineer and field engineer roles. I like the internship for the
+same reasons I'll like the job — I'm excited to see where it goes.
 
-Outside of coursework I am president of the American Institute of Architecture
-Students chapter and co-vice president of the Architecture and Construction
-Technology club, and I am a member of CMAA and CREDA. From November 2024 to May
-2025 I volunteered with the New Paltz Rescue Squad, assisting on emergency
-calls. That work is not construction, but it is where I learned how a crew
-communicates when the situation is changing faster than the plan.
+Outside of coursework I'm president of the American Institute of
+Architecture Students chapter and co-president of the Architecture and
+Construction Technology club, and I'm a member of CMAA and CREDA. From
+November 2024 to May 2025 I volunteered with the New Paltz Rescue Squad,
+helping out on emergency calls. That's not construction, but it's where I
+learned how a crew communicates when the situation is changing faster than
+the plan.
 
-I've been running small operations since I was a kid — a lemonade stand,
-then car washing, lawn care, snow shoveling, and throwing parties as I got
-older. None of it was construction, but it's the same instinct: I like being
-the one who makes something happen, not just watches it happen.
+I've been running my own little operations since I was a kid — lemonade
+stand, then car washing, mowing lawns, shoveling snow, throwing parties,
+whatever. None of it was construction, but it's the same thing: I like
+being the one who makes stuff happen, not just watching it happen.
