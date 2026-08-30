@@ -55,7 +55,7 @@ export const SITE = {
    * this is the one line on the home page that should sound like him.
    */
   direction:
-    "I'm building toward a career as a project engineer or field engineer with a general contractor or construction manager on Long Island and in the New York metro area.",
+    "I'm building toward a career as a project manager with a general contractor or real estate development firm on Long Island and in the New York metro area.",
 
   /** Shown in the home page contact block. */
   seeking:
