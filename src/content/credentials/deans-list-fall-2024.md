@@ -1,7 +1,7 @@
 ---
 kind: award
 name: Dean's List
-organization: Farmingdale State College
+organization: SUNY New Paltz
 date: Fall 2024
 featured: false
 weight: 90
