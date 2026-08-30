@@ -47,7 +47,7 @@ export const SITE = {
 
   /** Positioning line, shown under the name on the home page. */
   positioning:
-    'Construction Management Engineering Technology (BS), Farmingdale State College (SUNY) — anticipated Spring 2028',
+    'Construction Management Engineering Technology (BS), Farmingdale State College (SUNY), anticipated Spring 2028',
 
   /**
    * One sentence of direction, first person, shown on the home page.

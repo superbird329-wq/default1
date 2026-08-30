@@ -8,7 +8,7 @@ anchor: new-paltz-rescue-squad
 weight: 40
 bullets:
   - Assisted in emergency response operations, including on-scene coordination and patient care.
-  - Applied risk assessment and clear communication under time pressure and incomplete information.
+  - Applied risk assessment and clear communication under time pressure and with incomplete information.
   - Worked as part of a crew where task handoffs and situational awareness determined the outcome.
 tools: []
 standards: []
