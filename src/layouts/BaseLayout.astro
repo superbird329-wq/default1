@@ -27,6 +27,21 @@ const ogImage = SITE.ogImageAvailable ? new URL('/og-default.png', Astro.site).h
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+    {
+      /*
+        Every page here is a real navigation, not an SPA route change, so the
+        browser's own scroll restoration (on by default) reopens a refreshed
+        or back-navigated page at whatever position it was scrolled to last
+        time. Opting out makes every load start at the top, which is what a
+        static resume site should do.
+      */
+    }
+    <script is:inline>
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+    </script>
+
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
