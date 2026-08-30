@@ -69,6 +69,17 @@ const updated = new Date().toISOString().slice(0, 10);
     padding: var(--space-xs) var(--space-s);
   }
 
+  /*
+    Program and Email are the two long values. Below the 6-across desktop
+    layout, give them their own full-width row instead of squeezing them
+    into a half-width cell, so "BS Construction Management Eng. Tech." and
+    the email address each read on one line.
+  */
+  .title-block > :global(.fact:nth-child(2)),
+  .title-block > :global(.fact:nth-child(3)) {
+    grid-column: 1 / -1;
+  }
+
   .site-footer__note {
     margin-block-start: var(--space-m);
     font-size: var(--step--1);
@@ -88,6 +99,11 @@ const updated = new Date().toISOString().slice(0, 10);
   @media (min-width: 82em) {
     .title-block {
       grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+
+    .title-block > :global(.fact:nth-child(2)),
+    .title-block > :global(.fact:nth-child(3)) {
+      grid-column: auto;
     }
   }
 </style>

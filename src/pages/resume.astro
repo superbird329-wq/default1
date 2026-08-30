@@ -119,11 +119,12 @@ const completed = SITE.education.coursework.filter((c) => c.status === 'complete
             <li>
               {c.data.role ? `${c.data.role}, ` : ''}
               {c.data.name}
-              {isTodo(c.data.date) ? (
-                <> — <span class="todo">{c.data.date}</span></>
-              ) : (
-                <span class="value entry__dates"> — {c.data.upcoming ? `upcoming, ${c.data.date}` : c.data.date}</span>
-              )}
+              {c.data.date &&
+                (isTodo(c.data.date) ? (
+                  <> — <span class="todo">{c.data.date}</span></>
+                ) : (
+                  <span class="value entry__dates"> — {c.data.upcoming ? `upcoming, ${c.data.date}` : c.data.date}</span>
+                ))}
             </li>
           ))
         }
