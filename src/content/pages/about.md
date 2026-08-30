@@ -26,9 +26,10 @@ including soil sampling and test borings. Before that, and still alongside
 school, I have worked at Golden Touch Blasting doing surface preparation
 and handling billing and client communication.
 
-That mix of field and office is exactly what I want more of going into
-project engineer and field engineer roles. I like the internship for the
-same reasons I'll like the job, and I'm excited to see where it goes.
+That mix of field and office is exactly what I want more of going forward,
+whether that ends up being on the general contractor side or in real
+estate development. I like the internship for the same reasons I'll like
+whatever comes next, and I'm excited to see where it goes.
 
 Outside of coursework I'm president of the American Institute of
 Architecture Students chapter and co-president of the Architecture and
