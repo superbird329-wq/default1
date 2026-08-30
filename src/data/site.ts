@@ -40,7 +40,7 @@ export const SITE = {
    * Flip this to true once the content is complete and every TODO is gone.
    * It is the only change required to make the site indexable.
    */
-  indexable: false,
+  indexable: true,
 
   name: 'Vincent Cataldo',
   shortName: 'Vin Cataldo',

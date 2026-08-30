@@ -137,13 +137,7 @@ const jsonLd = {
           ))}
         </div>
       ) : (
-        <p>
-          <span class="todo">
-            TODO: three project case studies marked featured — geotechnical
-            report production and drawing QC, SPT blow-count pipeline, AutoCAD
-            site plan drafting
-          </span>
-        </p>
+        <p class="wip">Case studies — work in progress.</p>
       )
     }
   </Section>
@@ -274,6 +268,10 @@ const jsonLd = {
   .work {
     display: grid;
     gap: var(--space-s);
+  }
+
+  .wip {
+    color: var(--c-graphite);
   }
 
   /* --- Credentials --- */

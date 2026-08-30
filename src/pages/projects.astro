@@ -45,18 +45,7 @@ const slug = (category: string) => category.toLowerCase().replace(/\s+/g, '-');
   {
     projects.length === 0 ? (
       <section class="wrap empty">
-        <p>
-          <span class="todo">
-            TODO: three to five project case studies. Start with geotechnical
-            report production and drawing QC, the SPT blow-count pipeline, and
-            AutoCAD site plan drafting.
-          </span>
-        </p>
-        <p class="empty__how">
-          Add one by creating a Markdown file in <code>src/content/projects/</code>.
-          The schema in <code>src/content.config.ts</code> lists every field
-          required.
-        </p>
+        <p class="wip">Case studies — work in progress.</p>
       </section>
     ) : (
       <>
@@ -116,15 +105,8 @@ const slug = (category: string) => category.toLowerCase().replace(/\s+/g, '-');
     padding-block-start: var(--space-l);
   }
 
-  .empty__how {
-    margin-block-start: var(--space-s);
-    font-size: var(--step--1);
+  .wip {
     color: var(--c-graphite);
-  }
-
-  code {
-    font-family: var(--font-mono);
-    font-size: 0.9em;
   }
 
   .filters {
