@@ -36,7 +36,7 @@ const updated = new Date().toISOString().slice(0, 10);
       <Fact label="Program" value="BS Construction Management Eng. Tech." prose />
       <Fact label="Email" value={email} href={mailto} wrapAfter="@" />
       {phone && <Fact label="Phone" value={phone} href={tel} />}
-      <Fact label="LinkedIn" value={linkedinLabel} href={linkedinHref} />
+      <Fact label="LinkedIn" value={linkedinLabel} href={linkedinHref} icon="linkedin" />
       <Fact label="Updated" value={updated} />
     </div>
 
@@ -73,11 +73,33 @@ const updated = new Date().toISOString().slice(0, 10);
     Program and Email are the two long values. Below the 6-across desktop
     layout, give them their own full-width row instead of squeezing them
     into a half-width cell, so "BS Construction Management Eng. Tech." and
-    the email address each read on one line.
+    the email address each read on one line -- and push that pair to the
+    bottom of the stack (via `order`) so the short paired facts read first.
   */
-  .title-block > :global(.fact:nth-child(2)),
-  .title-block > :global(.fact:nth-child(3)) {
+  .title-block > :global(.fact:nth-child(1)) {
+    order: 1;
+  }
+
+  .title-block > :global(.fact:nth-child(2)) {
+    order: 5;
     grid-column: 1 / -1;
+  }
+
+  .title-block > :global(.fact:nth-child(3)) {
+    order: 6;
+    grid-column: 1 / -1;
+  }
+
+  .title-block > :global(.fact:nth-child(4)) {
+    order: 2;
+  }
+
+  .title-block > :global(.fact:nth-child(5)) {
+    order: 3;
+  }
+
+  .title-block > :global(.fact:nth-child(6)) {
+    order: 4;
   }
 
   .site-footer__note {
@@ -99,6 +121,10 @@ const updated = new Date().toISOString().slice(0, 10);
   @media (min-width: 82em) {
     .title-block {
       grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+
+    .title-block > :global(.fact) {
+      order: initial;
     }
 
     .title-block > :global(.fact:nth-child(2)),
