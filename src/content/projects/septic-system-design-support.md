@@ -27,20 +27,21 @@ objective: >-
 myRole: >-
   Produced the full sanitary design and drawing set for this parcel. I
   calculated the required design flow from the bedroom count per SCDHS
-  standards, selected an I/A OWTS unit rated to meet that flow, and sized
-  the leaching pool system — including the required future-expansion pool —
-  to the minimum leaching area SCDHS requires for a residence of this size.
-  I drafted the entire site layout in AutoCAD myself. The system's slanted
-  orientation, needed to fit the site's required setback offsets, was a
-  design decision I worked out together with my supervising engineer.
-  Supervising engineers reviewed the design at each stage and returned
-  markups in Bluebeam, which I incorporated across successive drawing
-  rounds. All work was reviewed and approved by a licensed professional
-  engineer before issuance.
+  standards, selected an I/A OWTS unit (a Fujiclean CEN7 fiberglass unit)
+  rated to meet that flow, and sized the leaching pool system — including
+  the required future-expansion pool — to the minimum leaching area SCDHS
+  requires for a residence of this size, specifying traffic-bearing
+  structures where the layout placed them under paved areas. I drafted the
+  entire site layout in AutoCAD myself. The system's slanted orientation,
+  needed to fit the site's required setback offsets, was a design decision
+  I worked out together with my supervising engineer. Supervising engineers
+  reviewed the design at each stage and returned markups in Bluebeam, which
+  I incorporated across successive drawing rounds. All work was reviewed
+  and approved by a licensed professional engineer before issuance.
 approach:
   - Calculated the required design flow from the bedroom count, per SCDHS's 110-gallons-per-bedroom-per-day standard.
-  - Selected an I/A OWTS treatment unit rated to meet or exceed that required flow.
-  - Sized the leaching pool system, including the required future-expansion pool, to the minimum leaching area SCDHS requires for a residence of this size.
+  - Selected an I/A OWTS treatment unit (a Fujiclean CEN7 fiberglass unit) rated to meet or exceed that required flow.
+  - Sized the leaching pool system, including the required future-expansion pool, to the minimum leaching area SCDHS requires, specifying traffic-bearing structures where the layout placed them under paved areas.
   - Drafted the complete site layout in AutoCAD, working with my supervising engineer to angle the system to fit the site's required setback offsets.
   - Incorporated revision markups from supervising engineers, received in Bluebeam, across successive drawing rounds.
   - Prepared plan and profile sheets, including cross-section details and design notes.
@@ -55,11 +56,13 @@ deliverables:
   - Plan and profile sheets with cross-section details
 outcome: The revised layout was reviewed favorably by the project's architect and submitted for municipal permitting review.
 learned: >-
-  This task showed me how much precision matters once a licensed engineer is
-  reviewing your work — a small error in pipe alignment or a dimension
-  callout can turn into a compliance or constructability problem down the
-  line. I learned to slow down and check every callout against the engineer's
-  calculations, and to treat markups as a normal part of getting a drawing
-  right rather than a correction of failure.
+  Because I did both the sizing calculations and the drafting, I learned
+  firsthand how quickly a mistake in my own math could become a real
+  problem — a miscalculated design flow or leaching area wouldn't get
+  caught by someone else double-checking the numbers, only by the
+  engineer's review at the end, or worse, in the field. It taught me to
+  verify my own calculations as rigorously as I'd check someone else's
+  work, and to treat the engineer's markups as the safety net they're meant
+  to be rather than a correction of failure.
 images: []
 ---
