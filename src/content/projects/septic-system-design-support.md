@@ -1,0 +1,37 @@
+---
+title: Residential On-Site Wastewater System Design Support
+weight: 10
+featured: false
+draft: true
+category: Internship Work
+projectType: On-site wastewater (septic) system design
+timeframe: 'TODO: confirm the display timeframe for this task (e.g. "Summer 2026")'
+role: Engineering Intern — CAD drafting support
+summary: Assisted in drafting an on-site wastewater system layout in AutoCAD for a residential parcel, under the supervision of a licensed professional engineer.
+objective: >-
+  The parcel required a compliant on-site wastewater (septic) system layout,
+  drafted and detailed for the engineer's review and eventual permitting
+  submission.
+myRole: >-
+  Drafted the septic system layout in AutoCAD from the supervising engineer's
+  design and calculations, including pipe run alignment and placement of the
+  septic tank and leaching/absorption structures. Incorporated revisions from
+  the engineer's markups across successive drawing rounds and prepared plan
+  and profile sheets, including cross-section details and design notes. All
+  work was reviewed and approved by a licensed professional engineer before
+  issuance.
+approach:
+  - Reviewed the engineer's preliminary design and calculations to understand system sizing and layout requirements.
+  - Drafted the system layout in AutoCAD, including pipe runs and placement of the septic tank and leaching/absorption structures.
+  - Incorporated revisions from the engineer's markups across successive drawing rounds.
+  - Prepared plan and profile sheets, including cross-section details and design notes.
+tools:
+  - AutoCAD
+standards: []
+deliverables:
+  - Septic system layout drawing (plan view)
+  - Plan and profile sheets with cross-section details
+outcome: 'TODO: outcome once confirmed (e.g. issued for permitting, status of engineer sign-off)'
+learned: 'TODO: two to four sentences on what this task taught'
+images: []
+---
