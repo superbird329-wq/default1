@@ -8,36 +8,47 @@
 # HEATHER'S APPROVAL (paste verbatim below this line, then flip draft: false):
 # TODO — not yet pasted.
 # =============================================================================
-title: Residential On-Site Wastewater System Design Support
+title: Residential On-Site Wastewater System Design
 weight: 10
 featured: false
 draft: true
 category: Internship Work
-projectType: On-site wastewater (septic) system design
+projectType: On-site wastewater (septic) system design and sizing
 timeframe: Summer 2026
-role: Engineering Intern — CAD drafting support
-summary: Assisted in drafting an on-site wastewater system layout in AutoCAD for a residential parcel, under the supervision of a licensed professional engineer.
+role: Engineering Intern — sanitary design & drafting
+summary: Sized and drafted a complete on-site wastewater (I/A OWTS) system layout in AutoCAD for a residential parcel, under the review of a licensed professional engineer.
 objective: >-
-  The parcel required a compliant on-site wastewater (septic) system layout,
-  drafted and detailed for the engineer's review and eventual permitting
-  submission.
+  The parcel required a compliant on-site wastewater system — including an
+  Innovative/Alternative Onsite Wastewater Treatment System (I/A OWTS), a
+  higher-performance treatment unit that Suffolk County requires in place of
+  a conventional septic system in certain groundwater management zones —
+  sized, laid out, and detailed for the engineer's review and eventual
+  permitting submission.
 myRole: >-
-  Drafted the septic system layout in AutoCAD from the supervising engineer's
-  design and calculations, including pipe run alignment and placement of the
-  septic tank and leaching/absorption structures. Incorporated revisions from
-  the engineer's markups across successive drawing rounds and prepared plan
-  and profile sheets, including cross-section details and design notes. All
-  work was reviewed and approved by a licensed professional engineer before
-  issuance.
+  Independently produced the full sanitary design and drawing set for this
+  parcel. I calculated the required design flow from the bedroom count per
+  SCDHS standards, selected an I/A OWTS unit rated to meet that flow, and
+  sized the leaching pool system — including the required future-expansion
+  pool — to the minimum leaching area SCDHS requires for a residence of this
+  size. I then drafted the entire site layout in AutoCAD myself; no one else
+  touched the CAD file. Supervising engineers reviewed the design at each
+  stage and returned markups in Bluebeam, which I incorporated across
+  successive drawing rounds. All work was reviewed and approved by a
+  licensed professional engineer before issuance.
 approach:
-  - Reviewed the engineer's preliminary design and calculations to understand system sizing and layout requirements.
-  - Drafted the system layout in AutoCAD, including pipe runs and placement of the septic tank and leaching/absorption structures.
-  - Incorporated revisions from the engineer's markups across successive drawing rounds.
+  - Calculated the required design flow from the bedroom count, per SCDHS's 110-gallons-per-bedroom-per-day standard.
+  - Selected an I/A OWTS treatment unit rated to meet or exceed that required flow.
+  - Sized the leaching pool system, including the required future-expansion pool, to the minimum leaching area SCDHS requires for a residence of this size.
+  - Drafted the complete site layout in AutoCAD, including pipe runs, the I/A OWTS unit, and leaching pool placement.
+  - Incorporated revision markups from supervising engineers, received in Bluebeam, across successive drawing rounds.
   - Prepared plan and profile sheets, including cross-section details and design notes.
 tools:
   - AutoCAD
-standards: []
+  - Bluebeam Revu
+standards:
+  - Suffolk County Department of Health Services (SCDHS) Standards for Approval of Plans and Construction for Sewage Disposal Systems for Single-Family Residences
 deliverables:
+  - Sanitary system sizing calculations (design flow, I/A OWTS selection, leaching pool area)
   - Septic system layout drawing (plan view)
   - Plan and profile sheets with cross-section details
 outcome: The revised layout was reviewed favorably by the project's architect and submitted for municipal permitting review.
