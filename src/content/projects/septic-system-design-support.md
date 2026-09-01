@@ -14,7 +14,7 @@ featured: false
 draft: true
 category: Internship Work
 projectType: On-site wastewater (septic) system design
-timeframe: 'TODO: confirm the display timeframe for this task (e.g. "Summer 2026")'
+timeframe: Summer 2026
 role: Engineering Intern — CAD drafting support
 summary: Assisted in drafting an on-site wastewater system layout in AutoCAD for a residential parcel, under the supervision of a licensed professional engineer.
 objective: >-
@@ -40,7 +40,13 @@ standards: []
 deliverables:
   - Septic system layout drawing (plan view)
   - Plan and profile sheets with cross-section details
-outcome: 'TODO: outcome once confirmed (e.g. issued for permitting, status of engineer sign-off)'
-learned: 'TODO: two to four sentences on what this task taught'
+outcome: The revised layout was reviewed favorably by the project's architect and submitted for municipal permitting review.
+learned: >-
+  This task showed me how much precision matters once a licensed engineer is
+  reviewing your work — a small error in pipe alignment or a dimension
+  callout can turn into a compliance or constructability problem down the
+  line. I learned to slow down and check every callout against the engineer's
+  calculations, and to treat markups as a normal part of getting a drawing
+  right rather than a correction of failure.
 images: []
 ---
