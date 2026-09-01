@@ -25,21 +25,23 @@ objective: >-
   sized, laid out, and detailed for the engineer's review and eventual
   permitting submission.
 myRole: >-
-  Independently produced the full sanitary design and drawing set for this
-  parcel. I calculated the required design flow from the bedroom count per
-  SCDHS standards, selected an I/A OWTS unit rated to meet that flow, and
-  sized the leaching pool system — including the required future-expansion
-  pool — to the minimum leaching area SCDHS requires for a residence of this
-  size. I then drafted the entire site layout in AutoCAD myself; no one else
-  touched the CAD file. Supervising engineers reviewed the design at each
-  stage and returned markups in Bluebeam, which I incorporated across
-  successive drawing rounds. All work was reviewed and approved by a
-  licensed professional engineer before issuance.
+  Produced the full sanitary design and drawing set for this parcel. I
+  calculated the required design flow from the bedroom count per SCDHS
+  standards, selected an I/A OWTS unit rated to meet that flow, and sized
+  the leaching pool system — including the required future-expansion pool —
+  to the minimum leaching area SCDHS requires for a residence of this size.
+  I drafted the entire site layout in AutoCAD myself. The system's slanted
+  orientation, needed to fit the site's required setback offsets, was a
+  design decision I worked out together with my supervising engineer.
+  Supervising engineers reviewed the design at each stage and returned
+  markups in Bluebeam, which I incorporated across successive drawing
+  rounds. All work was reviewed and approved by a licensed professional
+  engineer before issuance.
 approach:
   - Calculated the required design flow from the bedroom count, per SCDHS's 110-gallons-per-bedroom-per-day standard.
   - Selected an I/A OWTS treatment unit rated to meet or exceed that required flow.
   - Sized the leaching pool system, including the required future-expansion pool, to the minimum leaching area SCDHS requires for a residence of this size.
-  - Drafted the complete site layout in AutoCAD, including pipe runs, the I/A OWTS unit, and leaching pool placement.
+  - Drafted the complete site layout in AutoCAD, working with my supervising engineer to angle the system to fit the site's required setback offsets.
   - Incorporated revision markups from supervising engineers, received in Bluebeam, across successive drawing rounds.
   - Prepared plan and profile sheets, including cross-section details and design notes.
 tools:
