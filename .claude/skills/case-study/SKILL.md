@@ -191,3 +191,14 @@ then write the fact generically.
 **Assuming a redacted crop is clean.** The first crop still carried a lot
 number and a boundary bearing. Check every crop against the confidentiality
 list above, corner to corner, before treating it as usable.
+
+**Asserting why a code requirement applies.** The objective said an I/A OWTS
+is required "in certain groundwater management zones." What was actually
+known is that one was required on this parcel. The trigger conditions in the
+Suffolk County regulations are more involved than that, so the sentence
+stated a mechanism that had not been verified. This is the no-fabrication
+rule in a form that is easy to miss, because the invented part is an
+explanation rather than a number. Describe what the standard required here.
+Do not explain when it applies generally unless the source document has been
+read and says so. A reviewer with a PE will notice, and the write-up is aimed
+at exactly those readers.

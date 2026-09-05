@@ -20,10 +20,9 @@ summary: Sized and drafted a complete on-site wastewater (I/A OWTS) system layou
 objective: >-
   The parcel required a compliant on-site wastewater system, including an
   Innovative/Alternative Onsite Wastewater Treatment System (I/A OWTS, a
-  higher-performance treatment unit that Suffolk County requires in place of
-  a conventional septic system in certain groundwater management zones),
-  sized, laid out, and detailed for the engineer's review and eventual
-  permitting submission.
+  higher-performance treatment system required for certain properties under
+  Suffolk County's wastewater regulations), sized, laid out, and detailed
+  for the engineer's review and eventual permitting submission.
 myRole: >-
   Produced the full sanitary design and drawing set for this parcel. I
   calculated the required design flow from the bedroom count per SCDHS
