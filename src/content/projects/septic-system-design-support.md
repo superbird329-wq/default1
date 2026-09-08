@@ -48,7 +48,7 @@ tools:
   - AutoCAD
   - Bluebeam Revu
 standards:
-  - Suffolk County Department of Health Services (SCDHS) Standards for Approval of Plans and Construction for Sewage Disposal Systems for Single-Family Residences
+  - Suffolk County Department of Health Services (SCDHS) Standards for Approval of Plans and Construction for Sewage Disposal Systems for Single-Family Residences (April 19, 2022 edition)
 deliverables:
   - Sanitary system sizing calculations (design flow, I/A OWTS selection, leaching pool area)
   - Septic system layout drawing (plan view)

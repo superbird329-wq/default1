@@ -64,7 +64,10 @@ Ask for the documents:
   (offer to specify the crop)
 - Any calculation sheets
 - The governing code or standard, so it can be cited by its exact published
-  title rather than an approximation
+  title rather than an approximation. Ask which edition was actually on the
+  desk, not which one is current. Standards get reissued, offices do not
+  switch the day a revision drops, and the write-up should name the edition
+  the work was done to.
 - Any markups or review comments received
 
 Ask the questions, and map each answer to a schema field:
