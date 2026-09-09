@@ -196,6 +196,45 @@ Step 5 is the one that gets forgotten. A recruiter who reads both will notice.
 
 ---
 
+## Adding a transcript or coursework document
+
+These appear in a **Documents** section on `/resume`, under Education. The
+section only exists when at least one document is actually available, so the
+page never shows an empty heading or a link to a missing file.
+
+To add one:
+
+1. Put the file in `public/documents/`.
+2. Run `npm run strip-metadata`. A PDF exported from a school portal or from
+   Word carries your name, the software used, and often the full original file
+   path.
+3. Open `src/data/site.ts` and find the `documents:` list. Add an entry, or
+   edit the transcript entry that is already there:
+
+```ts
+documents: [
+  {
+    label: 'Academic transcript',        // the link text
+    note: 'Farmingdale State College',   // optional, shown next to the link
+    path: '/documents/vin-cataldo-transcript.pdf',   // must match the filename
+    available: true,                     // false hides it completely
+  },
+],
+```
+
+4. Run `npm run build` and check `/resume`.
+
+**Read the transcript before you publish it.** Transcripts routinely carry a
+student ID number, and some carry a date of birth. Neither belongs on a public
+web page that anyone can find. Either redact those fields first, or publish an
+unofficial copy that does not include them. This is the one step here that
+cannot be undone once the file has been live and crawled.
+
+The same entry format works for a coursework sample, a drawing set, or a
+project report. Give each one a `label` that says what it is.
+
+---
+
 ## Other common edits
 
 | To change | Edit |

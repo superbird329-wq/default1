@@ -1,0 +1,2 @@
+Downloadable documents (transcript, coursework samples).
+Put files here, then set available: true on the matching entry in src/data/site.ts.

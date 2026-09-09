@@ -27,6 +27,22 @@ export interface Course {
   status: 'completed' | 'in-progress';
 }
 
+/**
+ * A downloadable file offered on the resume page: transcript, coursework
+ * sample, drawing set. `available` gates the link, so an entry can be written
+ * here before its file exists without the site advertising a 404.
+ */
+export interface Doc {
+  /** Link text. Say what the document is, not "click here". */
+  label: string;
+  /** Optional one-line qualifier, e.g. the issuing school or the course. */
+  note?: string;
+  /** Path under public/, e.g. '/documents/transcript.pdf'. */
+  path: string;
+  /** Flip to true only once the file is committed at `path`. */
+  available: boolean;
+}
+
 export const SITE = {
   url: 'https://vincataldo.com',
 
@@ -116,7 +132,7 @@ export const SITE = {
     school: 'College of Engineering Technologies',
     location: 'Farmingdale, NY',
     expectedGraduation: 'Spring 2028',
-    gpa: '3.81',
+    gpa: '3.83',
     /**
      * Relevant coursework by course title, from the transcript. Gen-ed courses
      * are deliberately omitted: this list exists for a recruiter scanning for
@@ -148,6 +164,26 @@ export const SITE = {
     /** Term the in-progress courses belong to. */
     inProgressTerm: 'Fall 2026',
   },
+
+  /**
+   * Files offered for download on the resume page, beyond the resume PDF.
+   * Put the file in public/documents/, make `path` match its name, then set
+   * `available: true`. Nothing renders while every entry is unavailable, so
+   * the section cannot appear empty.
+   *
+   * READ ANY TRANSCRIPT BEFORE PUBLISHING IT. Transcripts routinely carry a
+   * student ID number, and some carry a date of birth. Neither belongs on a
+   * public page. Redact those, or link an unofficial copy that omits them.
+   * Run scripts/strip-metadata.sh over public/ afterwards either way.
+   */
+  documents: [
+    {
+      label: 'Academic transcript',
+      note: 'Farmingdale State College',
+      path: '/documents/vin-cataldo-transcript.pdf',
+      available: false,
+    },
+  ] as Doc[],
 
   /** §6.4. Vin confirmed all three resume certifications should show. */
   showCertifications: true,

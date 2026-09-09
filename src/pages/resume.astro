@@ -34,11 +34,12 @@ const linkedinLabel = linkedin
   .replace(/^https?:\/\/(www\.)?/, '')
   .replace(/\/$/, '');
 const completed = SITE.education.coursework.filter((c) => c.status === 'completed');
+const availableDocs = SITE.documents.filter((d) => d.available);
 ---
 
 <BaseLayout
   title="Resume — Vin Cataldo, Construction Management Engineering Technology"
-  description="Resume for Vincent Cataldo: Construction Management Engineering Technology student at Farmingdale State College, engineering intern, GPA 3.81."
+  description={`Resume for Vincent Cataldo: Construction Management Engineering Technology student at Farmingdale State College, engineering intern, GPA ${SITE.education.gpa}.`}
 >
   <article class="resume wrap">
     <header class="resume__head">
@@ -95,6 +96,29 @@ const completed = SITE.education.coursework.filter((c) => c.status === 'complete
         </p>
       </div>
     </section>
+
+    {
+      /*
+        Documents. Renders only the entries whose file has actually been
+        committed, and the whole section disappears when none have, so the
+        page never shows an empty heading or links a missing file.
+      */
+      availableDocs.length > 0 && (
+        <section class="resume__section no-print">
+          <h2>Documents</h2>
+          <ul class="docs">
+            {availableDocs.map((doc) => (
+              <li>
+                <a href={doc.path} download>
+                  {doc.label}
+                </a>
+                {doc.note && <span class="docs__note">{doc.note}</span>}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
 
     <section class="resume__section">
       <h2>Experience</h2>
@@ -263,6 +287,25 @@ const completed = SITE.education.coursework.filter((c) => c.status === 'complete
   .coursework .label {
     display: block;
     margin-block-end: var(--space-3xs);
+  }
+
+  .docs {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: var(--space-2xs);
+  }
+
+  .docs li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-2xs);
+  }
+
+  .docs__note {
+    font-size: var(--step--1);
+    color: var(--c-graphite);
   }
 
   @media (min-width: 40em) {
