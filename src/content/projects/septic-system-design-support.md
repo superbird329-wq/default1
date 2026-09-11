@@ -55,7 +55,7 @@
 # =============================================================================
 title: Residential On-Site Wastewater System Design
 weight: 10
-featured: false
+featured: true
 draft: false
 category: Internship Work
 projectType: On-site wastewater (septic) system design and sizing
