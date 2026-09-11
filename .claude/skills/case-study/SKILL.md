@@ -172,6 +172,42 @@ Ask him how he wants it delivered before building it. A published artifact
 gives a shareable link; a document he sends from his own email may suit a
 supervisor better. It is his relationship, so it is his call.
 
+### Building it
+
+`build-approval-packet.cjs` in this directory emits the .docx. It reads the
+case study text straight from `src/content/projects/<slug>.md`, so the packet
+cannot drift from what would actually be published. Everything specific to the
+request lives in `packets/<slug>.json`: recipients, what is being asked, the
+images with what was redacted from each, and the confidentiality checklist.
+
+```bash
+npm install docx          # not a project dependency, install on demand
+node .claude/skills/case-study/build-approval-packet.cjs \
+  --slug septic-system-design-support \
+  --images-dir /path/to/redacted/images \
+  --out ./Portfolio-Approval-Request.docx
+```
+
+The `.cjs` extension is load-bearing: this package is `"type": "module"`, so a
+`.js` file would be parsed as ESM and `require` would fail.
+
+The images are not in the repository and must not be, per the gate above. The
+manifest's `_comment` records where they live and under what names. Download
+them, run `npm run strip-metadata`, then point `--images-dir` at them.
+
+Verify before sending. LibreOffice is frequently missing from a fresh
+container, so `soffice --convert-to pdf` may fail on any input, which says
+nothing about the document. Check it the other way instead:
+
+```bash
+python3 <docx-skill>/scripts/office/validate.py <file>.docx   # schema
+unzip -l <file>.docx | grep media                             # images embedded
+unzip -p <file>.docx word/document.xml | grep -c "—"          # must be 0
+```
+
+Then tell him to open it in Word once, because none of that checks how the
+pages break around the images.
+
 ## Failure modes seen before
 
 **Understating the work.** The first draft of the septic case study said
