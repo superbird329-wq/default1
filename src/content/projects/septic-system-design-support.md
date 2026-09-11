@@ -1,17 +1,62 @@
 ---
 # =============================================================================
-# PUBLICATION GATE: DO NOT set draft: false until Heather Sonnenberg's written
-# approval, naming the specifics she's approving for public posting, has been
+# PUBLICATION GATE: DO NOT set draft: false until the supervisor's written
+# approval, naming the specifics being approved for public posting, has been
 # pasted in full immediately below this block. No approval text below = not
 # approved. This gate is not optional and does not expire on a deadline.
 #
-# HEATHER'S APPROVAL (paste verbatim below this line, then flip draft: false):
-# TODO: not yet pasted.
+# Paste the approval body verbatim, but render the approver as a role rather
+# than a name: SPEC 3.2 forbids the name of any person other than the owner
+# anywhere in this source or in commit history, and that applies to the
+# approval record itself. Keep the unredacted original outside the repository.
+#
+# APPROVAL (paste verbatim below this line, then flip draft: false):
+#
+#   By email, September 11, 2026, from the Principal at Subsurface Engineering,
+#   to Vincent Cataldo, copied to the second supervisor. Re: the approval
+#   packet "Portfolio Content: Request for Approval", September 3, 2026.
+#
+#     "Vin,
+#
+#     I just reviewed this and we are ok with your write up since there's no
+#     personal client contact information included.
+#
+#     Regards,"
+#
+#   [Signature block withheld here: it carries a name, a title, a firm street
+#   address and a phone number, all of which SPEC 3.2 keeps out of this source
+#   and out of commit history. The unredacted original is retained outside the
+#   repository. "We" is read as covering both supervisors, who were both on
+#   the thread.]
+#
+# SCOPE OF THIS APPROVAL. It covers the write-up text below, which is
+# word for word the text in section 3 of the reviewed packet. It does NOT
+# cover the two proposed images, and images: [] must stay empty, because:
+#
+#   1. The reply approves "your write up". Section 1 of the packet itself
+#      treats the write-up and the "two redacted images" as two separate
+#      items, so that wording is not read as reaching the images.
+#   2. The reason given, that no personal client contact information is
+#      included, is a narrower test than the images have to pass.
+#   3. Image 1 (partial site plan) does not match the packet's own account of
+#      it. Section 5 certifies site elevations as removed. They are not
+#      removed: rim and invert elevations in the callouts, a top-of-wall and
+#      bottom-of-wall pair, a spot elevation on the fence line, and several
+#      labelled contour lines all remain. Elevations are confidential under
+#      SPEC 3.2, and contours plus the parcel edge can identify a parcel in a
+#      county GIS lookup with no name anywhere on the sheet. So the approval
+#      above was given against a description that is not accurate, and it
+#      cannot carry the file as it stands.
+#
+# Image 1 must be corrected at the CAD source and re-approved against an
+# accurate description before it enters this repository. Image 2 (the
+# calculations excerpt) was found to match its description, but it was
+# submitted as part of a pair and has not been separately approved.
 # =============================================================================
 title: Residential On-Site Wastewater System Design
 weight: 10
 featured: false
-draft: true
+draft: false
 category: Internship Work
 projectType: On-site wastewater (septic) system design and sizing
 timeframe: Summer 2026
