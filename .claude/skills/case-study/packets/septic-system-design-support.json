@@ -1,0 +1,77 @@
+{
+  "_comment": [
+    "Approval-packet manifest for the septic case study. Everything here is",
+    "specific to the approval request rather than to the site; the case study",
+    "text itself is read from src/content/projects/septic-system-design-support.md",
+    "so the two cannot drift.",
+    "",
+    "The images are deliberately NOT in this repository (SPEC 3.2 gates drawing",
+    "images at the repository until written approval exists). They live in Vin's",
+    "Google Drive under the SSE folder, account catavp@farmingdale.edu:",
+    "  plan-view.png  <- 'Screenshot 2026-09-01 120154.png', Drive id 1EzmMIoDo4-kvmRqqQ4JR0KSVu828_EhJ",
+    "  calc-sheet.png <- 'Screenshot 2026-09-01 133309.png', Drive id 1Sqi40tAMDu4ivV5GUF7LB6c5OzA_ewmU",
+    "Download both, rename to the filenames below, run strip-metadata, then pass",
+    "the folder as --images-dir."
+  ],
+
+  "from": "Vincent Cataldo, Engineering Intern",
+  "to": ["Heather Sonnenberg", "Daniel Hurley"],
+  "signature": "Vincent Cataldo",
+  "signatureTitle": "Engineering Intern",
+
+  "asking": [
+    "For my CON162 assignment I am building a professional portfolio website. I would like to include one write-up of work I did here this summer, along with two redacted images. Nothing has been published, and nothing will be, until you tell me it is approved.",
+    "This document contains the exact text I propose to post, word for word, and the exact images. Please review and tell me whether to publish it as written, publish it with changes you mark, or leave it out entirely.",
+    "I have followed the guidance you both gave: general description of scope and my role only, no client information, no site information, and the supervision of a licensed engineer stated plainly."
+  ],
+
+  "generalTerms": "A residential on-site wastewater (septic) system design from this past summer, including the sizing calculations and the AutoCAD drawing set. I have deliberately not written down which job it is. You will know it from this description.",
+
+  "images": [
+    {
+      "file": "plan-view.png",
+      "title": "partial site plan, plan view",
+      "caption": "Septic (I/A OWTS) system layout, plan view (redacted).",
+      "removed": [
+        "The lot number",
+        "The boundary bearing and distance along the property line",
+        "The proposed dwelling's finished floor and basement floor elevations",
+        "The title block, firm name, and any seal",
+        "All file metadata (author, originating software, original file path)"
+      ],
+      "note": "What remains is the system layout itself: pipe runs, the leaching pool, the drywell locations, the distribution box, the treatment unit callout, and the standard offset dimensions."
+    },
+    {
+      "file": "calc-sheet.png",
+      "title": "sizing calculations excerpt",
+      "width": 440,
+      "caption": "Sanitary system sizing calculations: design flow, treatment unit selection, and leaching pool area.",
+      "removed": [],
+      "note": "This is the calculation block from the drawing. It shows the groundwater management zone, the bedroom count and resulting design flow in gallons per day, the required and proposed treatment unit capacity, and the required and provided leaching pool sidewall area. It carries no address, no client name, no permit or application number, no lot number, and no title block or seal. Nothing was cropped out of it, because there was nothing on it to remove. File metadata has been stripped."
+    }
+  ],
+
+  "checklist": [
+    ["Client or company name", "Not included"],
+    ["Property address or location beyond \"a residential parcel\"", "Not included"],
+    ["Permit, application, or municipal case number", "Not included"],
+    ["Internal project number", "Not included"],
+    ["Lot number, boundary bearings, or survey dimensions", "Removed from image"],
+    ["Site elevations", "Removed from image"],
+    ["Title block, PE seal, or firm logo", "Removed from image"],
+    ["Names of any other person or firm", "Not included"],
+    ["File metadata (author, software, original file path)", "Stripped"],
+    ["Supervision by a licensed PE stated explicitly", "Stated"]
+  ],
+
+  "replyOptions": [
+    "Approved as written. I publish exactly what is above, and nothing more.",
+    "Approved with changes. Mark up this document, or tell me which sentences or images to change or cut, and I publish the corrected version.",
+    "Not approved. I leave this project off the site entirely and it goes no further."
+  ],
+
+  "closing": [
+    "If it is useful, I am happy to send any future write-up through this same format before anything goes up. I would rather check every time than guess wrong once.",
+    "Thank you both for the time on this, and for what this internship has already taught me."
+  ]
+}
