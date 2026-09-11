@@ -231,6 +231,28 @@ then write the fact generically.
 number and a boundary bearing. Check every crop against the confidentiality
 list above, corner to corner, before treating it as usable.
 
+**Certifying a redaction that was never made.** This is the worst one so far,
+because it left the repository and reached the supervisors. The 3 September
+2026 packet certified "Site elevations: Removed from image" for the site plan.
+They were not removed. Rim and invert elevations in the structure callouts, a
+top-of-wall and bottom-of-wall pair, a spot elevation on the fence line and
+several labelled contour lines were all still on the drawing. What had actually
+been checked, weeks earlier, was that the dwelling's finished floor and basement
+floor elevations were cropped; that narrower and true claim was sitting in the
+same document, in the per-image list, contradicting the checklist. The
+supervisor then approved against a description that was false.
+
+Two rules come out of it. The checklist in section 5 is a certification, so
+verify every row against every image at the moment of sending, and never carry a
+row forward because a previous packet had it. And when a per-image list and the
+checklist say different things about the same image, stop: one of them is wrong,
+and the broader claim is the one to distrust.
+
+Note also what did and did not save this. The images had not entered the
+repository, because that gate is absolute and does not depend on anyone's
+judgement being right. The checklist depended on judgement and failed. Prefer
+mechanical gates to careful ones.
+
 **Certifying a redaction that was never done.** Section 5 of the septic
 approval packet listed "Site elevations: Removed from image" for the site plan.
 They had not been removed: rim and invert elevations, a top-of-wall and
