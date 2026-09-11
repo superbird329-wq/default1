@@ -54,6 +54,8 @@ Claude Code must never invent, estimate, or embellish:
 
 If a content field has no supplied value, leave a visible `TODO` placeholder in the Markdown source and list it in the build report. Do not fill it with plausible-sounding text. Lorem ipsum is acceptable only for layout testing and must be removed before the final build.
 
+*Amended 2026-09-11.* This rule governs images as well as words. A photograph presented as a record of a real person, a real site, or a real deliverable must be one. A generated image standing in for the owner's face, a project site, or a drawing is fabricated content in the same way an invented cost figure is, and the empty-slot pattern above is the correct response to not having one yet — every image slot on the site already reserves its space and renders without a photo. If a generated or illustrative image is used anyway, it must be captioned as such on the page. See `AUDIT.md`, finding 2.
+
 ### 3.2 No confidential client information
 
 The owner's internship work involves real client projects, addresses, and municipal case numbers. None of the following may appear anywhere in the site source, in image files, in image metadata, in PDF metadata, or in commit history:
@@ -87,6 +89,10 @@ Any drawing image used on the site must be a redacted crop or a redrawn abstract
 ### 3.3 Strip metadata
 
 All images and PDFs committed to the repository must have EXIF, XMP, and document metadata stripped. Include a script at `scripts/strip-metadata.sh` that runs `exiftool -all= ` over `public/` and add it as a pre-commit step in the README instructions.
+
+*Amended 2026-09-11.* A pre-commit step that depends on a tool the author may not have installed is a request, not a control: `strip-metadata.sh` does nothing at all where exiftool is absent, and says so only if someone is reading. Enforcement must therefore sit inside `npm run verify` and must not depend on anything outside the project's own dependencies. `scripts/check-assets.mjs` is that gate. It reads PNG chunks, JPEG segments, WebP chunks, PDF document-info dictionaries, and decompressed PDF page text directly, using Node's zlib and nothing else, and it fails the build on author names, GPS coordinates, embedded original file paths, or §3.2 patterns inside a PDF.
+
+It also reports **content credentials** — C2PA provenance manifests, carried in a PNG `caBX` chunk or a JPEG APP11 segment. These are not EXIF or XMP and are not removed by `exiftool -all=`. They are not confidential either, so they are reported as a non-fatal notice: a provenance record is disclosure, and stripping one to make generated media look photographic is the §3.1 problem, not the fix.
 
 ---
 

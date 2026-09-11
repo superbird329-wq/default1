@@ -9,6 +9,10 @@
 # for the shapes that client information takes — street addresses, case and
 # permit numbers, internal project numbers — but it cannot recognise a client's
 # company name. That judgement stays with the author.
+#
+# Text files only. grep cannot see inside a PNG chunk or a compressed PDF
+# stream, so images and PDFs are covered separately by scripts/check-assets.mjs
+# (npm run check:assets). Both run as part of npm run verify.
 
 set -euo pipefail
 
@@ -34,6 +38,17 @@ PROJNUM='\b[0-9]{2}-[0-9]{3,4}\b'
 # and a client's number appearing in a case study is exactly what this catches.
 PHONE='\(?[0-9]{3}\)?[-. ][0-9]{3}[-. ][0-9]{4}'
 PHONE_EXEMPT='src/data/site.ts'
+# Names of people other than Vin. Spec §3.2 forbids them, and the 2026-09-11
+# audit found one ("my boss at the time <first> <last>" in the About page) that
+# every other pattern here sailed straight past — a person's name has no
+# distinctive shape, so a general rule would flag every organisation on the
+# site. These three narrow cases are the ones that actually occur in a
+# portfolio: someone introduced by their relationship to the author, someone
+# with an honorific, and a licensed professional with credentials after their
+# name — which is what appears on a PE seal.
+NAME_REL='(boss|supervisor|manager|colleague|co-?worker|classmate|teammate|professor|instructor|mentor|friend|partner|neighbou?r)(,| at the time| named)?[[:space:]]+[A-Z][a-z]+[[:space:]]+[A-Z][a-z]+'
+NAME_TITLE='\b(Mr|Mrs|Ms|Dr|Prof)\.[[:space:]]+[A-Z][a-z]+'
+NAME_CRED='\b[A-Z][a-z]+[[:space:]]+[A-Z][a-z]+,[[:space:]]*(PE|P\.E\.|RA|R\.A\.|AIA|LEED|EIT)\b'
 
 # Only src/ and public/ are scanned: that is where every published word and
 # asset comes from. README.md and SPEC.md are deliberately excluded because they
@@ -44,7 +59,8 @@ SEARCH_PATHS=(src public)
 echo "Scanning working tree for confidential patterns..."
 echo
 
-for spec in "ADDRESS:$ADDRESS" "CASE/PERMIT NUMBER:$CASENUM" "PROJECT NUMBER:$PROJNUM" "PHONE:$PHONE"; do
+for spec in "ADDRESS:$ADDRESS" "CASE/PERMIT NUMBER:$CASENUM" "PROJECT NUMBER:$PROJNUM" "PHONE:$PHONE" \
+            "PERSON NAME:$NAME_REL" "PERSON NAME:$NAME_TITLE" "PERSON NAME:$NAME_CRED"; do
   name="${spec%%:*}"
   pattern="${spec#*:}"
   while IFS= read -r line; do
@@ -62,7 +78,8 @@ if [ "${1:-}" = "--history" ]; then
   echo
   echo "Scanning git history..."
   echo
-  for spec in "ADDRESS:$ADDRESS" "CASE/PERMIT NUMBER:$CASENUM" "PROJECT NUMBER:$PROJNUM"; do
+  for spec in "ADDRESS:$ADDRESS" "CASE/PERMIT NUMBER:$CASENUM" "PROJECT NUMBER:$PROJNUM" \
+              "PERSON NAME:$NAME_REL" "PERSON NAME:$NAME_TITLE" "PERSON NAME:$NAME_CRED"; do
     name="${spec%%:*}"
     pattern="${spec#*:}"
     while IFS= read -r line; do

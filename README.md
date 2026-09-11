@@ -29,7 +29,8 @@ npm run dev      # http://localhost:4321
 | `npm run check` | Type-check content frontmatter and components |
 | `npm run strip-metadata` | Strip EXIF/XMP metadata from `public/` — **run before committing any image or PDF** |
 | `./scripts/check-todos.sh` | Fail if `TODO` placeholders remain in the built output |
-| `./scripts/check-confidential.sh` | Scan for confidential-looking patterns |
+| `./scripts/check-confidential.sh` | Scan text for confidential-looking patterns |
+| `npm run check:assets` | Scan committed images and PDFs for metadata and confidential text |
 | `npm run check:contrast` | Audit the palette against WCAG 2.2 AA — run after any colour change |
 | `npm run verify` | Everything above, as one pre-deploy gate |
 
@@ -63,12 +64,22 @@ Describe work generically instead:
 its public use in writing, and the image is a redacted crop or a redrawn
 abstraction.
 
-Two scripts help, but neither replaces reading what you wrote:
+Three scripts help, but none of them replaces reading what you wrote:
 
 ```bash
-./scripts/check-confidential.sh             # working tree
-./scripts/check-confidential.sh --history   # also scans git history
+./scripts/check-confidential.sh             # text, working tree
+./scripts/check-confidential.sh --history   # text, plus the full git history
+npm run check:assets                        # inside every committed image and PDF
 ```
+
+`check-confidential.sh` is grep, so it only sees text. `check:assets` opens the
+binaries — PNG chunks, JPEG segments, PDF metadata, and the actual page text of
+every PDF — because §3.2 covers image and document metadata too, and grep cannot
+read either. It needs no exiftool.
+
+Findings from past reviews, and the two decisions still open, are recorded in
+[`AUDIT.md`](./AUDIT.md). Read it before your first content change: it explains
+what these scripts cannot catch.
 
 ### Stripping metadata
 
@@ -84,6 +95,19 @@ Requires `exiftool`:
 
 - macOS: `brew install exiftool`
 - Debian/Ubuntu: `sudo apt-get install libimage-exiftool-perl`
+
+If exiftool is not installed this step is silently skipped, which is exactly how
+metadata reaches a repository. `npm run check:assets` is the backstop: it needs
+nothing but Node, it runs inside `npm run verify`, and it fails the build on
+author names, GPS coordinates, or embedded original file paths.
+
+One thing it reports but does not block on: **content credentials**, the signed
+C2PA provenance record that AI image tools embed. The headshot currently carries
+one. It is not confidential — see finding 2 in [`AUDIT.md`](./AUDIT.md).
+
+Images imported from `src/assets/` get a second layer for free: Astro re-encodes
+them through sharp, which discards metadata on the way out. Anything in
+`public/` is served byte-for-byte and has no such protection.
 
 ---
 
@@ -438,25 +462,33 @@ public/
   _headers              Security headers
   _redirects            www -> apex
 scripts/                Metadata stripping and pre-publish checks
+SPEC.md                 The build specification — what this site must be
+AUDIT.md                Confidentiality review log, and the decisions still open
 ```
 
 ---
 
 ## Build status
 
+*Last confirmed against the repository on 2026-09-11.*
+
 Phases 1–3 are complete: the foundation, the design pass, and all five content
-pages built from Vin's real resume and transcript.
+pages built from Vin's real resume and transcript. The LinkedIn URL, the resume
+PDF, the About narrative, the headshot, and all 21 credentials are in place, and
+**no `TODO` placeholders remain** — `npm run verify` now passes end to end.
 
-Outstanding:
+Outstanding work:
 
-- **Project case studies** (`SPEC.md` §12 phase 4). None written yet. The
-  projects index and the case study template are built and waiting.
-- **LinkedIn URL** — a TODO marker on every page until supplied.
-- **Resume PDF** — export from the source document, see above.
-- **Headshot** for the About page, and the two narrative paragraphs in
-  `src/content/pages/about.md`.
-- **Club and competition dates**, and any scholarships.
-- **Quality pass and deployment** (§12 phases 5–6).
+- **Project case studies** (`SPEC.md` §12 phase 4). None written yet.
+  `src/content/projects/` is empty; the index and the case study template are
+  built and waiting. This is the last real gap in the site.
+- **Quality pass and deployment** (§12 phases 5–6). Lighthouse, the five
+  breakpoints, and the JavaScript-disabled pass have not been run.
 
-`npm run verify` currently fails on the remaining TODO markers. That is
-intentional: it is the gate that stops a half-finished site from going live.
+Two decisions, neither blocking, both explained in [`AUDIT.md`](./AUDIT.md):
+
+- **The headshot is AI-generated**, and the file carries a signed record saying
+  so. Replacing it with a real photograph closes the question; see finding 2.
+- **A former boss's full name is in git history**, though it is out of the
+  working tree. Removing it means rewriting public history; see finding 1. This
+  is the one reason `check-confidential.sh --history` exits non-zero.

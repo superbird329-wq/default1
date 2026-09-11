@@ -16,7 +16,8 @@
     "strip-metadata": "./scripts/strip-metadata.sh",
     "check:todos": "./scripts/check-todos.sh",
     "check:confidential": "./scripts/check-confidential.sh",
-    "verify": "npm run check && npm run check:contrast && npm run rebuild && npm run check:todos && npm run check:confidential",
+    "check:assets": "node scripts/check-assets.mjs",
+    "verify": "npm run check && npm run check:contrast && npm run rebuild && npm run check:todos && npm run check:confidential && npm run check:assets",
     "check:contrast": "node scripts/check-contrast.mjs"
   },
   "dependencies": {

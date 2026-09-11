@@ -8,7 +8,7 @@ in high school and college, I didn't want a career that was just behind a
 screen. I wanted to do something in the physical world that couldn't get
 replaced that easily. I've also always had a lot of respect for the guys
 doing that kind of work: my parents before they passed away during my high
-school years, my boss at the time Brian Gold, and my best friend George.
+school years, my boss at the time Brian, and my best friend George.
 Construction management just made sense. Haven't looked back since my
 first CM class.
 
