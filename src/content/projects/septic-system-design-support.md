@@ -1,11 +1,16 @@
 ---
 # =============================================================================
-# PUBLICATION GATE: DO NOT set draft: false until Heather Sonnenberg's written
-# approval, naming the specifics she's approving for public posting, has been
+# PUBLICATION GATE: DO NOT set draft: false until the supervisor's written
+# approval, naming the specifics being approved for public posting, has been
 # pasted in full immediately below this block. No approval text below = not
 # approved. This gate is not optional and does not expire on a deadline.
 #
-# HEATHER'S APPROVAL (paste verbatim below this line, then flip draft: false):
+# Paste the approval body verbatim, but render the approver as a role rather
+# than a name: SPEC 3.2 forbids the name of any person other than the owner
+# anywhere in this source or in commit history, and that applies to the
+# approval record itself. Keep the unredacted original outside the repository.
+#
+# APPROVAL (paste verbatim below this line, then flip draft: false):
 # TODO: not yet pasted.
 # =============================================================================
 title: Residential On-Site Wastewater System Design
