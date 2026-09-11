@@ -94,6 +94,21 @@ git log --all -S "<surname>" --oneline -- src/content/projects/
 
 ---
 
+## Owed to the firm, not to the site
+
+### Dan's internal project list
+
+Asked for before any of the website work started and never delivered: a list of
+every project worked on at Subsurface with the service provided on each
+(drilling oversight, report preparation, design services, and so on). Heather
+added that for internal review it may reference project numbers.
+
+This is internal to the firm. It does not belong in this repository, does not go
+on the site, and project numbers must not appear anywhere near this codebase.
+Write it somewhere else.
+
+---
+
 ## Ordinary backlog
 
 - **More case studies.** `SPEC.md` §12 phase 4. One of the planned set is
@@ -102,6 +117,19 @@ git log --all -S "<surname>" --oneline -- src/content/projects/
 - **LinkedIn URL.** A TODO marker until supplied. `npm run verify` fails while
   it is outstanding, which is the intended behaviour.
 - **Club and competition dates**, and any remaining scholarships.
+- **Coursework samples.** The Documents section on `/resume` is built and empty.
+  See "Adding a transcript or coursework document" in `README.md`. A surveying
+  field project or a drawing set would suit it. Anything from internship work
+  goes through the approval process first, like any other project material.
+- **Password-protecting the site.** Discussed, never built. Either a Cloudflare
+  Access policy set up in the dashboard with no code changes, or HTTP Basic Auth
+  via a Cloudflare Pages Function. Only worth doing to keep the site live but
+  not publicly readable. Note that access control does not loosen any
+  confidentiality rule: SPEC 3.2 gates the repository, not the audience.
+- **Em dashes in date ranges.** Prose em dashes are gone site-wide per Vin's
+  standing preference, but date ranges ("March 2026 — Present") and page titles
+  still use them, since that reads as typography rather than prose. Convert them
+  only if he asks.
 
 ---
 
@@ -113,3 +141,25 @@ git log --all -S "<surname>" --oneline -- src/content/projects/
 - Gate block genericised so it names a role rather than a person (`8949e62`).
 - Both proposed images verified corner to corner against the confidentiality
   list. Findings are above; neither file entered the repository.
+- **The transcript is deliberately not published.** It was read in full and is
+  clean of student ID and date of birth, so redaction was never the issue.
+  Publishing a transcript publishes every grade, which adds nothing beyond the
+  GPA and the curated coursework list already on `/resume`. The reasoning is on
+  the `documents` field in `src/data/site.ts`. A transcript is handed over on
+  request. If this is ever revisited, read the file first: many schools' exports
+  do carry a student ID even though this one does not.
+- **There is one degree, CMET.** The unofficial transcript carries a second
+  degree-sought record for "Science/Technology & Society", a stale registrar
+  record from the New Paltz transfer. Confirmed twice. Do not add it to the site
+  on the strength of the transcript, which is what reading the transcript cold
+  would suggest.
+- **The SCDHS citation names the April 19, 2022 edition** because that is the
+  copy that was on the desk, confirmed by Vin. The values used are identical in
+  the June 10, 2026 edition, so naming it is precision rather than a correction.
+- **GPA is 3.83**, confirmed against the transcript totals. It lives once, in
+  `src/data/site.ts`; the resume page's meta description interpolates it rather
+  than carrying a second copy, which is how the two previously drifted.
+- **PHY 135T is completed, not in progress.** The transcript's Fall 2026
+  in-progress block lists five courses and PHY 135T is not among them; College
+  Physics I finished in Summer 2026 with an A. Because `/resume` renders only
+  completed courses, the wrong status had been hiding it.

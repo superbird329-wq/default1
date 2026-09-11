@@ -303,4 +303,22 @@ const doc = new Document({
 Packer.toBuffer(doc).then((buf) => {
   fs.writeFileSync(outPath, buf);
   console.log(`written: ${outPath} (${buf.length} bytes, ${manifest.images.length} image(s))`);
+
+  /*
+   * Section 5 is a certification to a supervisor, not boilerplate, and nothing
+   * here can check it: no code can look at a raster image and confirm that an
+   * elevation is absent. The 3 September 2026 packet certified "Site
+   * elevations: Removed from image" for a drawing that still carried rim and
+   * invert callouts, a top-of-wall pair, a spot elevation and labelled
+   * contours, and the supervisor approved against that false description. So
+   * the claims get printed where whoever runs this has to read them.
+   */
+  const claims = manifest.checklist.filter(([, status]) => /removed|stripped/i.test(status));
+  if (claims.length) {
+    console.log('\nCLAIMS MADE IN SECTION 5. Each is a certification. Verify every one');
+    console.log('against every image, corner to corner, before this is sent:\n');
+    claims.forEach(([item, status]) => console.log(`  - ${item}: ${status}`));
+    console.log('\nA row here that is broader than what an image actually shows is the');
+    console.log('failure that has already happened once. Check, do not assume.\n');
+  }
 });
