@@ -127,6 +127,13 @@ export const SITE = {
   },
 
   education: {
+    /*
+     * ONE degree, CMET. The unofficial transcript carries a second
+     * degree-sought record with the major "Science/Technology & Society",
+     * left over from the New Paltz transfer. Vin confirmed twice that it is
+     * a stale registrar record and not a second major. Do not add it here on
+     * the strength of the transcript alone.
+     */
     institution: 'Farmingdale State College (SUNY)',
     degree: 'BS, Construction Management Engineering Technology',
     school: 'College of Engineering Technologies',
@@ -169,23 +176,27 @@ export const SITE = {
 
   /**
    * Files offered for download on the resume page, beyond the resume PDF.
-   * Put the file in public/documents/, make `path` match its name, then set
-   * `available: true`. Nothing renders while every entry is unavailable, so
-   * the section cannot appear empty.
+   * Empty by design: the Documents section does not render until an entry
+   * here is available, so the page never shows an empty heading.
    *
-   * READ ANY TRANSCRIPT BEFORE PUBLISHING IT. Transcripts routinely carry a
-   * student ID number, and some carry a date of birth. Neither belongs on a
-   * public page. Redact those, or link an unofficial copy that omits them.
-   * Run scripts/strip-metadata.sh over public/ afterwards either way.
+   * To add one: put the file in public/documents/, run
+   * `npm run strip-metadata`, then add an entry shaped like this.
+   *
+   *   { label: 'Surveying field project', note: 'CON 103T',
+   *     path: '/documents/surveying-project.pdf', available: true },
+   *
+   * Use `available: false` to stage an entry before its file exists.
+   *
+   * NO TRANSCRIPT HERE, AND THAT IS DELIBERATE. Vin's was reviewed in
+   * September 2026 and decided against. It is clean of student ID and date
+   * of birth, so that was not the reason: publishing a transcript publishes
+   * every grade on it, which tells a construction recruiter nothing that the
+   * GPA and the curated coursework list above do not already say. A
+   * transcript is handed over on request. If this is ever revisited, read
+   * the file first, because many schools' exports do carry a student ID or
+   * a date of birth even when this one does not.
    */
-  documents: [
-    {
-      label: 'Academic transcript',
-      note: 'Farmingdale State College',
-      path: '/documents/vin-cataldo-transcript.pdf',
-      available: false,
-    },
-  ] as Doc[],
+  documents: [] as Doc[],
 
   /** §6.4. Vin confirmed all three resume certifications should show. */
   showCertifications: true,
