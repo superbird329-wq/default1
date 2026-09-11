@@ -153,13 +153,15 @@ export const SITE = {
       { code: 'ECO 157', title: 'Principles of Economics (Micro)', status: 'completed' },
       { code: 'ECO 156', title: 'Principles of Economics (Macro)', status: 'completed' },
       { code: 'MTH 150', title: 'Calculus I', status: 'completed' },
-      // In progress, Fall 2026
+      // Completed Summer 2026. Listed as in-progress until the transcript
+      // showed it finished, which also kept it off the displayed list.
+      { code: 'PHY 135T', title: 'College Physics I', status: 'completed' },
+      // In progress, Fall 2026. Matches the transcript's in-progress block.
       { code: 'CON 162', title: 'Materials & Methods of Construction II', status: 'in-progress' },
       { code: 'CON 103T', title: 'Surveying', status: 'in-progress' },
       { code: 'CIV 106', title: 'Statics', status: 'in-progress' },
       { code: 'ARC 121', title: 'Graphics II', status: 'in-progress' },
       { code: 'MTH 390', title: 'Methods in Operations Research', status: 'in-progress' },
-      { code: 'PHY 135T', title: 'College Physics I', status: 'in-progress' },
     ] as Course[],
     /** Term the in-progress courses belong to. */
     inProgressTerm: 'Fall 2026',
