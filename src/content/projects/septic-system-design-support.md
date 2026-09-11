@@ -1,11 +1,16 @@
 ---
 # =============================================================================
-# PUBLICATION GATE: DO NOT set draft: false until Heather Sonnenberg's written
-# approval, naming the specifics she's approving for public posting, has been
+# PUBLICATION GATE: DO NOT set draft: false until the supervisor's written
+# approval, naming the specifics being approved for public posting, has been
 # pasted in full immediately below this block. No approval text below = not
 # approved. This gate is not optional and does not expire on a deadline.
 #
-# HEATHER'S APPROVAL (paste verbatim below this line, then flip draft: false):
+# The approver is the supervising engineer at Subsurface Engineering who
+# reviewed this design. Her name is deliberately not written here: SPEC 3.2
+# forbids the name of any person other than Vin anywhere in this repository,
+# and that includes a comment.
+#
+# APPROVAL (paste verbatim below this line, then flip draft: false):
 # TODO: not yet pasted.
 # =============================================================================
 title: Residential On-Site Wastewater System Design

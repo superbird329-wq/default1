@@ -154,6 +154,22 @@ The build fails with a plain-English message if a required field is missing, so
 you cannot accidentally publish a half-finished case study. Set `draft: true`
 while you work on one.
 
+### If the project was built in another repository
+
+Some projects (the SPT blow-count tool, a competition submission, a course
+project) live in their own repo, and the facts about them are in that code, not
+in this one. Do not write those from memory. Open the Claude Code session that
+has that repository, paste the matching prompt from
+`.claude/skills/case-study/prompts/`, and it will read the code and hand back a
+draft plus a list of what it still needs from you.
+
+`.claude/skills/case-study/prompts/boring-tool-writeup.md` is ready to send for
+the SPT blow-count tool. It has not been sent yet.
+
+What comes back is a draft, not a finished file. That session has never seen the
+confidentiality rules in this README beyond what the prompt carries, so read it
+against them yourself before the file goes in `src/content/projects/`.
+
 ### Adding images to a project
 
 Only redacted crops or redrawn abstractions, and only once Subsurface
@@ -486,16 +502,28 @@ scripts/                Metadata stripping and pre-publish checks
 Phases 1–3 are complete: the foundation, the design pass, and all five content
 pages built from Vin's real resume and transcript.
 
+Phase 4 (the case studies) is in progress. The resume PDF, the headshot, the
+LinkedIn URL, the credentials, and the About narrative are all in.
+
 Outstanding:
 
-- **Project case studies** (`SPEC.md` §12 phase 4). None written yet. The
-  projects index and the case study template are built and waiting.
-- **LinkedIn URL** — a TODO marker on every page until supplied.
-- **Resume PDF** — export from the source document, see above.
-- **Headshot** for the About page, and the two narrative paragraphs in
-  `src/content/pages/about.md`.
-- **Club and competition dates**, and any scholarships.
+- **The septic case study is written and held as a draft.** It cannot be
+  published until Subsurface Engineering approves the text in writing and that
+  approval is pasted into the gate block at the top of
+  `src/content/projects/septic-system-design-support.md`. Nothing else is
+  blocking it. See `.claude/skills/case-study/SKILL.md` step 4 for the approval
+  packet to send them.
+- **The SPT blow-count tool case study is not written.** The prompt that
+  collects it is ready at
+  `.claude/skills/case-study/prompts/boring-tool-writeup.md`, and has not been
+  sent. See "If the project was built in another repository" above.
+- **A third and possibly fourth case study** (`SPEC.md` §11 candidate list).
+  `SPEC.md` Appendix A names the three that should end up `featured: true`.
+- **Dates for five credentials**: AIAS president, ACT club co-president, CREDA,
+  EVOC, and Habitat for Humanity render without one until supplied.
 - **Quality pass and deployment** (§12 phases 5–6).
 
-`npm run verify` currently fails on the remaining TODO markers. That is
-intentional: it is the gate that stops a half-finished site from going live.
+Run `npm run verify` before any deploy. It fails on any TODO marker that reaches
+the built site, which is the gate that stops a half-finished page from going
+live. Draft case studies are excluded from the build, so the unpasted approval
+line in the septic file does not trip it.

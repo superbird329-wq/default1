@@ -45,6 +45,15 @@ standard that was probably applied. If it is unknown, write `TODO: <what is
 needed>` in the field. `scripts/check-todos.sh` fails the build on any TODO
 reaching `dist/`, so a placeholder cannot silently ship. A plausible guess can.
 
+**Say who did what, including the AI.** Some of these projects were built in
+Claude Code sessions. A write-up that lets a reader assume every line was typed
+by hand is as wrong as one that understates his role, and it is the kind of
+wrong that collapses in an interview when someone asks him to walk through the
+code. Name the AI assistance in `myRole` the same way supervision is named:
+plainly, in one clause, alongside what he decided, specified, and verified
+himself. Supervision and assistance stated openly read as strength. Discovered
+later, they read as a lie.
+
 **No em dashes anywhere.** Use commas, parentheses, or a colon. This is a
 standing style rule across the whole site (see commit 4e5ca52).
 
@@ -78,6 +87,7 @@ Ask the questions, and map each answer to a schema field:
 | When, to the season and year? | `timeframe` |
 | What did you personally do, start to finish? | `myRole`, `approach` |
 | **What did anyone else do?** | `myRole` |
+| **Was any of it AI-assisted, and which parts?** | `myRole` |
 | What software did you use yourself? | `tools` |
 | Which codes or standards did you apply, by name? | `standards` |
 | What did you actually produce? | `deliverables` |
@@ -90,9 +100,51 @@ the design decisions someone else's call or made jointly? A first answer of
 "I did all of it" frequently becomes "well, my boss worked out the orientation
 with me" when asked the second way. Get that before drafting, not after.
 
+For anything he built rather than drew, ask the same question about the AI:
+which decisions were his (what the tool had to do, which standard governs, what
+counts as a refusal condition, what the output feeds into), what he verified by
+hand, and what was generated and then reviewed. "I built it" and "Claude built
+it" are both false about a Claude Code project, and the true version is more
+impressive than either.
+
 `learned` cannot be written for him. Offer an angle if he is stuck, but the
 reflection has to be his or it reads like filler to the interviewer who asks
 about it.
+
+## Step 1b: when the project's facts live in another repository
+
+Some case studies describe work that was built somewhere else: a tool in its
+own repo, a competition submission, a course project. Do not write those from
+what Vin remembers or from what this repo can infer. Hand the intake to the
+Claude Code session that has that codebase open, and have it read the code
+before it writes a word.
+
+Ready-made prompts live in `prompts/` next to this file:
+
+- `prompts/boring-tool-writeup.md`: the SPT blow-count extraction pipeline
+  (SPEC 11, candidate 3). Not yet sent.
+
+A prompt like that has to be self-contained, because the far session has never
+read `SPEC.md` and never will. It must carry, every time:
+
+1. The last published case study quoted in full, as the style reference. There
+   is no other way to convey the house style to a session that cannot read this
+   repo.
+2. The schema: every field, in order, with the limits (`summary` under 200
+   characters, `approach` three to six items, the required fields).
+3. The three rules that do not bend: no fabrication (TODO instead of a guess),
+   no confidential client information (including anything in that repo's own
+   test fixtures), no em dashes.
+4. The attribution demand, spelled out, including the AI question above.
+5. An instruction to cite which source file each technical claim came from, so
+   the claims can be checked here rather than trusted.
+6. An instruction not to commit anything anywhere.
+
+What comes back is a draft and a TODO list, not a finished file. It arrives
+unvalidated: read it against the confidentiality rules yourself, then run step 3
+on it here. The far session's word that it is clean is worth nothing, because
+it was never shown the rules it would be violating beyond the ones in the
+prompt.
 
 ## Step 2: draft
 

@@ -62,6 +62,12 @@ const projects = defineCollection({
     /**
      * §6.3.3 What Vin personally did. Must distinguish individual contribution
      * from team output, and must state supervision honestly where it applies.
+     *
+     * Same rule for AI assistance: a project built in a Claude Code session
+     * says so here, next to what Vin decided, specified, and verified. Stating
+     * it costs nothing. Omitting it is the claim that he typed every line, and
+     * that claim fails in the interview where someone asks him to walk through
+     * it. See .claude/skills/case-study/SKILL.md.
      */
     myRole: z.string().min(1),
     /** §6.3.4 Steps taken and the reasoning behind them. Three to six items. */

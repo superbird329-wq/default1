@@ -35,11 +35,14 @@ PROJNUM='\b[0-9]{2}-[0-9]{3,4}\b'
 PHONE='\(?[0-9]{3}\)?[-. ][0-9]{3}[-. ][0-9]{4}'
 PHONE_EXEMPT='src/data/site.ts'
 
-# Only src/ and public/ are scanned: that is where every published word and
-# asset comes from. README.md and SPEC.md are deliberately excluded because they
-# contain anti-examples ("do not write ...") that are supposed to look like the
-# thing being forbidden.
-SEARCH_PATHS=(src public)
+# src/ and public/ are where every published word and asset comes from.
+# .claude/ is scanned too: the case study prompts under
+# .claude/skills/case-study/prompts/ quote real case study text, and a draft
+# pasted back from another Claude Code session lands there before anyone reads
+# it. README.md and SPEC.md are deliberately excluded because they contain
+# anti-examples ("do not write ...") that are supposed to look like the thing
+# being forbidden.
+SEARCH_PATHS=(src public .claude)
 
 echo "Scanning working tree for confidential patterns..."
 echo
