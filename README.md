@@ -486,19 +486,20 @@ scripts/                Metadata stripping and pre-publish checks
 
 ## Build status
 
+The site is live and `npm run verify` passes clean.
+
 Phases 1–3 are complete: the foundation, the design pass, and all five content
-pages built from Vin's real resume and transcript.
+pages built from Vin's real resume and transcript. The LinkedIn URL, the resume
+PDF, the headshot and the About narrative are all in place. The first case study
+(the on-site wastewater system design) was published on 11 September 2026.
 
-Outstanding:
+**The running list of what is left lives in [`docs/open-items.md`](docs/open-items.md).**
+Read that rather than this section: it carries the current state, including two
+things that are blocked on a person rather than on code.
 
-- **Project case studies** (`SPEC.md` §12 phase 4). None written yet. The
-  projects index and the case study template are built and waiting.
-- **LinkedIn URL** — a TODO marker on every page until supplied.
-- **Resume PDF** — export from the source document, see above.
-- **Headshot** for the About page, and the two narrative paragraphs in
-  `src/content/pages/about.md`.
-- **Club and competition dates**, and any scholarships.
-- **Quality pass and deployment** (§12 phases 5–6).
-
-`npm run verify` currently fails on the remaining TODO markers. That is
-intentional: it is the gate that stops a half-finished site from going live.
+One standing note that belongs here, because it is easy to undo by accident:
+the case study's images are deliberately held back and `images: []` is empty on
+purpose. The publication gate at the top of
+`src/content/projects/septic-system-design-support.md` explains why, and
+`docs/open-items.md` says what has to happen before they go in. Do not add them
+to get the page looking fuller.

@@ -195,6 +195,36 @@ then write the fact generically.
 number and a boundary bearing. Check every crop against the confidentiality
 list above, corner to corner, before treating it as usable.
 
+**Certifying a redaction that was never done.** Section 5 of the septic
+approval packet listed "Site elevations: Removed from image" for the site plan.
+They had not been removed: rim and invert elevations, a top-of-wall and
+bottom-of-wall pair, a spot elevation on the fence line, and several labelled
+contour lines were all still on the drawing. Section 4 of the same packet was
+narrower and accurate, claiming only that the finished floor and basement floor
+elevations were gone. The two sections contradicted each other and the wrong one
+was the one written as a certification.
+
+This is worse than an unredacted crop, because the supervisor then approves
+against a description rather than against the file, and the error is in Vin's
+document rather than in their reply. An approval obtained that way cannot be
+relied on, and the packet is the evidence that they were told wrong.
+
+So: build section 5 by reading the image, not by reading section 4. Every line
+of that checklist is a claim someone will rely on. If a line says "removed",
+open the file and confirm it is removed.
+
+**Reading an approval as broader than it is.** The reply to that packet said
+"we are ok with your write up". It did not mention the images, and the reason it
+gave (no personal client contact information) is not the test the images have to
+pass. Section 1 of the packet itself had listed the write-up and the images as
+separate items, so the narrow reading is the correct one. Publish exactly what
+the words cover. When an approval is ambiguous, the cost of asking again is one
+email; the cost of guessing wide is a client's drawing in permanent git history.
+
+A useful shape for the re-ask is `docs/approvals/septic-images-addendum.md`:
+own the error plainly, list what is actually on the file, and give three
+one-line options to reply with.
+
 **Asserting why a code requirement applies.** The objective said an I/A OWTS
 is required "in certain groundwater management zones." What was actually
 known is that one was required on this parcel. The trigger conditions in the
