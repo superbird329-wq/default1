@@ -29,29 +29,49 @@
 #   repository. "We" is read as covering both supervisors, who were both on
 #   the thread.]
 #
-# SCOPE OF THIS APPROVAL. It covers the write-up text below, which is
-# word for word the text in section 3 of the reviewed packet. It does NOT
-# cover the two proposed images, and images: [] must stay empty, because:
+# SECOND APPROVAL (verbal), relayed by the owner, 12 September 2026:
 #
-#   1. The reply approves "your write up". Section 1 of the packet itself
-#      treats the write-up and the "two redacted images" as two separate
-#      items, so that wording is not read as reaching the images.
-#   2. The reason given, that no personal client contact information is
-#      included, is a narrower test than the images have to pass.
-#   3. Image 1 (partial site plan) does not match the packet's own account of
-#      it. Section 5 certifies site elevations as removed. They are not
-#      removed: rim and invert elevations in the callouts, a top-of-wall and
-#      bottom-of-wall pair, a spot elevation on the fence line, and several
-#      labelled contour lines all remain. Elevations are confidential under
-#      SPEC 3.2, and contours plus the parcel edge can identify a parcel in a
-#      county GIS lookup with no name anywhere on the sheet. So the approval
-#      above was given against a description that is not accurate, and it
-#      cannot carry the file as it stands.
+#   Reported by Vin on 12 September 2026: a supervisor at Subsurface
+#   Engineering said by telephone that the images are "good to go", and Vin
+#   directed that both the reading of the first reply and the packet's
+#   inaccurate certification be overridden on that basis.
 #
-# Image 1 must be corrected at the CAD source and re-approved against an
-# accurate description before it enters this repository. Image 2 (the
-# calculations excerpt) was found to match its description, but it was
-# submitted as part of a pair and has not been separately approved.
+#   RECORDED HONESTLY: this approval is verbal and relayed, not written. No
+#   text exists to paste. It is logged here as what it is so that nobody
+#   later reads it as a written approval on file. If a written confirmation
+#   arrives, paste it above this note and delete this paragraph.
+#
+# SCOPE OF WHAT IS PUBLISHED. The write-up text below, word for word from
+# section 3 of the reviewed packet, and BOTH images.
+#
+#   Image 2, the sizing calculations excerpt, was checked corner to corner
+#   and carries no address, client name, permit or application number, lot
+#   number, elevation, title block, seal, or file metadata.
+#
+#   Image 1, the partial site plan, IS PUBLISHED WITH SITE ELEVATIONS STILL
+#   ON IT. This is a deliberate decision by the owner: directed 12 September
+#   2026 and restated on 13 September, after the specifics below were put to
+#   him in full. It is recorded here rather than glossed over, because the
+#   3 September packet certified these as removed and they are not:
+#
+#     - EL.83.8 on the stock fence line
+#     - RIM +/-86.50 (leaching pool), RIM +/-87.00 (distribution box),
+#       RIM = +/-87.50 (treatment unit)
+#     - SAN C.O. RIM +/-88.00 / INV +/-85.17
+#     - TW 89.5 / BW 87.0
+#     - Labelled contours at 84, 86, 87, 88 and 89
+#
+#   The known consequence, accepted: a labelled contour set together with the
+#   property-line shape can match a parcel in the county GIS viewer even with
+#   no name, address, lot number or title block on the sheet. Publishing this
+#   file can therefore identify the parcel.
+#
+#   What the earlier redaction round did remove, and which is genuinely gone
+#   from the file: the lot number, the boundary bearing and distance, the
+#   title block, the firm name, the seal, and all file metadata.
+#
+#   If this is ever reconsidered, the fix is to remove the elevations and the
+#   contour linework at the CAD source and re-export, not to edit the raster.
 # =============================================================================
 title: Residential On-Site Wastewater System Design
 weight: 10
@@ -108,5 +128,23 @@ learned: >-
   verify my own calculations as rigorously as I'd check someone else's
   work, and to treat the engineer's markups as the safety net they're meant
   to be rather than a correction of failure.
-images: []
+images:
+  - src: /img/septic-site-plan-excerpt.png
+    alt: >-
+      Partial site plan, plan view, showing the on-site wastewater system
+      layout: three drywells, a traffic-bearing leaching pool with a 50%
+      future-expansion pool, a distribution box, the Fujiclean CEN7 treatment
+      unit, connecting pipe runs, and the setback dimensions to each structure.
+    caption: >-
+      Septic (I/A OWTS) system layout, plan view. Redacted excerpt, with the
+      lot number, boundary bearing, title block and seal removed.
+  - src: /img/sanitary-calculations-excerpt.png
+    alt: >-
+      Sanitary system calculations sheet listing a design flow of 550 gallons
+      per day for a five-bedroom dwelling, a Fujiclean CEN7 I/A OWTS rated at
+      700 gallons per day, and a leaching pool providing 402 square feet of
+      sidewall area against a 400 square foot minimum.
+    caption: >-
+      Sizing calculations excerpt. Redacted, with no address, client name,
+      permit number, or lot number.
 ---

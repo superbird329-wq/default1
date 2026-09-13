@@ -3,63 +3,55 @@
 The running list of what is unfinished on this site. Update it when something
 lands so it stays the one place worth reading.
 
-Last updated: 11 September 2026.
+Last updated: 13 September 2026.
 
 ---
 
-## Blocked on someone else
+## Recently closed
 
-### Septic case study images
+### Septic case study images — CLOSED 13 September 2026
 
-The write-up is **published** (`src/content/projects/septic-system-design-support.md`,
-`draft: false`, live since 11 September 2026). Both images are **held back**, and
-`images: []` must stay empty until the item below clears.
+Both images are published. Nothing here is blocked any more; this entry is kept
+as the record of a decision, not as an open item.
 
-**Why they are held.** The approval email of 11 September approves "your write
-up". Section 1 of the 3 September approval packet lists the write-up and the
-"two redacted images" as separate items, so that wording is not read as covering
-the images. More importantly, section 5 of that packet certified "Site
-elevations: Removed from image" for the site plan, and that certification was
-wrong. Still on the drawing:
+- `public/img/septic-site-plan-excerpt.png` — partial site plan, plan view
+- `public/img/sanitary-calculations-excerpt.png` — sizing calculations excerpt
 
-- Rim and invert elevations in several structure callouts
-- A top-of-wall and bottom-of-wall elevation pair
-- A spot elevation on the fence line
-- Several labelled contour lines
+Released on a verbal approval relayed by Vin: a supervisor said by phone that
+the images are good to go. That approval is verbal and relayed, not written.
+A one-line written confirmation is still worth getting so the paper record
+matches what is published; `docs/approvals/septic-images-addendum.md` is the
+drafted request if it is wanted.
 
-Section 4 of the same packet was narrower and accurate (it claimed only the
-finished floor and basement floor elevations were removed). Sections 4 and 5
-contradicted each other and section 5 was the one written as a certification.
+**The site plan is published with its site elevations still on it, by Vin's
+explicit decision** — directed 12 September and restated 13 September, after
+the specifics below were put to him in full.
+Still drawn on the published sheet:
 
-Elevations are confidential under SPEC 3.2 in their own right, and a labelled
-contour set plus the shape of the property line can match a parcel in the county
-GIS viewer with no name, address, lot number or title block anywhere on the
-sheet. So the approval was given against a description that was not true, and it
-cannot carry that file.
+- `EL.83.8` on the stock fence line
+- `RIM ±86.50` (leaching pool), `RIM ±87.00` (distribution box),
+  `RIM = ±87.50` (treatment unit)
+- `SAN C.O. RIM ±88.00 / INV ±85.17`
+- `TW 89.5 / BW 87.0`
+- Labelled contours at 84, 86, 87, 88 and 89
 
-**To clear it:**
+The accepted consequence: a labelled contour set plus the property-line shape
+can match a parcel in the county GIS viewer even with no name, address, lot
+number or title block on the sheet, so the published file can identify the
+parcel. The 3 September packet certified these elevations as removed and that
+certification was wrong; it is contradicted by the file itself, and that is
+recorded in the gate block at the top of the case study rather than quietly
+dropped.
 
-1. Remove the elevations at the CAD source, not by painting over the export, so
-   nothing is recoverable underneath. Re-export the crop.
-2. Check the new crop corner to corner against the confidentiality list in
-   `.claude/skills/case-study/SKILL.md`. The first crop of this drawing passed a
-   casual look and still carried a lot number and a boundary bearing.
-3. Open `docs/approvals/septic-images-addendum.md`, drop in the corrected image,
-   send it. A .docx of the same document was generated on 11 September and sent
-   to Vin directly; the markdown here is the source of record if that file is
-   lost.
-4. When the reply arrives, paste it into the gate block at the top of the case
-   study following the rules already written there (body verbatim, approver as a
-   role not a name, unredacted original kept outside the repo).
-5. Only then add the images: `public/img/`, `npm run strip-metadata`, then fill
-   the `images` list. See "Adding images to a project" in `README.md`.
+What the earlier redaction round did remove, and is genuinely gone: the lot
+number, the boundary bearing and distance, the title block, the firm name, the
+seal, and all file metadata. `npm run strip-metadata` was run over `public/`
+before committing.
 
-Image 2 (the sizing calculations excerpt) was checked corner to corner and is
-clean: no address, no client name, no permit or application number, no lot
-number, no elevations, no title block or seal, no file metadata. It is held only
-because it was submitted as half of a pair and the reply does not name it. The
-addendum offers "calculations only" as one of its three options, so a one-line
-answer can release it on its own.
+**If this is reconsidered**, the fix is to strip the elevations and contour
+linework at the CAD source and re-export, then replace the file. Editing the
+raster is not the route: the contour *lines* identify the parcel, not only
+their labels.
 
 ---
 
@@ -140,7 +132,9 @@ Write it somewhere else.
   and match verbatim.
 - Gate block genericised so it names a role rather than a person (`8949e62`).
 - Both proposed images verified corner to corner against the confidentiality
-  list. Findings are above; neither file entered the repository.
+  list, twice: once on 11 September and again on 12 September before publishing.
+  Both are now in the repository. The site plan went in carrying its elevations,
+  as a recorded decision rather than an oversight — see the closed entry above.
 - **The transcript is deliberately not published.** It was read in full and is
   clean of student ID and date of birth, so redaction was never the issue.
   Publishing a transcript publishes every grade, which adds nothing beyond the
