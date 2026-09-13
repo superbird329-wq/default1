@@ -3,31 +3,30 @@
 The running list of what is unfinished on this site. Update it when something
 lands so it stays the one place worth reading.
 
-Last updated: 12 September 2026.
+Last updated: 13 September 2026.
 
 ---
 
-## Blocked on someone else
+## Recently closed
 
-### Septic case study images
+### Septic case study images — CLOSED 13 September 2026
 
-**Image 2 (sizing calculations excerpt) is published** as of 12 September 2026,
-at `public/img/sanitary-calculations-excerpt.png`. Released on a verbal approval
-relayed by Vin: a supervisor said by phone that the images are good to go, and
-Vin directed the earlier hold be overridden. That approval is verbal and
-relayed, not written; it is recorded as such in the gate block at the top of the
-case study. Getting a one-line written confirmation is still worth doing, purely
-so the record matches the publication.
+Both images are published. Nothing here is blocked any more; this entry is kept
+as the record of a decision, not as an open item.
 
-The file was re-checked corner to corner before it went in: no address, client
-name, permit or application number, lot number, elevation, title block, seal, or
-file metadata. `npm run strip-metadata` was run over it.
+- `public/img/septic-site-plan-excerpt.png` — partial site plan, plan view
+- `public/img/sanitary-calculations-excerpt.png` — sizing calculations excerpt
 
-**Image 1 (partial site plan) is still held, and the approval is no longer what
-is blocking it.** The file is. The copies in Drive
-(`Screenshot 2026-09-01 120154.png`, and the raw CAD capture
-`Screenshot 2026-09-01 120422.png`) are the original export. Every elevation the
-3 September packet certified as removed is still drawn on the sheet:
+Released on a verbal approval relayed by Vin: a supervisor said by phone that
+the images are good to go. That approval is verbal and relayed, not written.
+A one-line written confirmation is still worth getting so the paper record
+matches what is published; `docs/approvals/septic-images-addendum.md` is the
+drafted request if it is wanted.
+
+**The site plan is published with its site elevations still on it, by Vin's
+explicit decision** — directed 12 September and restated 13 September, after
+the specifics below were put to him in full.
+Still drawn on the published sheet:
 
 - `EL.83.8` on the stock fence line
 - `RIM ±86.50` (leaching pool), `RIM ±87.00` (distribution box),
@@ -36,26 +35,23 @@ is blocking it.** The file is. The copies in Drive
 - `TW 89.5 / BW 87.0`
 - Labelled contours at 84, 86, 87, 88 and 89
 
-An earlier redaction round did happen on this file and did real work: the lot
-number, the boundary bearing, the title block and the seal are all gone. The
-elevations were simply not part of that round. A labelled contour set plus the
-property-line shape can match a parcel in the county GIS viewer with no name
-anywhere on the sheet, so publishing this file discloses the parcel whatever the
-approval says.
+The accepted consequence: a labelled contour set plus the property-line shape
+can match a parcel in the county GIS viewer even with no name, address, lot
+number or title block on the sheet, so the published file can identify the
+parcel. The 3 September packet certified these elevations as removed and that
+certification was wrong; it is contradicted by the file itself, and that is
+recorded in the gate block at the top of the case study rather than quietly
+dropped.
 
-**To clear it:**
+What the earlier redaction round did remove, and is genuinely gone: the lot
+number, the boundary bearing and distance, the title block, the firm name, the
+seal, and all file metadata. `npm run strip-metadata` was run over `public/`
+before committing.
 
-1. Remove the elevations and the contour linework at the CAD source, not by
-   painting over the export, and re-export the crop. (Painting over a flattened
-   PNG is not itself recoverable, but the contour *lines* are the identifying
-   feature, not just their labels, and removing linework cleanly is a CAD job.)
-2. Check the new crop corner to corner against the confidentiality list in
-   `.claude/skills/case-study/SKILL.md`.
-3. Drop it in `public/img/`, run `npm run strip-metadata`, add it to the
-   `images` list in the case study, and note the release in the gate block.
-
-`docs/approvals/septic-images-addendum.md` is still the drafted written request
-if a paper trail is wanted. It is no longer required to publish Image 2.
+**If this is reconsidered**, the fix is to strip the elevations and contour
+linework at the CAD source and re-export, then replace the file. Editing the
+raster is not the route: the contour *lines* identify the parcel, not only
+their labels.
 
 ---
 
@@ -137,8 +133,8 @@ Write it somewhere else.
 - Gate block genericised so it names a role rather than a person (`8949e62`).
 - Both proposed images verified corner to corner against the confidentiality
   list, twice: once on 11 September and again on 12 September before publishing.
-  The calculations excerpt is clean and is now in the repository. The site plan
-  is not, and the findings above say why.
+  Both are now in the repository. The site plan went in carrying its elevations,
+  as a recorded decision rather than an oversight — see the closed entry above.
 - **The transcript is deliberately not published.** It was read in full and is
   clean of student ID and date of birth, so redaction was never the issue.
   Publishing a transcript publishes every grade, which adds nothing beyond the

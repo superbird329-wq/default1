@@ -42,31 +42,36 @@
 #   arrives, paste it above this note and delete this paragraph.
 #
 # SCOPE OF WHAT IS PUBLISHED. The write-up text below, word for word from
-# section 3 of the reviewed packet, plus Image 2 only:
+# section 3 of the reviewed packet, and BOTH images.
 #
-#   Image 2, the sizing calculations excerpt, is published. It was checked
-#   corner to corner and carries no address, client name, permit or
-#   application number, lot number, elevation, title block, seal, or file
-#   metadata. The verbal approval covers it and nothing in the file
-#   contradicts that.
+#   Image 2, the sizing calculations excerpt, was checked corner to corner
+#   and carries no address, client name, permit or application number, lot
+#   number, elevation, title block, seal, or file metadata.
 #
-# IMAGE 1 (partial site plan) IS STILL HELD, and not because of the approval.
-# The file itself is the blocker. The copy in Drive is the original export,
-# and every elevation the packet certified as removed is still drawn on it:
+#   Image 1, the partial site plan, IS PUBLISHED WITH SITE ELEVATIONS STILL
+#   ON IT. This is a deliberate decision by the owner: directed 12 September
+#   2026 and restated on 13 September, after the specifics below were put to
+#   him in full. It is recorded here rather than glossed over, because the
+#   3 September packet certified these as removed and they are not:
 #
-#   - EL.83.8 on the stock fence line
-#   - RIM +/-86.50 (leaching pool), RIM +/-87.00 (distribution box),
-#     RIM = +/-87.50 (treatment unit)
-#   - SAN C.O. RIM +/-88.00 / INV +/-85.17
-#   - TW 89.5 / BW 87.0
-#   - Labelled contours at 84, 86, 87, 88 and 89
+#     - EL.83.8 on the stock fence line
+#     - RIM +/-86.50 (leaching pool), RIM +/-87.00 (distribution box),
+#       RIM = +/-87.50 (treatment unit)
+#     - SAN C.O. RIM +/-88.00 / INV +/-85.17
+#     - TW 89.5 / BW 87.0
+#     - Labelled contours at 84, 86, 87, 88 and 89
 #
-# An earlier redaction round did happen on this file: the lot number, the
-# boundary bearing, the title block and the seal are gone. The elevations
-# were not part of it. A labelled contour set plus the property-line shape
-# can match a parcel in the county GIS viewer with no name on the sheet, so
-# publishing this file would disclose the parcel regardless of approval.
-# Correct it at the CAD source and re-export; then it can go in.
+#   The known consequence, accepted: a labelled contour set together with the
+#   property-line shape can match a parcel in the county GIS viewer even with
+#   no name, address, lot number or title block on the sheet. Publishing this
+#   file can therefore identify the parcel.
+#
+#   What the earlier redaction round did remove, and which is genuinely gone
+#   from the file: the lot number, the boundary bearing and distance, the
+#   title block, the firm name, the seal, and all file metadata.
+#
+#   If this is ever reconsidered, the fix is to remove the elevations and the
+#   contour linework at the CAD source and re-export, not to edit the raster.
 # =============================================================================
 title: Residential On-Site Wastewater System Design
 weight: 10
@@ -124,6 +129,15 @@ learned: >-
   work, and to treat the engineer's markups as the safety net they're meant
   to be rather than a correction of failure.
 images:
+  - src: /img/septic-site-plan-excerpt.png
+    alt: >-
+      Partial site plan, plan view, showing the on-site wastewater system
+      layout: three drywells, a traffic-bearing leaching pool with a 50%
+      future-expansion pool, a distribution box, the Fujiclean CEN7 treatment
+      unit, connecting pipe runs, and the setback dimensions to each structure.
+    caption: >-
+      Septic (I/A OWTS) system layout, plan view. Redacted excerpt, with the
+      lot number, boundary bearing, title block and seal removed.
   - src: /img/sanitary-calculations-excerpt.png
     alt: >-
       Sanitary system calculations sheet listing a design flow of 550 gallons
